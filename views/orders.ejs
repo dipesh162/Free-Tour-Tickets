@@ -1,0 +1,78 @@
+<% include partials/header %>
+
+<div style="margin: 30px 30px">
+	<div class="containter">
+		<div class="row">
+			<div class="col-md-4 col-sm-12"><img src="<%= event.bgImage %>"; style="height: 100%; width: 90%;"></div>
+			<div class="col-md-4 col-sm-12">
+				<h2>Booked Ticket for <%= event.tourName %></h2>
+				<h3><strong>Date:</strong> <%= event.tourDates[2] %></h3>
+				<h3><strong>City:</strong> <%= event.tourCity[2] %></h3>
+				<h3><strong>Country:</strong> <%= event.tourCountry[2] %></h3>
+				<h3><strong>Venue:</strong> <%= event.tourVenue[2] %></h3>
+			</div>
+			<div class="col-md-2">
+				<h4>Uploaded Sketch</h4>
+				<img src="<%= event.bgImage %>"; style="height: 80%; width: 90%;">
+			</div>
+            <div class="col-md-2">
+				<h4>Uploaded Cover</h4>
+				<video src="../public/hotel.mp4" controls>
+				  Your browser does not support the video tag.
+				</video>
+			</div>			
+		</div>
+	</div>
+</div>	
+
+<div style="margin: 30px 30px">
+	<div class="containter">
+		<div class="row">
+			<div class="col-md-4 col-sm-12"><img src="<%= event.bgImage %>"; style="height: 100%; width: 90%;"></div>
+			<div class="col-md-4 col-sm-12">
+				<h2>Booked Ticket for <%= event.tourName %></h2>
+				<h3><strong>Date:</strong> <%= event.tourDates[2] %></h3>
+				<h3><strong>City:</strong> <%= event.tourCity[2] %></h3>
+				<h3><strong>Country:</strong> <%= event.tourCountry[2] %></h3>
+				<h3><strong>Venue:</strong> <%= event.tourVenue[2] %></h3>
+			</div>
+			<div class="col-md-2">
+				<h4>Uploaded Sketch</h4>
+			</div>
+            <div class="col-md-2">
+				<h4>Uploaded Cover</h4>
+			</div>			
+		</div>
+	</div>
+</div>
+
+<div style="margin: 30px 30px">
+	<div class="containter">
+		<div class="row">
+			<div class="col-md-4 col-sm-12"><img src="<%= event.bgImage %>"; style="height: 100%; width: 90%;"></div>
+			<div class="col-md-4 col-sm-12">
+				<h2>Booked Ticket for <%= event.tourName %></h2>
+				<h3><strong>Date:</strong> <%= event.tourDates[2] %></h3>
+				<h3><strong>City:</strong> <%= event.tourCity[2] %></h3>
+				<h3><strong>Country:</strong> <%= event.tourCountry[2] %></h3>
+				<h3><strong>Venue:</strong> <%= event.tourVenue[2] %></h3>
+			</div>
+			<div class="col-md-2">
+				<h4>Uploaded Sketch</h4>
+			</div>
+            <div class="col-md-2">
+				<h4>Uploaded Cover</h4>
+			</div>			
+		</div>
+	</div>
+</div>
+<!-- orders.forEach(function(order)){
+	order.name,
+	order.bgImage,
+	order.tourDate[order.tourIndex],
+	order.tourCity[order.tourIndex],
+	order.tourCountry[order.tourIndex]
+}) -->
+
+<% include partials/footer %>
+

@@ -1,0 +1,14 @@
+<% include partials/header.ejs %>
+
+<div class="jumbotron">
+  <h1 class="display-3">Thank You!</h1>
+  <p class="lead p-thankyou"><strong>Thank you so much <%= suber.firstName %> <%= suber.secondName %> for sending your response for an upcoming <%= event.celebName %>'s <%= event.tourName %> ticket which will take place at <%= event.tourVenue[tourIndex] %> on <%= event.tourDates[tourIndex] %> in <%= event.tourCity[tourIndex] %> , <%= event.tourCountry[tourIndex] %>. Your ticket  will be confirmed by our team, if you are a that die hard fan of your favourite artist and you prove that, then our team will soon notify you via e-mail address you have provided .Our team will select 10 best fans from your city. We hope that you will get an overwhelming experience of watching your favourite artist/band performing live and rocking the arena</p>
+  <hr>
+
+  <p class="lead">
+    <center><a class="btn btn-danger btn-lg btn-home" href="/" role="button">Book Another </a></center>
+  </p>
+</div>
+
+
+<% include partials/footer.ejs %>

@@ -1,0 +1,50 @@
+<% include partials/header.ejs %>
+
+
+
+
+
+<% if(submission.length === 0){ %>
+  <div style="height: 650px;">
+    <h1 id="no-submissions">No Submissions Yet</h1>
+    <img src="emoji.png" class ="emoji">
+  </div>
+<% } %> 
+
+
+<% if(submission.length !== 0){ %> 
+  <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>  
+          <th scope="col">Name</th>
+          <th scope="col">Email</th>
+          <th scope="col">Mobile-no.</th>
+          <th scope="col">Sketch</th>
+          <th scope="col">Cover</th>
+          <th scope="col">Comment</th>      
+        </tr>
+      </thead>
+
+      <tbody>
+          <% var i=0  %>
+          <% submission.forEach(function(sub){ %>
+            <tr>  
+              <% i = i+1 %>
+              <th scope="row"><%= i %></th>
+              <td><%= sub.firstName %></td>
+              <td><%= sub.email %></td>
+              <td><%= sub.mobileNo %></td>
+              <td><img src="<%= sub.sketch %>"></td>
+              <td><%= sub.cover %></td>
+              <td><%= sub.comment %></td>
+            </tr> 
+          <% }) %>
+      </tbody>     
+  </table>
+  <div style="height: 500px;"></div>
+<% } %>
+
+
+<% include partials/footer.ejs %>
+

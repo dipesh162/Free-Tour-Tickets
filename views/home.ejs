@@ -1,0 +1,92 @@
+<% include partials/header.ejs %>
+
+
+<div id="carouselExampleSlidesOnly carousel Carousel" class="slide" data-ride="carousel" data-interval="2000">
+  <div class="carousel-inner" id="car-images">
+  	    <div class="carousel-item one active">
+  	      <img class="d-block w-100 car-img img-fluid" src="/car-images/sg1.jpg" alt="Third slide">
+  	    </div>    
+  	    <div class="carousel-item two">
+  	      <img class="d-block w-100 car-img" src="/car-images/jb.jpg" alt="Third slide">
+  	    </div> 
+  	    <div class="carousel-item three">
+  	      <img class="d-block w-100 car-img" src="/car-images/me.jpg" alt="Third slide">
+  	    </div>              
+  	    <div class="carousel-item four">
+  	      <img class="d-block w-100 car-img" src="/car-images/cd.jpg" alt="Third slide">
+  	    </div>  
+  	    <div class="carousel-item five">
+  	      <img class="d-block w-100 car-img" src="/car-images/dl.jpg" alt="Third slide">
+  	    </div>     
+  	    <div class="carousel-item six">
+  	      <img class="d-block w-100 car-img" src="/car-images/cp.jpg" alt="Third slide">
+  	    </div>  
+  	    <div class="carousel-item seven">
+  	      <img class="d-block w-100 car-img" src="/car-images/ar.jpg" alt="Third slide">
+  	    </div>  
+  	    <div class="carousel-item eight">
+  	      <img class="d-block w-100 car-img" src="/car-images/sg.jpg" alt="Third slide">
+  	    </div>
+
+  	    <div class="carousel-caption">
+          <div class="container">
+      				<div class="row">
+      					<div class="col-lg-12">
+        						<div id="welcome">
+        							<h1 id="welcome-h1"><span style="color: white">Free Tour Tickets</span></h1>
+        							<h3 id="welcome-h3"><span style="color: white">The Best Place To Get Free Concert Tickets</span></h3>
+        							<hr id="welcome-hr">
+        			        <button class="btn btn-default btn-lg attractive-btn"  data-toggle="modal" data-target="#myModal" id="welcomebtn"><a href="#myModal"></a><!-- <i class="fas fa-paw"></i> --> Get Started!</button>
+        					  </div>
+      				   </div>
+      				</div>
+            </div>
+  	    </div> 
+              
+   </div>
+</div>
+
+
+
+<div class="modal" id="myModal" style="margin-top: 10%">
+    <div class="modal-dialog">
+      <div class="modal-content">
+      
+        <!-- Modal Header -->
+        <div class="modal-header ml-auto mr-auto">
+          <h4 class="modal-title">Instructions to participate</h4>
+          <button type="button" class="close ml-auto" data-dismiss="modal">&times;</button>
+        </div>
+        
+        <!-- Modal body -->
+        <div class="modal-body">
+         Follow these instructions to get your free ticket.
+        These details and artworks/covers of yours will help us choosing the deserving ones among you, our team will send
+        an
+        email confirming your ticket with venue details and your "FREE TOUR TICKETS" pass.
+        </div>
+        
+        <hr>
+
+        <div class="modal-body">
+        	<strong>Step 1:</strong> Choose your favourite Artist/Band from the grid.<br>
+          <strong>Step 2:</strong> Click on INFO button.<br>
+	        <strong>Step 3:</strong> Find your nearby city and click on BOOK button.<br>
+	        <strong>Step 4:</strong> Fill your required details in the fields mentioned <br>
+	        <strong>Step 5:</strong> Click "SignUp" button.<br>
+	        <strong>Step 6:</strong> Upload covers/sketches of your favourite artist/band.<br>
+	        <strong>Step 7:</strong> Wait for an email.
+        </div>
+        <!-- Modal footer -->
+        <div class="modal-footer ml-auto mr-auto">
+          	<a href="/grids" style="margin-left: 20px;" class="btn btn-default btn-lg attractive-btn">> CONTINUE</a>
+        </div>
+      </div>
+    </div>
+</div>
+
+
+
+<script type="text/javascript" src="grids.js"></script>
+
+<% include ./partials/footer.ejs %>

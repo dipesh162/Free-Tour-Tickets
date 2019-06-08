@@ -1,0 +1,132 @@
+<% include partials/header.ejs %>
+  
+<div class="bg-images">
+
+	<img src="/<%= event.bgImage %>">
+
+	<div id="bg-profile-img">
+		<img src="/<%= celeb.image %>">
+	</div>
+    
+    <% if(event.tourName === "WorldWired Tour") { %>
+	    <div id="met-logo">
+			<img src="/metlogo.svg">
+	    </div>
+	<% } %>
+	
+	<% if(event.tourName === "Purpose Tour") { %>
+        <img id="purpose-tour-heading" src="/ppi2.svg">
+	<% } %>
+
+
+	<div id="bg-profile-tourname">
+		<% if(event.tourName === "Sweetner World Tour") { %>
+		    <% var tourName =  event.tourName %>
+				<h2 id="sweetner-tour-heading" class="common-tour-heading">
+					<span style="position: relative; left: 30px;"><%= tourName.slice(0,8) %></span>
+					<span style="display: block"><%= tourName.slice(9) %></span>
+				</h2>
+		<% } %>
+
+		<% if(event.tourName === "Divide Tour") { %>
+				<h2 id="divide-tour-heading" class="common-tour-heading">
+					<%= event.tourName %>
+				</h2>		 
+				<img src="/divide.jpg" id="divide-logo">
+		<% } %>
+
+
+		<% if(event.tourName === "Reputation Tour") { %>
+			<h2 id="reputation-tour-heading" class="common-tour-heading">
+				<%= event.tourName %>
+			</h2>
+
+		<% if(event.tourName === "2019 Tour") { %>
+			<h2 id="boyce-tour-heading" class="common-tour-heading">
+				Boyce Avenue's <%=  event.tourName %>
+			</h2>
+		<% } %>
+
+		<% if(event.tourName === "Voice Notes Tour") { %>
+			<h2 id="voice-tour-heading" class="common-tour-heading">
+				THE <%= event.tourName %>
+			</h2>
+		<% } %>
+
+		<% if(event.tourName === "Synthesis Tour") { %>
+			<h2 id="synthesis-tour-heading" class="common-tour-heading">
+				Synthesis Live 2019
+			</h2>
+		<% } %>																		
+	</div>
+    
+    
+    <div id="bg-profile-social-icons">
+    	<ul>
+    		<li><a href="<%= celeb.fbLink %>" target="_blank" title="Like <%= celeb.celebName %> on facebook"><img src="/facebook.png"></a></li>
+    		<li><a href="<%= celeb.twitterLink %>" target="_blank" title="Follow <%= celeb.celebName %> on twitter"><img src="/twitter.png"></a></li>
+    		<li><a href="<%= celeb.instaLink %>" target="_blank" title="Follow <%= celeb.celebName %> on instagram"><img src="/instagram.png"></a></li>
+    		<li><a href="<%= celeb.youtubeLink %>" target="_blank" title="Watch <%= celeb.celebName %>'s videos on youtube"><img src="/youtube.png"></a></li>
+    		<li><a href="<%= celeb.soundcloudLink %>" target="_blank" title="Listen <%= celeb.celebName %> on soundcloud"><img src="/soundcloud.png"></a></li>
+    	</ul>
+	</div>
+</div>
+
+
+<div class="row text-center streaming-sites-row">
+	<div class="container">
+		<h2 class="music-heading">music</h2>
+		<div class="streaming-sites-icons">
+		<div class="row">
+			<div class="col-lg-3 col-md-6 col-sm-12"><a href="<%= celeb.spotifyLink %>" target="_blank" title="Listen <%= celeb.celebName %> on spotify"><img src="/spotify_color.png"></a></div>
+			<div class="col-lg-3 col-md-6 col-sm-12"><a href="<%= celeb.amazonmusicLink %>" target="_blank" title="Listen <%= celeb.celebName %> on amazonmusic"><img src="/amazon_02.png"></a></div>
+			<div class="col-lg-3 col-md-6 col-sm-12"><a href="<%= celeb.applemusicLink %>"  target="_blank" title="Listen <%= celeb.celebName %> on iTunes"><img src="/applemusic.png"></a></div>
+			<div class="col-lg-3 col-md-6 col-sm-12"><a href="<%= celeb.googleplayLink %>" target="_blank" title="Listen <%= celeb.celebName %> on googleplay"><img src="/googleplay.png"></a></div>
+		</div>
+	</div> 
+	</div>
+</div>
+
+<h2 class="text-center mt-3 mb-3"><%= event.tourName %> Dates</h2>
+
+
+<table class="table">
+	<thead>
+		<tr>
+			<th>Date</th>
+			<th>City</th>
+			<th>Country</th>
+			<th>Venue</th>
+			<th></th>
+		</tr>
+    </thead>
+    
+    <tbody>
+  
+      <% for(var i=0 ; i< event.tourDates.length; i++){ %>
+       		<tr>
+			<td><%= event.tourDates[i] %></td>
+			<td><%= event.tourCity[i]  %></td>
+			<td><%= event.tourCountry[i]  %></td>
+			<td><%= event.tourVenue[i]  %></td>
+			<td style="width: 8%"><a class="ok" href="/artworks/<%= celeb._id %>/<%= i %>"><button>Book Ticket</button></a></td>
+		</tr>
+      <% } %>
+	
+    </tbody>
+</table>
+
+<script type="text/javascript">
+
+var btn = document.querySelector(".ok");
+btn.addEventListener("click", function(){
+	alert("HI");
+});
+
+</script>
+
+
+
+<!-- 
+
+<% include partials/footer.ejs %> -->

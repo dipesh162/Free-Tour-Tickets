@@ -1,0 +1,24 @@
+<% include partials/header.ejs %>
+
+<div class="page-bg-login">
+  <div class="jumbotron-fluid" style="width:50%; margin:0 auto; opacity: 0.8; background: white; height: 100%;">
+  	<!-- <div style=""> -->
+        <h1 class="font-size-40" style="font-family:aero; font-style: italic; font-weight: bold; text-align: center;">FreeTourTickets'19</h1>
+        <h5 style="text-align: center; width: 100%; font-family: Billabong; font-weight: 900;">Login to your account</h5>
+        <hr style="margin-top: 35px; margin-bottom: 30px;">
+        <div style="width: 75%; margin: 0 auto;">
+          <p class="container">
+            <form action="/login" method="POST">
+              <div class="form-group">
+                <input class="form-control form-group signup-input" type="text" name="username" placeholder="Email/Username">
+                <input class="form-control form-group signup-input" type="password" name="password" placeholder="Password">
+              </div>
+              <p><button class="btn btn-large btn-block btn-primary signup-btn" id="attractive-btn">Sign Up & Proceed</button></p>
+            </form>
+          </p>
+        </div>
+    <!-- </div> -->
+  </div>
+</div>
+
+<% include partials/footer.ejs %>
