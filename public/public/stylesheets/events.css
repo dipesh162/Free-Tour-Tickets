@@ -1,0 +1,455 @@
+.bg-images {
+  position: relative;
+}
+
+.bg-images img{
+   width:100%;
+   height:700px;
+   max-width:100%;
+   max-height:90%;
+}
+
+.bg-images #bg-profile-img img{
+  position: absolute;
+  bottom : 18px;
+  left: 18px;
+  width: 320px; 
+  height: 320px;
+  border: 3px solid brown;
+  border-radius: 40px; 
+}
+
+.bg-images #bg-profile-tourname{
+  position: absolute;
+  top: 10px;
+  right: 20px;
+}
+
+/*---------------------------------- <TOUR HEADINGS> -------------------------------- */ 
+#purpose-tour-heading{
+   height:130px; 
+   position: absolute;
+   top: 10px; 
+   left: 40%;
+}
+
+#reputation-tour-heading{
+  text-transform: lowercase; 
+  font-family: Engravers Old English Normal;
+  color: #fcf9f9;
+}
+
+#sweetner-tour-heading{
+  transform: rotate(180deg); 
+  font-family: BodoniXT; 
+  color: #bcbab2;
+}
+
+#boyce-tour-heading{
+   text-transform: uppercase; 
+   font-weight: bold; 
+   color: white;
+}
+
+#voice-tour-heading{
+  text-transform: uppercase; 
+  font-family: Porter Bold; 
+  font-weight: bold; 
+  color: #f5ead2;
+}   
+
+#synthesis-tour-heading{
+ text-transform: uppercase; 
+ font-family: Didot Regular; 
+ letter-spacing: 3px;
+ font-weight: bold
+}
+
+#divide-tour-heading{
+  text-transform: uppercase;
+  font-family: Porter Bold; 
+  font-weight: bold; 
+  color:#89C4F4;
+}
+
+.common-tour-heading{
+  font-size: 52px;
+}
+
+/*----------------------------------</TOUR HEADINGS> -------------------------------- */ 
+
+/*-----------------------------------<LOGOS>-------------------------------------------*/ 
+
+#met-logo{
+  height: 180px; 
+  width:55%;
+  position: absolute;
+  top: 1%;
+  left: 22.5%
+}
+
+#divide-logo{
+  height: 200px; 
+  width: 280px;
+  /*position: absolute;
+  right: 20px;
+  top: 40px;*/
+}
+
+/*-----------------------------------</LOGOS>---------------------------------------------*/ 
+
+/* - - - - - - - - --   - - - - - - - - - - - - - - -  - - - - - - */ 
+
+.bg-images #bg-profile-social-icons {
+  position: absolute; 
+  right: 20px;
+  bottom: 10px;
+  display: block;
+}
+
+.bg-images #bg-profile-social-icons img{
+  height: 40px;
+  width: 40px;
+}
+
+#bg-profile-social-icons ul li{
+  display: inline;
+  margin: 0 10px;
+}
+
+#bg-profile-social-icons img{
+  display: inline;
+  margin: 0 10px;
+}
+
+
+/* - - - - - - - - - - - - - - - - - - -<STREAMING SITES SECTIONS> - - - - - - - - - - - - - - - */
+
+.streaming-sites-row{
+ /*background-color:rgb(179,187,189); */
+  min-height: 200px;
+  background-color: #DCD9D4; 
+  background-image: linear-gradient(to bottom, rgba(255,255,255,0.50) 0%, rgba(0,0,0,0.50) 100%), radial-gradient(at 50% 0%, rgba(255,255,255,0.10) 0%, rgba(0,0,0,0.50) 50%); 
+  background-blend-mode: soft-light,screen;
+  text-align: center;
+}
+
+.music-heading{
+  text-transform: uppercase; font-family: BebasNeue-Regular; font-size: 72px; color: white; 
+  text-shadow: 2px 2px 2px grey,
+               2px 2px 2px black;
+  letter-spacing: 5px;             
+}
+
+.streaming-sites-icons img{
+  font-size: 20px;
+  height: 80px;
+  width: 180px;
+  margin: 10px 0px;
+  box-shadow: 2.5px 2.5px 2.5px grey,
+              2.5px 2.5px 2.5px black;
+  border-top: 1px solid grey;
+  border-left: 1px solid grey;
+}
+
+/* - - - - - - - - - - - - - - - - - - -</STREAMING SITES SECTIONS> - - - - - - - - - - - - - - - */
+
+
+/*------------------------------------------- MEDIA QUERIES -------------------------------- */
+
+/*---------------------------------------FOR EXTRA SMALL DEVICES -----------------------  */
+@media (max-width: 575px) {
+
+  .bg-images{
+    position: relative;
+  }
+
+  .bg-images img{
+     width:100%;
+     height:280px;
+     max-width:100%;
+     max-height:90%;
+  }
+
+  .bg-images #bg-profile-img img{
+     display: none;
+  }
+
+  #purpose-tour-heading{
+     height:60px; 
+     position: absolute;
+     top: 10px; 
+     left: 25%;
+  }
+
+  #met-logo{
+     position: absolute;
+     top: -11%;
+  }
+
+  #divide-logo{
+    display: none;
+  }
+
+  .bg-images #bg-profile-social-icons{
+    position: absolute;
+  }
+
+
+  .bg-images #bg-profile-social-icons img{
+    height: 22px;
+    width: 22px;
+    display: inline;
+  }
+
+  .bg-images #bg-profile-tourname{
+    position: absolute;
+    left: 2%;
+    font-size: 100px;
+  }
+
+  .common-tour-heading{
+    font-size: 28px;
+    text-align: center !important;
+  }
+
+  .music-heading{
+    text-transform: uppercase; font-family: BebasNeue-Regular; font-size: 50px; color: white; 
+    text-shadow: 2px 2px 2px grey,
+                 2px 2px 2px black;
+    letter-spacing: 5px;             
+  }
+
+  .streaming-sites-icons img{
+    box-shadow: 1.5px 1.5px 1.5px grey,
+              1.5px 1.5px 1.5px black;
+    height: 50px;
+    width: 140px;
+  }   
+
+  #contact-icon{
+   font-size :25px;
+  }
+
+  #contact-no{
+    font-size: 20px;
+  }
+
+  #contact-email{
+    font-size: 20px;
+  }
+}
+
+/* - - --- -- - - - - - - - - - - - -  - - - - - - - - - - - -  - - --------------------------------------- */
+
+/* ------------------------------------ small devices (landscape phones) -------------------------------------- */
+@media (min-width: 576px) {
+
+  .attractive-btn{
+    font-size: 17px;
+   }
+
+    #artistheading{
+    font-size: 50px;
+  }
+
+  .bg-images img{
+    height: 350px;
+    width: 100%;
+  }
+
+  .bg-images #bg-profile-img img{
+     display: none;
+  }
+
+  .common-tour-heading{
+    font-size: 35px;
+    text-align: center !important;
+  }
+
+  #purpose-tour-heading{
+     height:78px; 
+     position: absolute;
+     top: 10px; 
+     left: 29%;
+  }
+
+  #divide-logo{
+    display: none;
+  }
+
+  #met-logo{
+     position: absolute;
+     top: -5%;
+  }
+
+  .bg-images #bg-profile-social-icons img{
+    height: 26px;
+    width: 26px;
+    display: inline;
+  }
+
+  .music-heading{
+    text-transform: uppercase; font-family: BebasNeue-Regular; font-size: 58px; color: white; 
+    text-shadow: 2px 2px 2px grey,
+                 2px 2px 2px black;
+    letter-spacing: 5px;             
+  }
+
+  .streaming-sites-icons img{
+    height: 60px;
+    width: 160px;
+  }    
+
+}
+ /*--------------------------------------------------------------------------------------------------------------------*/
+
+
+ /*------------------------------------------  Medium devices tablets -------------------------------- */
+
+@media (min-width: 768px) {
+
+    .bg-images img{
+      height: 430px;
+      width: 100%;
+    }
+
+    .bg-images #bg-profile-img img{
+       display: block;
+       height:230px; 
+       width:230px;
+    }
+    
+    #purpose-tour-heading{
+       height:90px; 
+       position: absolute;
+       top: 10px; 
+       left: 33%;
+    }
+
+    #divide-logo{
+      display: block;
+      opacity: 0.6;
+      height: 150px;
+      width: 150px;
+      position: relative;
+      right: -40%;
+    }
+
+    #met-logo{
+      height: 180px; 
+      width:55%;
+      position: absolute;
+      top: 1%;
+      left: 22.5%;
+    }
+
+    .common-tour-heading{
+      font-size: 41px;
+    }
+
+    .bg-images #bg-profile-social-icons img{
+      height: 28px;
+      width: 28px;
+      display: inline;
+    }
+
+    .music-heading{
+      text-transform: uppercase; font-family: BebasNeue-Regular; font-size: 65px; color: white; 
+      text-shadow: 2px 2px 2px grey,
+                   2px 2px 2px black;
+      letter-spacing: 5px;             
+    }    
+
+    .streaming-sites-icons img{
+      width: 25%;
+      height: 60px;
+      width: 160px;
+    }    
+}
+
+/* ----------------------------------------------------------------------------------------------------------------- */
+
+/* -------------------------------------- Large devices desktops ----------------------------- */
+
+@media (min-width: 992px) {
+    .bg-images {
+      position: relative;
+    }
+    .bg-images img{
+      /*position: relative;*/
+       width:100%;
+       height:700px;
+       max-width:100%;
+       max-height:90%;
+    }
+
+    .bg-images #bg-profile-img img{
+      position: absolute;
+      bottom : 18px;
+      left: 18px;
+      width: 320px; 
+      height: 320px;
+      border: 3px solid brown;
+      border-radius: 40px; 
+    }
+    
+    #purpose-tour-heading{
+     height:130px; 
+     position: absolute;
+     top: 10px; 
+     left: 40%;
+    }
+    
+    #met-logo{
+      height: 180px; 
+      width:55%;
+      position: absolute;
+      top: 1%;
+      left: 22.5%
+    }
+
+    #divide-logo{
+      height: 200px; 
+      width: 280px;
+      opacity: 1;
+      position: relative;
+      right: -15%;
+    }
+
+    .common-tour-heading{
+      font-size: 52px;
+    }
+
+    .bg-images #bg-profile-social-icons img{
+      height: 40px;
+      width: 40px;
+    }
+
+    .music-heading{
+      text-transform: uppercase; font-family: BebasNeue-Regular; font-size: 72px; color: white; 
+      text-shadow: 2px 2px 2px grey,
+                   2px 2px 2px black;
+      letter-spacing: 5px;             
+    } 
+
+    .streaming-sites-icons img{
+      font-size: 20px;
+      height: 80px;
+      width: 180px;
+      margin: 15px 0px;
+      box-shadow: 2.5px 2.5px 2.5px grey,
+                  2.5px 2.5px 2.5px black;
+      border-top: 1px solid grey;
+      border-left: 1px solid grey;
+    }        
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+/* ---------------------------------- Extra large devices (large desktops) ---------------------------------*/
+
+@media (min-width: 1200px) {
+
+
+}

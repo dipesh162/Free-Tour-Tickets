@@ -1,0 +1,152 @@
+/*------------------------------------------- MEDIA QUERIES -------------------------------- */
+
+/*---------------------------------------FOR EXTRA SMALL DEVICES -----------------------  */
+@media (max-width: 575px) {
+
+  #welcome{
+      margin-bottom: 70%;
+    }
+
+   #welcome-h1{
+    font-size: 45px;
+   }
+
+   #welcome-h3{
+     font-size: 15px;
+   }
+
+   #welcome-btn{
+    font-size: 15px;
+     }                   
+   
+   .attractive-btn{
+    font-size: 15px;
+   }
+
+   .steps{
+      width: 100%;
+    }
+
+  #artistheading{
+    font-size: 40px;
+  }
+
+  .car-img{
+    opacity: 1;
+    height: 450px;
+  }
+
+  #welcome{
+      margin-bottom: 27%;
+      text-align: center;    
+   }
+
+  .attractive-btn{
+    font-size: 13px;
+  }
+
+  .page-bg-login{
+    background-image: none;
+  }
+
+  .page-bg-artworks{
+    background-image: none !important;
+  }
+
+  #no-submissions{
+    font-size: 40px;
+    text-align: center;
+    margin-top: 20px
+  }
+
+  .emoji{
+    height:150px; 
+    display: block;
+    margin: 30px auto;
+   }
+}
+
+/* - - --- -- - - - - - - - - - - - -  - - - - - - - - - - - -  - - --------------------------------------- */
+
+/* ------------------------------------ small devices (landscape phones) -------------------------------------- */
+@media (min-width: 576px) {
+
+.attractive-btn{
+  font-size: 17px;
+ }
+
+  #artistheading{
+  font-size: 50px;
+}
+
+  .car-img{
+    opacity: 1;
+    height: 580px;
+  }
+
+  #welcome{
+      margin-bottom: 25%;
+      text-align: center;    
+}
+
+.emoji{
+    height:200px; 
+    display: block;
+    margin: 50px auto;
+   }
+
+
+
+}
+ /*--------------------------------------------------------------------------------------------------------------------*/
+
+
+ /*------------------------------------------  Medium devices tablets -------------------------------- */
+
+@media (min-width: 768px) {
+
+  .car-img{
+    opacity: 1;
+    height: 620px;
+  }
+
+  #welcome{
+      margin-bottom: 27%;
+      text-align: center;    
+}
+
+ .page-bg{
+    display: block;
+  }
+}
+
+/* ----------------------------------------------------------------------------------------------------------------- */
+
+/* -------------------------------------- Large devices desktops ----------------------------- */
+
+@media (min-width: 992px) {
+
+  .car-img{
+    opacity: 1;
+    height: 830px;
+  }
+
+  #welcome{
+      margin-bottom: 27%;
+      text-align: center;    
+  }
+
+  .page-bg-login{
+    background-repeat: no-repeat; 
+    background-size: cover;
+    height: 100%;
+  }
+
+  .page-bg-artworks{
+    background-repeat: no-repeat; 
+    background-size: cover;
+    height: 100%;
+  }  
+}
+
+/* --------------------------------------------------------------------------------------------- */

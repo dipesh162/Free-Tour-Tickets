@@ -1,0 +1,31 @@
+@font-face {
+  font-family: 'BodoniXT';
+  src: url('BodoniXT.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Engravers Old English Normal';
+  src: url('Engravers Old English Normal.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Porter Bold';
+  src: url('Porter Bold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Didot Regular';
+  src: url('Didot Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Pentagram-Regular';
+  src: url('Pentagram-Regular.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'BebasNeue-Regular';
+  src: url('BebasNeue-Regular.ttf') format('truetype');
+}
+
+
