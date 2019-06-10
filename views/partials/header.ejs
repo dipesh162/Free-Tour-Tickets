@@ -2,7 +2,6 @@
 <html>
 <head>
 	<title>Free Tour Tickets'19</title>
-
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"></link>
 	<link rel="stylesheet" type="text/css" href="/stylesheets/main.css"></link>	
   <link rel="stylesheet" type="text/css" href="/stylesheets/fonts.css"></link>
@@ -16,14 +15,16 @@
 <body>
 
 <nav class="navbar navbar-expand-lg navbar-light nav-color sticky-top">
-<a class="navbar-brand loginbg" href="/"><span>Free Tour Tickets'19</span></a>
-  
+  <a class="navbar-brand loginbg" href="/"><span>Free Tour Tickets'19</span></a>
+
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
   </button>
+
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
     <ul class="navbar-nav ml-auto">
      
+     <% if(!currentUser) { %>
       <li class="nav-item active">
         <a class="nav-link" href="/login"><span>Login <i class="fas fa-sign-in-alt"></i></span><span class="sr-only">(current)</span></a>
       </li>
@@ -31,28 +32,40 @@
       <li class="nav-item active">
         <a class="nav-link" href="/register"><span>Signup <i class="fas fa-user-plus"></i></span></a>
       </li>
-      
      
-
+     <% } else if(currentUser.username === "iamadmin"){ %>
       <li class="nav-item active">
         <a class="nav-link" href="/submissions"><span>Submissions</span></a>
       </li> 
-   
-     <li class="nav-item active">
-        <a class="nav-link" href="/orders"><span>My Orders</span></a>
-      </li>       
- 
 
       <li class="nav-item active">
-        <a class="nav-link" href="/submissions"><span>Submissions</span></a>
-      </li>
+        <a class="nav-link" href="/logout"><span>Logout</span></a>
+      </li>            
 
-       <li class="nav-item active">
-        <a class="nav-link" href="/"><span>Logout</span></a>
-      </li>
+    <% } else { %> 
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <span class="text-white"><%= currentUser.username %></span>
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="/users/<%= currentUser.username %>/orders">My Orders</a>
+          <a class="dropdown-item" href="/users/<%= currentUser._id %>/edit">Edit Profile</a>
+          <form action="/users/<%= currentUser._id %>?_method=DELETE" method="POST">
+            <button class="btn btn-danger"><a class="dropdown-item">Delete My Account</a></button>
+          </form> 
+        </div>
+      </li>  
+ 
+     <li class="nav-item active">
+        <a class="nav-link" href="/logout"><span>Logout</span></a>
+     </li>
+
+    
+    <% } %>
+    
     </ul>
   </div>
 </nav>
 <!-- <div class="mega_container" style="margin: 0; padding: 0;"> -->
 <!-- padding-bottom: 295px;" -->
-
+</div>

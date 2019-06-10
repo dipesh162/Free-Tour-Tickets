@@ -5,7 +5,6 @@ var submissionschema = new mongoose.Schema({
   firstName: String,
   secondName: String,
   email: String,
-  mobileNo: Number,
   sketch: String,
   cover: String,
   comment: String

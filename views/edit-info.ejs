@@ -1,0 +1,22 @@
+<% include partials/header.ejs %>
+
+<h1 class="text-center" style="margin-top:3%">Edit Your Information</h1>
+
+<div style="width: 40%; margin: 40px auto">
+	<form action="/users/<%= user._id %>?_method=PUT" method="POST">
+	    <div class="form-group">
+			<input type="text" class="form-control" name="user[firstName]" placeholder="Edit First Name" value="<%= user.firstName %>">  
+	    </div>			
+		<div class="form-group">
+			<input type="text" class="form-control" name="user[lastName]" placeholder="Edit Last Name" value="<%= user.lastName %>">
+		</div>
+		<div class="form-group">
+			<input type="username" class="form-control" name="user[username]" placeholder="Edit Username" value="<%= user.username %>">
+		</div>
+        <div class="form-group">
+		     <input type="submit" class="btn btn-danger login-register-btn" value="Update Info">
+        </div>		
+	</form>
+</div>
+
+<% include partials/footer.ejs %>

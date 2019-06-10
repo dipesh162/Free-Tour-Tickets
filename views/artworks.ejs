@@ -1,12 +1,11 @@
 <% include partials/header.ejs %>
 
 <div class="page-bg-artworks" style="background-image: url('/<%= event.bgImage %>')">
-	<div class="jumbotron jumbotron-fluid" style="width: 55%; margin: 0 auto; opacity: 0.7; height: 100%;">
 		<div style="width: inherit; margin: 0 auto;">
-			<h1 style="text-align: center; width: 100%; font-family: Billabong; font-weight: 900; margin-left: -30px">Upload your any <%= event.celebName %>'s cover/sketch</h1>
+			<h1 style="color: white; text-align: center; width: 100%; font-family: Billabong; font-weight: 900; margin-left: -30px">Upload your any <%= event.celebName %>'s cover/sketch</h1>
 			<hr style="margin-top: 35px; margin-bottom: 30px;">
-<form action="/greetings/<%= event._id %>" method="POST" name="myform"  onsubmit="return validation()"> <!-- <%= %> -->
-   <div class="form-group"> <!-- enctype="multipart/form-data" boundary="<------- --> 
+<form action="/greetings/<%= event._id %>" method="POST" name="myform" enctype="multipart/form-data" onsubmit="return validation()"> <!-- <%= %> -->
+   <div class="form-group"> <!--  boundary="<------- --> 
 	   <div class="form-row">
 		    <div class="col">
 		      <input type="text" class="form-control" name="firstname" placeholder="First Name">
@@ -17,10 +16,7 @@
         </div>
     </div>			
 	<div class="form-group">
-		<input type="email" class="form-control"  name="email" placeholder="Email">
-	</div>
-	<div class="form-group">
-		<input type="text" class="form-control" name="number" placeholder="Mobile number">
+		<input type="email" class="form-control" name="email" placeholder="Email">
 	</div>
 	<div class="form-group">
 		<input type="hidden" class="form-control" name="tour_index" value="<%= tourIndex %>">
@@ -39,8 +35,7 @@
 	</div>
 </form>
 		</div>
-	</div>
-</div>
+
 
 <script type="text/javascript" id="script" src="../formvalid(artworks).js" data-name="<%= event.celebName %>">
 	

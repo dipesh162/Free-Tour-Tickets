@@ -1,0 +1,222 @@
+/*------------------------------------------- MEDIA QUERIES -------------------------------- */
+
+/*---------------------------------------FOR EXTRA SMALL DEVICES -----------------------  */
+@media (max-width: 575px) {
+
+  #welcome{
+      margin-bottom: 70%;
+    }
+
+   #welcome-h1{
+    font-size: 45px;
+   }
+
+   #welcome-h3{
+     font-size: 15px;
+   }
+
+   #welcome-btn{
+    font-size: 15px;
+     }                   
+   
+   .attractive-btn{
+    font-size: 15px;
+   }
+
+   .steps{
+      width: 100%;
+    }
+
+  #artistheading{
+    font-size: 40px;
+  }
+
+  .car-img{
+    opacity: 1;
+    height: 450px;
+  }
+
+  #welcome{
+      margin-bottom: 27%;
+      text-align: center;    
+   }
+
+  .attractive-btn{
+    font-size: 13px;
+  }
+
+  .page-bg-login{
+    height: 80%;
+  }
+
+  #no-submissions{
+    font-size: 40px;
+    text-align: center;
+    margin-top: 20px
+  }
+
+  .emoji{
+    height:150px; 
+    display: block;
+    margin: 30px auto;
+   }
+   
+  .ftt-heading{
+    margin-top:20%;
+    margin-bottom: 3%;
+  } 
+
+  .hr-reg{
+    border: 0.3px solid white;
+    width: 50%;
+  }  
+
+  .login-reg-form-div{
+    width: 70%;
+  }
+
+  .form-row .first-name{
+    margin-bottom: 15px;
+  }
+}
+
+/* - - --- -- - - - - - - - - - - - -  - - - - - - - - - - - -  - - --------------------------------------- */
+
+/* ------------------------------------ small devices (landscape phones) -------------------------------------- */
+@media (min-width: 576px) {
+
+.attractive-btn{
+  font-size: 17px;
+ }
+
+  #artistheading{
+  font-size: 50px;
+}
+
+  .car-img{
+    opacity: 1;
+    height: 580px;
+  }
+
+  #welcome{
+      margin-bottom: 25%;
+      text-align: center;    
+}
+
+.emoji{
+    height:200px; 
+    display: block;
+    margin: 50px auto;
+   }
+
+  .page-bg-login{
+    height: 85%;
+  }
+ .ftt-heading{
+    margin-top:25%;
+    margin-bottom: 2%;
+  } 
+
+  .hr-reg{
+    border: 0.3px solid white;
+    width: 45%;
+  }  
+
+  .login-reg-form-div{
+    width: 60%;
+  }
+
+  .form-row .first-name{
+      margin-bottom: 15px;
+    }
+}
+ /*--------------------------------------------------------------------------------------------------------------------*/
+
+
+ /*------------------------------------------  Medium devices tablets -------------------------------- */
+
+@media (min-width: 768px) 
+{
+
+  .car-img{
+    opacity: 1;
+    height: 620px;
+  }
+
+  #welcome{
+      margin-bottom: 34%;
+      margin-top: 34;
+      text-align: center;    
+  }
+
+  .ftt-heading{
+    margin-top: 8%;
+  } 
+
+  .hr-reg{
+    border: 0.3px solid white;
+    width: 40%;
+  }  
+
+  .login-reg-form-div{
+    width: 50%;
+  }
+
+  .form-row .first-name{
+    margin-bottom: 0;
+  }
+}
+
+/* ----------------------------------------------------------------------------------------------------------------- */
+
+/* -------------------------------------- Large devices desktops ----------------------------- */
+
+@media (min-width: 992px) {
+
+  .car-img{
+    opacity: 1;
+    height: 900px;
+  }
+
+  #welcome{
+      margin-top: 35%;
+      text-align: center;    
+  }
+
+  .page-bg-login{
+    background-repeat: no-repeat; 
+    background-size: cover;
+    height: 100%;
+  }
+
+
+.ftt-heading{
+  margin-top:3%;
+  margin-bottom: 1%;
+}
+
+.hr-reg{
+  margin:25px auto; 
+  border: 0.3px solid white; 
+  width: 22%;
+}
+
+.login-reg-form-div{
+  width: 30%;
+  margin: 0 auto;
+}
+
+.login-register-btn{
+  display: block;
+  font-family: Billabong; 
+  margin: 0 auto;
+  width: 30%;
+  font-size: 18px;
+}
+
+  .form-row .first-name{
+    margin-bottom: 0;
+  }
+}
+
+/* --------------------------------------------------------------------------------------------- */

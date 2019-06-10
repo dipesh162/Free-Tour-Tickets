@@ -1,16 +1,20 @@
-var mongoose = require("mongoose");
+var mongoose = require("mongoose"),
+    passportLocalMongoose = require("passport-local-mongoose");
+    // beautifyUnique = require('mongoose-beautiful-unique-validation');
 
 var userSchema = new mongoose.Schema({
 	firstName:String,
 	lastName:String,
-	userName:String,
+	username:String,
 	password:String,
 	events: {
-	        type: mongoose.Schema.ObjectId,
-	        ref: "Events"
+	        type: mongoose.Schema.Types.ObjectId
 		    },
     tourIndex: String
 });
+
+userSchema.plugin(passportLocalMongoose);
+// userSchema.plugin(beautifyUnique);
 
 var User = mongoose.model("Users", userSchema);
 module.exports  = User;

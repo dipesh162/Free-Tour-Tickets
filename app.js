@@ -1,44 +1,61 @@
-var express       =  require("express"),
-    app           =  express(),
-    mongoose      =  require("mongoose"),
-    multer        =  require("multer"),
-    bodyParser    =  require("body-parser"),
-    passport      =  require("passport"),
-    localStrategy =  require('passport-local').Strategy,
-    bcrypt        =  require("bcrypt"),
-    Celebrity     =  require("./models/celebrity"),
-    Order         =  require("./models/order"),
-    Upload        =  require("./models/upload"),
-    Event         =  require("./models/event"), 
-    User          =  require("./models/user"),
-    Submission    =  require("./models/submission"),
-    path          =  require("path");
+var express               =  require("express"),
+    app                   =  express(),
+    methodOverride        =  require("method-override"),
+    mongoose              =  require("mongoose"),
+    multer                =  require("multer"),
+    bodyParser            =  require("body-parser"),
+    expressSession        =  require("express-session"),
+    passport              =  require("passport"),
+    LocalStrategy         =  require('passport-local'),
+    passportLocalMongoose =  require("passport-local-mongoose"),
+    bcrypt                =  require("bcrypt"),
+    Celebrity             =  require("./models/celebrity"),
+    Order                 =  require("./models/order"),
+    Upload                =  require("./models/upload"),
+    Event                 =  require("./models/event"), 
+    User                  =  require("./models/user"),
+    Submission            =  require("./models/submission"),
+    path                  =  require("path");
 
 mongoose.connect("mongodb://localhost/ftt4", {useNewUrlParser: true});
 
-// Storage engine for multer for sketches//
-// var storagesketch = multer.diskStorage({
-//    destination: function(req,file,cb){
-//         cb(null,"./uploads/sketches")
-//    },
-//    filename: function(req,file,cb){             // cb is callback// 
-//         cb(null,file.fieldname + '-' + Date.now() + path.extname(file.originalname));   // extname is extension name // 
-//    }
-// });
+// --------------------------------------------  <APP USES> --------------------------------------------------//
 
-// Upload.create("")
+app.use(bodyParser.urlencoded({extended:true}));
+app.use(bodyParser.json());
+app.use(require('express-session')({
+  secret: 'very secret words',
+  resave: false,
+  saveUninitialized: false
+}));
+app.use(expressSession({
+    secret: "Tommy is the best",
+    resave: false,
+    saveUninitialized: false
+}));
+app.use(express.static(__dirname + "/public"));
+app.set("view engine" , "ejs");
+app.use(methodOverride("_method"));
 
-// var storage = multer.diskStorage({
-//    destination: function(req,file,cb){
-//         cb(null,"./public/uploads");
-//    },
-//    filename: function(req,file,cb){             // cb is callback// 
-//         cb(null,file.fieldname + '-' + Date.now() + path.extname(file.originalname));   // extname is extension name // 
-//    }
-// });
+// --------------------------------------------  </APP USES> --------------------------------------------------//
 
 
-// Set Storage Enging for multer
+// -----------------------------------------  <PASSPORT SETUP> ----------------------------------------------- //
+
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser()); //(encoding) responsible for reading the session,taking data from that session and give back to session
+passport.deserializeUser(User.deserializeUser()); //(unencoding) and again serealizing for
+app.use(function(req, res, next){
+  res.locals.currentUser = req.user;
+  next();
+})
+// -----------------------------------------  </PASSPORT SETUP> ----------------------------------------------- //
+ 
+
+// ======================================= Set Storage Enging for multer ======================================= //
+
 var storage = multer.diskStorage({
   destination:"./public/uploads",
   filename: function(req,file,cb){
@@ -52,22 +69,13 @@ var upload = multer({storage: storage}).fields([
    {name: "cover"}
   ]);
 
-//Initial Upload variable
-// var upload = multer({
-//   storage: storage,
-//   limits:{fileSize: 5000000},
-//   fileFilter: function(req, file, cb){
-//     checkFileType(file,cb);
-//   }
-// }).single('sketch');
-
 // Check file type
 function checkFileType(file,cb){
   var filetypes = /jpeg|jpg|png|gif/;
   var extname  =  filetypes.test(path.extname(file.originalname).toLowerCase());
 
   // check mime 
-  var mimetype =  filetypes.test(file.mimetype);
+  var mimetype = filetypes.test(file.mimetype);
 
   if(mimetype && extname){
     return cb(null,true);
@@ -77,51 +85,33 @@ function checkFileType(file,cb){
   }
 }
 
-
-// var uploadCover = multer({
-//   storage: coverStorage
-// }).single('cover');
+// ========================================== </MULTER SETUP DONE> ========================================//
 
 
-app.use(bodyParser.urlencoded({extended:true}));
-app.use(bodyParser.json());
-app.set("view engine" , "ejs");
-app.use(express.static(__dirname + "/public"));
+// Authentication Middleware //
 
+    function isLoggedIn(req, res, next)
+    {
+      if(req.isAuthenticated()){
+        return next();
+      }
+       res.redirect("/login");
+    }
 
+// ================================================== ROUTES ================================================================//
 
 app.get("/", function(req,res){
 	res.render("home");
 });
 
-app.post('/login',
- passport.authenticate('local', { successRedirect: '/', failureRedirect: '/login', failureFlash: true }));
 
-app.post("/", function(req,res){
-  var username = req.body.username;
-  var pass     = req.body.password;
+app.post('/login', 
+  passport.authenticate('local', 
+    { successRedirect: '/grids', 
+      failureRedirect: '/login'
+    }), function(req,res){
+  });
 
-  User.findOne({userName: username},function(err, user){
-    if(err){
-      console.log(err);
-      res.render("/login", {layout:false, locals:{ error:err } });
-    }
-
-    if(user.userName !== req.body.username || user.password!== req.body.password)
-    {
-      console.log("login failed");
-      res.redirect("/login");
-      console.log(user);
-    }
-
-    else
-    {
-      res.redirect("/");
-      console.log(user);
-    }
-  })
-  
-});
 
 app.get("/grids", function(req,res)
 {
@@ -136,50 +126,38 @@ app.get("/grids", function(req,res)
   });
 });
 
-app.post("/grids", function(req,res)
-{
-    User.findOne({userName: req.body.email}, function(err, user)
-      {
-      if(err)
-        {
-          console.log(err);
-        }
-      
-      if(user){
-        res.redirect("/register");
-      }
 
-      else
-      {
-          bcrypt.hash(req.body.password, 10, function(err,hashedpass)
+app.post("/register", function(req,res)
+{ 
+    User.register(new User({username: req.body.username}), req.body.password, function(err,user)
+    {
+      if(err)
+       {
+        console.log(err);
+        return res.render('register');
+       }
+
+        passport.authenticate("local")(req, res, function()
+        { 
+          res.redirect("/");
+          console.log(user._id);
+
+          User.findOne({username: req.body.username}, function(err,updateUser)
           {
               if(err)
                 {
-                 console.log(err);
+                  console.log(err); 
                 }
               else
                 {
-                  var fname    = req.body.firstname,
-                      sname    = req.body.secondname,
-                      email    = req.body.email,
-                      mobileno = req.body.mobile,
-                      pass     = hashedpass,
-                      newUser  = {firstName: fname,lastName: sname,userName: email,password: pass}; 
-                      User.create(newUser, function(err,NewCreatedUser)
-                      {
-                        if(err){
-                          console.log(err);
-                              }
-                        else{
-                          res.redirect("/grids" , {user: NewCreatedUser});
-                              console.log(NewCreatedUser);
-                            } 
-                      });                   
-                 }
-            });
-      }
-      })
- })  
+                  updateUser.firstName = req.body.firstname;
+                  updateUser.lastName = req.body.lastname;
+                  updateUser.save();
+                }
+          });
+        });      
+    });
+});  
 
 
 app.get("/events/:id", function(req,res)
@@ -215,7 +193,7 @@ app.get("/register", function(req,res)
 //   res.render("register", id);
 // });
 
-app.get("/artworks/:id/:tourIndex", function(req,res)
+app.get("/artworks/:id/:tourIndex", isLoggedIn, function(req,res)
 {
   //if(isLogin() == false){
     // redirect to /register/id
@@ -232,7 +210,7 @@ app.get("/artworks/:id/:tourIndex", function(req,res)
   });
 });
 
-app.post("/greetings/:id" ,function(req,res)
+app.post("/greetings/:id", isLoggedIn, function(req,res)
 {
     var firstname     = req.body.firstname;
     var secondname    = req.body.secondname;  
@@ -266,6 +244,8 @@ app.post("/greetings/:id" ,function(req,res)
         }
         else{
           console.log(req.files);
+          console.log(req.body.sketch);
+          console.log(req.body.cover);
           // console.log(req.files.sketch); 
           // console.log(req.files.cover);
 
@@ -296,7 +276,7 @@ app.post("/greetings/:id" ,function(req,res)
     });
 });
 
-app.get("/submissions", function(req,res)
+app.get("/submissions", isLoggedIn, function(req,res)
 {
 	Submission.find({}, function(err,submissions)
     {
@@ -311,7 +291,7 @@ app.get("/submissions", function(req,res)
 });
 
 
-app.get("/orders", function(req,res){
+app.get("/orders", isLoggedIn, function(req,res){
 
 //   var orders = Order.find({userId: loggedInUser._id});
 // orders[
@@ -350,15 +330,80 @@ app.get("/orders", function(req,res){
         if(err){ console.log(err); }
         else{
           console.log(events);
-   res.render("orders", {event: events});
-          
+         res.render("orders", {event: events});
+
         }
       })
-    
-    // })s
     }
   })
 });
+
+app.get("/users/:id" ,function(req,res){
+  res.render("home");
+});
+
+app.get("/users/:id/orders", function(req, res){
+  User.findById(user._id, function(err, foundUser){
+    if(err)
+      { 
+        console.log(err);
+      }
+    else
+      {
+      
+      }
+  })
+});
+
+app.get("/users/:id/edit", function(req, res){
+  User.findById(req.params.id,function(err, foundUser)
+  {
+    if(err)
+    {
+      console.log(err);
+    }
+    else
+    {
+    res.render("edit-info" , {user: foundUser});
+    }
+  });
+});
+
+app.put("/users/:id", function(req, res)
+{
+  User.findByIdAndUpdate(req.params.id, req.body.user, function(err, updatedUser)
+  {
+    if(err)
+    {
+      console.log(err);
+      console.log("error occured while updating user's information");
+      res.redirect("/users/" + req.params.id + "/edit");
+    }
+    else
+    {
+    res.redirect("/users/" + req.params.id);
+    res.render("home");
+    }
+  });
+});
+
+app.delete("/users/:id", function(req,res){
+   User.findByIdAndRemove(req.params.id, function(err,destroyedUser)
+   {
+    if(err){
+      res.redirect("/users/" + req.params.id)
+    }
+    else{
+      res.redirect("/logout");
+    }
+   })
+})
+
+app.get('/logout', function(req, res){
+  req.logout();
+  res.redirect('/');
+});
+
 
 app.listen(3333, "127.0.0.1" , function(){
 	console.log("Free tour tickets server has started");

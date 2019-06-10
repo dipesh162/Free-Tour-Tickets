@@ -19,7 +19,6 @@
           <th scope="col">#</th>  
           <th scope="col">Name</th>
           <th scope="col">Email</th>
-          <th scope="col">Mobile-no.</th>
           <th scope="col">Sketch</th>
           <th scope="col">Cover</th>
           <th scope="col">Comment</th>      
@@ -32,9 +31,8 @@
             <tr>  
               <% i = i+1 %>
               <th scope="row"><%= i %></th>
-              <td><%= sub.firstName %></td>
+              <td><%= sub.firstName + ' ' + sub.secondName%></td>
               <td><%= sub.email %></td>
-              <td><%= sub.mobileNo %></td>
               <td><img src="<%= sub.sketch %>"></td>
               <td><%= sub.cover %></td>
               <td><%= sub.comment %></td>
