@@ -17,7 +17,7 @@ var express               =  require("express"),
     Submission            =  require("./models/submission"),
     path                  =  require("path");
 
-mongoose.connect("mongodb://localhost/ftt4", {useNewUrlParser: true});
+mongoose.connect("mongodb://localhost/ftt4git", {useNewUrlParser: true});
 
 // --------------------------------------------  <APP USES> --------------------------------------------------//
 
@@ -105,17 +105,32 @@ app.get("/", function(req,res){
 });
 
 
-app.post('/login', 
-  passport.authenticate('local', 
-    { successRedirect: '/grids', 
-      failureRedirect: '/login'
-    }), function(req,res){
-  });
+// app.post('/login', function(req,res){
+//   passport.authenticate('local', 
+//     { successRedirect: '/users/' + req.body.username, 
+//       failureRedirect: '/login'
+//     }), function(req,res){
+//   }});
+app.post('/login', function(req, res, next) {
+  passport.authenticate('local', function(err, user, info) {
+    if (err) { return next(err); }
+    // Redirect if it fails
+    if (!user) { return res.redirect('/login'); }
+    req.logIn(user, function(err) {
+      if (err) { return next(err); }
+      // Redirect if it succeeds
+      return res.redirect('/users/' + user.username);
+    });
+  })(req, res, next);
+});
 
+
+app.get("/users/:id", function(req,res){
+    res.render("home");
+  })
 
 app.get("/grids", function(req,res)
 {
-  console.log(req.user);
   Celebrity.find({} , function(err, allcelebs){
   	if(err){
   		console.log(err);
@@ -338,53 +353,56 @@ app.get("/orders", isLoggedIn, function(req,res){
   })
 });
 
-app.get("/users/:id" ,function(req,res){
-  res.render("home");
-});
+// app.get("/users/:id" , isLoggedIn, function(req,res){
+//   res.redirect("/");
+// });
 
 app.get("/users/:id/orders", function(req, res){
-  User.findById(user._id, function(err, foundUser){
+  res.send("no orders yet");
+});
+
+app.get("/users/:id/edit", function(req, res){
+  console.log(req.user);
+  User.findById(req.user._id, function(err, foundUser){
     if(err)
       { 
         console.log(err);
       }
     else
       {
-      
+       res.render("edit-info", {user: foundUser});
       }
   })
 });
 
-app.get("/users/:id/edit", function(req, res){
-  User.findById(req.params.id,function(err, foundUser)
-  {
-    if(err)
-    {
-      console.log(err);
-    }
-    else
-    {
-    res.render("edit-info" , {user: foundUser});
-    }
-  });
-});
 
 app.put("/users/:id", function(req, res)
 {
-  User.findByIdAndUpdate(req.params.id, req.body.user, function(err, updatedUser)
-  {
-    if(err)
-    {
-      console.log(err);
-      console.log("error occured while updating user's information");
-      res.redirect("/users/" + req.params.id + "/edit");
-    }
-    else
-    {
-    res.redirect("/users/" + req.params.id);
-    res.render("home");
-    }
-  });
+  console.log(req.body.user.username);
+    User.findByIdAndUpdate(req.user._id, req.body.user, function(err,user){
+      if(err){
+        console.log(err);
+      }
+      else{
+      user.save();
+      res.redirect("/users/" + req.body.user.username);
+      }
+    })
+ 
+  // User.findOne(req.params.id, req.body.user, function(err, updatedUser)
+  // {
+  //   if(err)
+  //   {
+  //     console.log(err);
+  //     console.log("error occured while updating user's information");
+  //     res.redirect("/users/" + req.body.user.username + "/edit");
+  //   }
+  //   else
+  //   {
+  //   res.redirect("/users/" + req.body.user.username);
+  //   res.render("home");
+  //   }
+  // });
 });
 
 app.delete("/users/:id", function(req,res){

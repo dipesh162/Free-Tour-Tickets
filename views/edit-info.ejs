@@ -3,7 +3,7 @@
 <h1 class="text-center" style="margin-top:3%">Edit Your Information</h1>
 
 <div style="width: 40%; margin: 40px auto">
-	<form action="/users/<%= user._id %>?_method=PUT" method="POST">
+	<form action="/users/:id?_method=PUT" method="POST">
 	    <div class="form-group">
 			<input type="text" class="form-control" name="user[firstName]" placeholder="Edit First Name" value="<%= user.firstName %>">  
 	    </div>			
@@ -19,4 +19,5 @@
 	</form>
 </div>
 
-<% include partials/footer.ejs %>
+<div style="height: 60%"></div>
+<% include partials/footer2.ejs %>

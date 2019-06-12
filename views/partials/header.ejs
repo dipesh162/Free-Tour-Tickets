@@ -49,7 +49,7 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
           <a class="dropdown-item" href="/users/<%= currentUser.username %>/orders">My Orders</a>
-          <a class="dropdown-item" href="/users/<%= currentUser._id %>/edit">Edit Profile</a>
+          <a class="dropdown-item" href="/users/<%= currentUser.username %>/edit">Edit Profile</a>
           <form action="/users/<%= currentUser._id %>?_method=DELETE" method="POST">
             <button class="btn btn-danger"><a class="dropdown-item">Delete My Account</a></button>
           </form> 
