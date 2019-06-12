@@ -223,16 +223,19 @@ app.get("/artworks/:id/:tourIndex", isLoggedIn, function(req,res)
 });
 
 app.post("/greetings/:id", isLoggedIn, function(req,res)
-{
-    var firstname     = req.body.firstname;
-    var secondname    = req.body.secondname;  
-    var email         = req.body.email;
-    var number        = req.body.number;
-    var sketch        = req.body.sketch;
-    var cover         = req.body.cover;
-    var comment       = req.body.comment;
-    var tour_index    = req.body.tour_index;
-    var newSubmission = {firstName: firstname, secondName: secondname, email:email, mobileNo: number, sketch: sketch, cover: cover, comment:comment};
+{  
+    var loggedInUser  = req.user,
+        userId        = loggedInUser._id,
+
+        firstname     = req.body.firstname;
+        secondname    = req.body.secondname;  
+        email         = req.body.email;
+        number        = req.body.number;
+        sketch        = req.body.sketch;
+        cover         = req.body.cover;
+        comment       = req.body.comment;
+        tour_index    = req.body.tour_index;
+        newSubmission = {firstName: firstname, secondName: secondname, email:email, mobileNo: number, sketch: sketch, cover: cover, comment:comment};
     
     Submission.create(newSubmission, function(err, newSubmission)
     {
@@ -267,8 +270,8 @@ app.post("/greetings/:id", isLoggedIn, function(req,res)
         }
     }); 
     
-    Order.create({userId:mongoose.Types.ObjectId(req.params.id), eventId:mongoose.Types.ObjectId(req.params.id), tourIndex:tour_index }, function(err,order){
-      if(err){console.log(err)}
+    Order.create({userId:userId, eventId:req.params.id, tourIndex:req.body.tour_index }, function(err,order){
+      if(err){console.log(err); }
         else{
         console.log(order);
         }
@@ -343,7 +346,6 @@ app.get("/orders", isLoggedIn, function(req,res){
         else{
           console.log(events);
          res.render("orders", {event: events});
-
         }
       })
     }
@@ -354,8 +356,63 @@ app.get("/orders", isLoggedIn, function(req,res){
 //   res.redirect("/");
 // });
 
-app.get("/users/:id/orders", function(req, res){
-  res.send("no orders yet");
+app.get("/users/:id/orders", function(req, res)
+{
+  // Order.find({userid:req.user._id})
+  var founduser = req.user;
+  Order.find({userId: founduser._id}, function(err,foundOrders)
+  {
+    if(err){
+      console.log(err);
+    }
+    else{
+       var finalOrders = [];
+
+        var userOrders = foundOrders;
+        // console.log(userOrders);
+        
+        userOrders.forEach(function(order){
+          var event = Event.findOne({_id:order.eventId});
+          event["tourIndex"] = order.tourIndex;
+          finalOrders.push(event);
+        })
+~
+        // console.log(finalOrders);
+        res.render("orders", {orders: finalOrders});
+        // var firsteventId = foundOrders[0].eventId;
+        
+        // Event.findById(firsteventId, function(err,firstevent)
+        // {
+        //   if(err){ console.log(err); }
+        //   else{
+        //   res.render("orders", {order1: foundOrders[0], order2:foundOrders[1], event:event});
+        //   }
+        // }
+      }
+  })
+//   var orders = Order.find({userId: loggedInUser._id});
+// orders[
+//   {userId: 1234, eventId: abc, tourIndex: 3},
+//   {userId: 1234, eventId: bcd, tourIndex: 0}
+// ]
+
+
+  // events[
+  //   { _id: abc, name: dipesh, bg_Image: DIP.jpg, tourCity ... },
+  //   { _id: bcd, name: shubh, bg_Image: SHU.jpg, tourCity ... }
+  // ];
+  // var finalOrders = [];
+  // orders.forEach(function(order){
+
+      // event = Event.findOne({_id: order.eventId});
+  //   { _id: abc, name: dipesh, bg_Image: DIP.jpg, tourCity ... },
+
+      // event["tourIndex"] = order.tourIndex;
+  //   { _id: abc, name: dipesh, bg_Image: DIP.jpg, tourCity ..., tourIndex: 3 },
+
+      // finalOrders.push(event);
+  // })
+
 });
 
 app.get("/users/:id/edit", function(req, res){
@@ -403,7 +460,7 @@ app.put("/users/:id", function(req, res)
 });
 
 app.delete("/users/:id", function(req,res){
-   User.findByIdAndRemove(req.params.id, function(err,destroyedUser)
+   User.findByIdAndRemove(req.params.id, function(err,deletedUser)
    {
     if(err){
       res.redirect("/users/" + req.params.id)
