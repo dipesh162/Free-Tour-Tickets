@@ -151,12 +151,8 @@ app.post("/register", function(req,res)
         console.log(err);
         return res.render('register');
        }
-
         passport.authenticate("local")(req, res, function()
         { 
-          res.redirect("/");
-          console.log(user._id);
-
           User.findOne({username: req.body.username}, function(err,updateUser)
           {
               if(err)
@@ -170,6 +166,7 @@ app.post("/register", function(req,res)
                   updateUser.save();
                 }
           });
+          return res.redirect('/users/' + user.username);
         });      
     });
 });  
