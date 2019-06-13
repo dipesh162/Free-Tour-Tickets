@@ -3,14 +3,15 @@ var mongoose = require("mongoose"),
     // beautifyUnique = require('mongoose-beautiful-unique-validation');
 
 var userSchema = new mongoose.Schema({
-	firstName:String,
-	lastName:String,
-	username:String,
-	password:String,
+	firstName:{type: String,},
+	lastName:{type: String},
+	username:{type: String, unique:true},
+	email:{type: String, unique:true},
+	password:{type: String},
 	events: {
 	        type: mongoose.Schema.Types.ObjectId
 		    },
-    tourIndex: String
+    tourIndex: Number
 });
 
 userSchema.plugin(passportLocalMongoose);

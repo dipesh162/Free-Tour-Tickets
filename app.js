@@ -162,7 +162,8 @@ app.post("/register", function(req,res)
               else
                 {
                   updateUser.firstName = req.body.firstname;
-                  updateUser.lastName = req.body.lastname;
+                  updateUser.lastName  = req.body.lastname;
+                  updateUser.email     = req.body.email;
                   updateUser.save();
                 }
           });
@@ -180,10 +181,8 @@ app.get("/events/:id", function(req,res)
       	console.log(err);
         }
 
-      else{
-            console.log(req.params.id);      
+      else{     
             var getCeleb = allcelebs.celebName;
-            console.log(allcelebs._id);
             Event.findOne({celebName:getCeleb}, function(err,events)
             {
               res.render("newevent", {event:events, celeb:allcelebs});
@@ -258,13 +257,15 @@ app.post("/greetings/:id", isLoggedIn, function(req,res)
           console.log("Multer error occured when uploading image(sketch)");
         }
         else{
-          console.log(req.files);
-          console.log(req.body.sketch);
-          console.log(req.body.cover);
+          var sketch = req.files.sketch;
+          console.log(sketch[0]);
+          // console.log(req.files);
+          // console.log(req.body.sketch);
+          // console.log(req.body.cover);
           // console.log(req.files.sketch); 
           // console.log(req.files.cover);
 
-          // console.log(req.files[0]);
+          // console.log(req.files[c0]);
           // console.log(req.files[1]);
           // Upload.create({sketch:req.files.path}, function(err,up){console.log(up);});
         }
@@ -366,19 +367,43 @@ app.get("/users/:id/orders", function(req, res)
       console.log(err);
     }
     else{
-       var finalOrders = [];
-
         var userOrders = foundOrders;
         // console.log(userOrders);
-        
-        userOrders.forEach(function(order){
-          var event = Event.findOne({_id:order.eventId});
-          event["tourIndex"] = order.tourIndex;
-          finalOrders.push(event);
+        userOrders.forEach(function(order)
+        {
+        var finalOrders = [];
+
+          // var index = order.tourIndex;
+          // console.log(index);
+          eventId = order.eventId;
+          Event.findById(eventId, function(err,event){
+            var index = order.tourIndex;
+            //  console.log(event);  
+            finalOrders.push(event); 
+            finalOrders.push(index);     
+            // console.log(finalOrders);            
+          })
         })
-~
+        res.render("orders", {orders:finalOrders});
+      }
+    })
+  })
+        // console.log(userOrders);
+        
+        // userOrders.forEach(function(order){
+        //   var ee = order.EventId
+        //   console.log(ee);
+          // Event.findOne({_id:order.eventId}, function(err,event){
+          //   var event = event;
+          // });
+          // event.tourIndex = order.tourIndex;
+          // event.save();
+          // finalOrders.push(event);
+        // })
+~   
+    // });
         // console.log(finalOrders);
-        res.render("orders", {orders: finalOrders});
+        // res.render("orders", {orders: finalOrders});
         // var firsteventId = foundOrders[0].eventId;
         
         // Event.findById(firsteventId, function(err,firstevent)
@@ -388,8 +413,8 @@ app.get("/users/:id/orders", function(req, res)
         //   res.render("orders", {order1: foundOrders[0], order2:foundOrders[1], event:event});
         //   }
         // }
-      }
-  })
+      // }
+  
 //   var orders = Order.find({userId: loggedInUser._id});
 // orders[
 //   {userId: 1234, eventId: abc, tourIndex: 3},
@@ -413,7 +438,7 @@ app.get("/users/:id/orders", function(req, res)
       // finalOrders.push(event);
   // })
 
-});
+
 
 app.get("/users/:id/edit", function(req, res){
   console.log(req.user);
