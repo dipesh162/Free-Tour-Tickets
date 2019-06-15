@@ -11,7 +11,8 @@ var userSchema = new mongoose.Schema({
 	events: {
 	        type: mongoose.Schema.Types.ObjectId
 		    },
-    tourIndex: Number
+	tourIndex: Number,
+	uploads: { type: mongoose.Schema.Types.ObjectId }
 });
 
 userSchema.plugin(passportLocalMongoose);

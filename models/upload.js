@@ -2,7 +2,10 @@ var mongoose = require("mongoose");
 
 var uploadSchema = new mongoose.Schema({
 	sketch:String,
-	cover:String
+	cover:String,
+	ownerId:{
+		type: mongoose.Schema.Types.ObjectId,
+	}
 });
 
 var Upload = mongoose.model("Upload", uploadSchema);

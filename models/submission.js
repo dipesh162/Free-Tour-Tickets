@@ -2,12 +2,12 @@ var express = require("express");
 var mongoose = require("mongoose");
 
 var submissionschema = new mongoose.Schema({
-  firstName: String,
-  secondName: String,
-  email: String,
-  sketch: String,
-  cover: String,
-  comment: String
+  events :{ 
+             type: mongoose.Schema.Types.ObjectId 
+          },
+  uploads: {
+             type: mongoose.Schema.Types.ObjectId 
+          }       
 });
 
 var Submission = mongoose.model("Submission", submissionschema);

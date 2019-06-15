@@ -8,7 +8,11 @@ var eventSchema = new mongoose.Schema({
     tourDates:   [{type: String}],
     tourCity:    [{type: String}],
     tourCountry: [{type: String}], 
-    tourVenue:   [{type: String}]
+    tourVenue:   [{type: String}],
+    uploads: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Upload"
+    }]
 });
 
 var Event = mongoose.model("Event", eventSchema);

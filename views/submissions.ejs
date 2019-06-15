@@ -13,34 +13,24 @@
 
 
 <% if(submission.length !== 0){ %> 
-  <table class="table">
-      <thead>
-        <tr>
-          <th scope="col">#</th>  
-          <th scope="col">Name</th>
-          <th scope="col">Email</th>
-          <th scope="col">Sketch</th>
-          <th scope="col">Cover</th>
-          <th scope="col">Comment</th>      
-        </tr>
-      </thead>
 
-      <tbody>
-          <% var i=0  %>
-          <% submission.forEach(function(sub){ %>
-            <tr>  
-              <% i = i+1 %>
-              <th scope="row"><%= i %></th>
-              <td><%= sub.firstName + ' ' + sub.secondName%></td>
-              <td><%= sub.email %></td>
-              <td><img src="<%= sub.sketch %>"></td>
-              <td><%= sub.cover %></td>
-              <td><%= sub.comment %></td>
-            </tr> 
-          <% }) %>
-      </tbody>     
-  </table>
+  <% submission.forEach(function(sub){ %>
+      <% if(sub.uploads.length!== 0) { %>
+          <img src="/<%= sub.bgImage %>" alt="">
+
+            <% for(var i=0; i< sub.uploads.length; i++){ %>
+              <h1>Sketches:</h1>
+              <img src="/<%= sub.uploads.sketch %>" alt="">
+              <h1>Videos:</h1>
+              <video width="500" height="500" controls>
+                <source src="/<%= sub.uploads.cover %>" type="video/mp4">
+              </video>
+            <% } %>  
+      <% } %>
+   <% }) %>
+
   <div style="height: 500px;"></div>
+
 <% } %>
 
 

@@ -7,7 +7,11 @@ var orderSchema = new mongoose.Schema({
 	eventId: {
 			    type: mongoose.Schema.Types.ObjectId,
 			  },
-	tourIndex: Number
+	tourIndex: Number,
+	uploads: {
+			   type: mongoose.Schema.Types.ObjectId,
+			   ref:"Upload"
+	         }
 });
 
 var Order = mongoose.model("Order", orderSchema);

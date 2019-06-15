@@ -4,38 +4,19 @@
 		<div style="width: inherit; margin: 0 auto;">
 			<h1 style="color: white; text-align: center; width: 100%; font-family: Billabong; font-weight: 900; margin-left: -30px">Upload your any <%= event.celebName %>'s cover/sketch</h1>
 			<hr style="margin-top: 35px; margin-bottom: 30px;">
-<form action="/greetings/<%= event._id %>" method="POST" name="myform" enctype="multipart/form-data" onsubmit="return validation()"> <!-- <%= %> -->
-   <div class="form-group"> <!-- boundary="<------- --> 
-	   <div class="form-row">
-		    <div class="col">
-		      <input type="text" class="form-control" name="firstname" placeholder="First Name">
-		    </div>
-		    <div class="col">
-		      <input type="text" class="form-control" name="secondname" placeholder="Last Name">
-		    </div>
-        </div>
-    </div>			
-	<div class="form-group">
-		<input type="email" class="form-control" name="email" placeholder="Email">
-	</div>
-	<div class="form-group">
-		<input type="hidden" class="form-control" name="tour_index" value="<%= tourIndex %>">
-	</div>
-	<div class="form-group">
-		<input type="file" class="form-control-file" accept="image/*" name="sketch" placeholder="Sketch">
-	</div>
-	<div class="form-group">
-		<input type="file" class="form-control-file" accept="video/*" name="cover" placeholder="Cover">
-	</div>
-	<div class="form-group">
-		<textarea class="form-control" rows="5" style="max-width: 600px;" name="comment" placeholder="Add your Comment(Optional)"></textarea>
-	</div>
-	<div class="form-group">
-		<input type="submit" value="Submit">
-	</div>
-</form>
+			<form action="/greetings/<%= event._id %>/<%= tourIndex %>" method="POST" name="myform" enctype="multipart/form-data" onsubmit="return validation()"> <!-- <%= %> -->			
+				<div class="form-group">
+					<input type="file" class="form-control-file" accept="image/*" name="sketch" placeholder="Sketch">
+				</div>
+				<div class="form-group">
+					<input type="file" class="form-control-file" accept="video/*" name="cover" placeholder="Cover">
+				</div>
+				<div class="form-group">
+					<input type="submit" value="Submit">
+				</div>
+			</form>
 		</div>
-
+</div>
 
 <script type="text/javascript" id="script" src="../formvalid(artworks).js" data-name="<%= event.celebName %>">
 	

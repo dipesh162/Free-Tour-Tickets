@@ -59,7 +59,7 @@ app.use(function(req, res, next){
 var storage = multer.diskStorage({
   destination:"./public/uploads",
   filename: function(req,file,cb){
-    cb(null,file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+    cb(null,file.fieldname + '-' + Date.now() + '-' + file.originalname);
   }
 });
 
@@ -104,13 +104,6 @@ app.get("/", function(req,res){
 	res.render("home");
 });
 
-
-// app.post('/login', function(req,res){
-//   passport.authenticate('local', 
-//     { successRedirect: '/users/' + req.body.username, 
-//       failureRedirect: '/login'
-//     }), function(req,res){
-//   }});
 app.post('/login', function(req, res, next) {
   passport.authenticate('local', function(err, user, info) {
     if (err) { return next(err); }
@@ -204,11 +197,9 @@ app.get("/register", function(req,res)
 //   res.render("register", id);
 // });
 
-app.get("/artworks/:id/:tourIndex", isLoggedIn, function(req,res)
+app.get("/artworks/:id/:tourIndex",  isLoggedIn, function(req,res)
 {
-  //if(isLogin() == false){
-    // redirect to /register/id
-  //} 
+  
   Event.findById(req.params.id,function(err, events){
     if(err)
     {
@@ -221,33 +212,9 @@ app.get("/artworks/:id/:tourIndex", isLoggedIn, function(req,res)
   });
 });
 
-app.post("/greetings/:id", isLoggedIn, function(req,res)
+app.post("/greetings/:id/:tourIndex",  isLoggedIn, function(req,res)
 {  
-    var loggedInUser  = req.user,
-        userId        = loggedInUser._id,
-
-        firstname     = req.body.firstname;
-        secondname    = req.body.secondname;  
-        email         = req.body.email;
-        number        = req.body.number;
-        sketch        = req.body.sketch;
-        cover         = req.body.cover;
-        comment       = req.body.comment;
-        tour_index    = req.body.tour_index;
-        newSubmission = {firstName: firstname, secondName: secondname, email:email, mobileNo: number, sketch: sketch, cover: cover, comment:comment};
-    
-    Submission.create(newSubmission, function(err, newSubmission)
-    {
-      if(err){
-        console.log(err);
-      }
-      else{
-        console.log("New Submission is created");
-        console.log(newSubmission);
-      }
-    }
-
-    );
+   var tour_index    = req.params.tourIndex;
 
 
     upload(req,res,function(err)
@@ -257,54 +224,99 @@ app.post("/greetings/:id", isLoggedIn, function(req,res)
           console.log("Multer error occured when uploading image(sketch)");
         }
         else{
-          var sketch = req.files.sketch;
-          console.log(sketch[0]);
-          // console.log(req.files);
-          // console.log(req.body.sketch);
-          // console.log(req.body.cover);
-          // console.log(req.files.sketch); 
-          // console.log(req.files.cover);
-
-          // console.log(req.files[c0]);
-          // console.log(req.files[1]);
-          // Upload.create({sketch:req.files.path}, function(err,up){console.log(up);});
+          var sketch = req.files.sketch[0];
+          var cover = req.files.cover[0];         
+          Upload.create({sketch:"uploads/" +sketch.filename , cover:"uploads/" +cover.filename, ownerId:req.user._id}, function(err,upload){
+            if(err){
+              console.log(err);
+            }
+            else
+            {
+              console.log(upload);
+              Order.create({userId:req.user._id, eventId:req.params.id, tourIndex:tour_index }, function(err,order){
+                if(err){console.log(err); }
+                  else{
+                  order.uploads = upload;
+                  order.save();
+                  console.log("New order is created");
+                  console.log(order);
+                  }
+              })
+              console.log(upload);
+              Event.findById(req.params.id,function(err,event)
+              {
+                  if(err)
+                  {
+                    console.log(err);
+                    res.redirect("artworks");
+                  }
+                  else
+                  {
+                    event.uploads.push(upload);
+                    event.save();
+                    console.log(event);
+                    res.render("greetings", {user:req.user ,event:event, tourIndex: tour_index});
+                  }
+              });              
+            }
+          })
         }
     }); 
-    
-    Order.create({userId:userId, eventId:req.params.id, tourIndex:req.body.tour_index }, function(err,order){
-      if(err){console.log(err); }
-        else{
-        console.log(order);
-        }
-    })
-
-    Event.findById(req.params.id,function(err,events)
-    {
-        if(err)
-        {
-          console.log(err);
-          res.redirect("artworks");
-        }
-        else
-        {
-          res.render("greetings", {event:events, suber:newSubmission, tourIndex: tour_index});
-        }
-    });
 });
 
-app.get("/submissions", isLoggedIn, function(req,res)
+app.get("/uploads", function(req,res){
+  Upload.find({} , function(err,uploads){
+    res.render("upload" , {uploads:uploads});
+  })
+})
+
+app.get("/submissions", function(req,res)
 {
-	Submission.find({}, function(err,submissions)
+	Event.find({}, function(err,events)
     {
        if(err){
        	console.log(err);
        }
-       else{
-       	res.render("submissions", {submission: submissions});
-        console.log(submissions);
+       else
+       {
+         res.send("rukja");
+         var allevents = events;
+         allevents.forEach(function(event)
+         {
+          //  if(event.uploads!==null)
+           var uploadsArray = event.uploads;
+           if(uploadsArray)
+           {
+             var finalUploadsArray = uploadsArray;
+            //  console.log(finalUploadsArray);
+             for(var i=0 ; i<finalUploadsArray; i++)
+             {
+                if(uploadsArray)
+                Upload.findById(finalUploadsArray[i], function(err,upload)
+                {
+                  console.log(upload);
+                })
+             }
+           }
+
+         })
        }
-  	});
-});
+      })
+})
+      //  else{
+      //    events.forEach(event{
+      //     Upload.find({_id:event.uploads[0]}, function(err,rep){
+      //       if(err){
+      //         console.log(err);
+      //       }
+      //       else{
+
+      //       }
+      //     })
+      //    })
+      //  	res.render("submissions", {submission: events});
+      
+// });
 
 
 app.get("/orders", isLoggedIn, function(req,res){
@@ -341,8 +353,8 @@ app.get("/orders", isLoggedIn, function(req,res){
     }
     else{
       console.log(orders);
-      console.log(orders[1].userId);
-      Event.findById(orders[1].userId, function(err,events){
+      console.log(orders[0].userId);
+      Event.findById(orders[0].userId, function(err,events){
         if(err){ console.log(err); }
         else{
           console.log(events);
@@ -438,10 +450,20 @@ app.get("/users/:id/orders", function(req, res)
       // finalOrders.push(event);
   // })
 
-
+app.get("/users/:id/submissions", function(req, res){
+  Upload.find({ownerId:req.user._id}, function(err, foundSubmissions){
+    if(err)
+      { 
+        console.log(err);
+      }
+    else
+      {
+       res.render("user-submissions", {submissions: foundSubmissions});
+      }
+  })
+})
 
 app.get("/users/:id/edit", function(req, res){
-  console.log(req.user);
   User.findById(req.user._id, function(err, foundUser){
     if(err)
       { 
