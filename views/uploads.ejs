@@ -1,13 +1,6 @@
 <% include partials/header %>
 
 
-<% if(uploads.length === 0){ %>
-  <div style="height: 650px;">
-    <h1 id="no-submissions">No Submissions Yet</h1>
-    <img src="emoji.png" class ="emoji">
-  </div>
-<% } %> 
-
 <% else{ %>
   <% uploads.forEach(function(upload){ %>
       <img src="/<%= upload.sketch %>" alt="">
@@ -17,4 +10,4 @@
   <% }) %>
 <% } %>
 
-<h2>hi</h2>
+<% include partials/footer.ejs %>

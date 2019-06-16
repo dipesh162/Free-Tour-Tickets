@@ -126,11 +126,10 @@
 /* - - - - - - - - - - - - - - - - - - -<STREAMING SITES SECTIONS> - - - - - - - - - - - - - - - */
 
 .streaming-sites-row{
- /*background-color:rgb(179,187,189); */
   min-height: 200px;
-  background-color: #DCD9D4; 
-  background-image: linear-gradient(to bottom, rgba(255,255,255,0.50) 0%, rgba(0,0,0,0.50) 100%), radial-gradient(at 50% 0%, rgba(255,255,255,0.10) 0%, rgba(0,0,0,0.50) 50%); 
-  background-blend-mode: soft-light,screen;
+  background: #44A08D;  
+  background: -webkit-linear-gradient(to right, #093637, #44A08D); 
+  background: linear-gradient(to right, #093637, #44A08D);
   text-align: center;
 }
 

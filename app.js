@@ -74,7 +74,7 @@ function checkFileType(file,cb){
   var filetypes = /jpeg|jpg|png|gif/;
   var extname  =  filetypes.test(path.extname(file.originalname).toLowerCase());
 
-  // check mime 
+  // check mime type
   var mimetype = filetypes.test(file.mimetype);
 
   if(mimetype && extname){
@@ -257,16 +257,22 @@ app.post("/greetings/:id/:tourIndex",  isLoggedIn, function(req,res)
                     console.log(event);
                     res.render("greetings", {user:req.user ,event:event, tourIndex: tour_index});
                   }
-              });              
+              }); 
+              
+              Submission.create({event:req.params.id, function (err,newCreatedSub){
+                console.log("New submission is created");
+                  console.log(newCreatedSub);
+              }})
             }
           })
         }
     }); 
 });
 
-app.get("/uploads", function(req,res){
+app.get("/uploads", function(req,res)
+{
   Upload.find({} , function(err,uploads){
-    res.render("upload" , {uploads:uploads});
+    res.render("uploads" , {uploads:uploads});
   })
 })
 
@@ -303,20 +309,7 @@ app.get("/submissions", function(req,res)
        }
       })
 })
-      //  else{
-      //    events.forEach(event{
-      //     Upload.find({_id:event.uploads[0]}, function(err,rep){
-      //       if(err){
-      //         console.log(err);
-      //       }
-      //       else{
 
-      //       }
-      //     })
-      //    })
-      //  	res.render("submissions", {submission: events});
-      
-// });
 
 
 app.get("/orders", isLoggedIn, function(req,res){
@@ -364,10 +357,6 @@ app.get("/orders", isLoggedIn, function(req,res){
     }
   })
 });
-
-// app.get("/users/:id" , isLoggedIn, function(req,res){
-//   res.redirect("/");
-// });
 
 app.get("/users/:id/orders", function(req, res)
 {
@@ -527,5 +516,3 @@ app.get('/logout', function(req, res){
 app.listen(3333, "127.0.0.1" , function(){
 	console.log("Free tour tickets server has started");
 });
-
-// "C:\Program Files\MongoDB\Server\4.0\bin\mongo.exe" 
