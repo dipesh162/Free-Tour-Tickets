@@ -118,10 +118,6 @@ app.post('/login', function(req, res, next) {
 });
 
 
-app.get("/users/:id", function(req,res){
-    res.render("home");
-  })
-
 app.get("/grids", function(req,res)
 {
   Celebrity.find({} , function(err, allcelebs){
@@ -224,50 +220,53 @@ app.post("/greetings/:id/:tourIndex",  isLoggedIn, function(req,res)
           console.log("Multer error occured when uploading image(sketch)");
         }
         else{
-          var sketch = req.files.sketch[0];
-          var cover = req.files.cover[0];         
-          Upload.create({sketch:"uploads/" +sketch.filename , cover:"uploads/" +cover.filename, ownerId:req.user._id}, function(err,upload){
-            if(err){
-              console.log(err);
-            }
-            else
-            {
-              console.log(upload);
-              Order.create({userId:req.user._id, eventId:req.params.id, tourIndex:tour_index }, function(err,order){
-                if(err){console.log(err); }
-                  else{
-                  order.uploads = upload;
-                  order.save();
-                  console.log("New order is created");
-                  console.log(order);
-                  }
+              if(req.files.sketch && !req.files.cover){
+                var sketch = req.files.sketch[0];
+                newUpload = {sketch:"uploads/" +sketch.filename , ownerId:req.user._id};  
+              }
+              if(req.files.cover && !req.files.sketch){
+                var cover = req.files.cover[0];      
+                newUpload = {cover:"uploads/" +cover.filename, ownerId:req.user._id};  
+              }
+              if(req.files.cover && req.files.sketch) {
+                var sketch = req.files.sketch[0];
+                var cover = req.files.cover[0];                  
+                newUpload = {sketch:"uploads/" +sketch.filename ,cover:"uploads/" +cover.filename, ownerId:req.user._id};  
+              }
+              Upload.create(newUpload, function(err,upload){
+                if(err){
+                  console.log(err);
+                }
+                else
+                {
+                  Order.create({userId:req.user._id, eventId:req.params.id, tourIndex:tour_index }, function(err,order){
+                    if(err){console.log(err); }
+                      else{
+                      order.uploads = upload;
+                      order.save();
+                      }
+                  })
+                  Event.findById(req.params.id,function(err,event)
+                  {
+                      if(err)
+                      {
+                        console.log(err);
+                        res.redirect("artworks");
+                      }
+                      else
+                      {
+                        event.uploads.push(upload);
+                        event.save();
+                        res.render("greetings", {user:req.user ,event:event, tourIndex: tour_index});
+                      }
+                  }); 
+                }
               })
-              console.log(upload);
-              Event.findById(req.params.id,function(err,event)
-              {
-                  if(err)
-                  {
-                    console.log(err);
-                    res.redirect("artworks");
-                  }
-                  else
-                  {
-                    event.uploads.push(upload);
-                    event.save();
-                    console.log(event);
-                    res.render("greetings", {user:req.user ,event:event, tourIndex: tour_index});
-                  }
-              }); 
-              
-              Submission.create({event:req.params.id, function (err,newCreatedSub){
-                console.log("New submission is created");
-                  console.log(newCreatedSub);
-              }})
-            }
-          })
         }
     }); 
 });
+
+
 
 app.get("/uploads", function(req,res)
 {
@@ -345,12 +344,9 @@ app.get("/orders", isLoggedIn, function(req,res){
       console.log(err);
     }
     else{
-      console.log(orders);
-      console.log(orders[0].userId);
       Event.findById(orders[0].userId, function(err,events){
         if(err){ console.log(err); }
         else{
-          console.log(events);
          res.render("orders", {event: events});
         }
       })
@@ -360,37 +356,45 @@ app.get("/orders", isLoggedIn, function(req,res){
 
 app.get("/users/:id/orders", function(req, res)
 {
-  // Order.find({userid:req.user._id})
-  var founduser = req.user;
-  Order.find({userId: founduser._id}, function(err,foundOrders)
+  Order.find({userId: req.user._id}, function(err,foundOrders)
   {
     if(err){
       console.log(err);
     }
     else{
-        var userOrders = foundOrders;
-        // console.log(userOrders);
-        userOrders.forEach(function(order)
+      var finalOrders = [];
+      foundOrders.forEach(function(order)
+      {
+        var tourIndex = order.tourIndex;
+        Event.findById(order.eventId, function(err,foundEvent)
         {
-        var finalOrders = [];
-
-          // var index = order.tourIndex;
-          // console.log(index);
-          eventId = order.eventId;
-          Event.findById(eventId, function(err,event){
-            var index = order.tourIndex;
-            //  console.log(event);  
-            finalOrders.push(event); 
-            finalOrders.push(index);     
-            // console.log(finalOrders);            
-          })
+          if(err){
+            console.log(err);
+          }
+          else{  
+            var eachOrder = { bgImage: foundEvent.bgImage, eventName: foundEvent.celebName, tourIndex:tourIndex };
+          finalOrders.push(eachOrder);
+          }
         })
-        res.render("orders", {orders:finalOrders});
+      
+      })
+      res.send("abhi ruk");
+      console.log(finalOrders);
+      //  res.render("orders", {orders: foundOrders})
       }
-    })
   })
-        // console.log(userOrders);
-        
+})      
+          // console.log(index);
+          // eventId = order.eventId;
+          // Event.findById(eventId, function(err,event){
+          //   var index = order.tourIndex;
+            //  console.log(event);  
+            // finalOrders.push(event); 
+            // finalOrders.push(index);     
+            // console.log(finalOrders);            
+        //   })
+        // })
+        // res.render("orders", {orders:finalOrders});
         // userOrders.forEach(function(order){
         //   var ee = order.EventId
         //   console.log(ee);
@@ -439,15 +443,32 @@ app.get("/users/:id/orders", function(req, res)
       // finalOrders.push(event);
   // })
 
-app.get("/users/:id/submissions", function(req, res){
-  Upload.find({ownerId:req.user._id}, function(err, foundSubmissions){
-    if(err)
-      { 
+app.get("/users/:id/uploads", isLoggedIn, function(req, res){
+  Upload.find({ownerId:req.user._id}, function(err, foundUploads)
+  {
+    if(err){ 
         console.log(err);
       }
-    else
-      {
-       res.render("user-submissions", {submissions: foundSubmissions});
+    else{
+          var sketches = [],
+              covers   = [];
+          foundUploads.forEach(function(upload)
+          {
+              if(upload.sketch && !upload.cover)
+              {
+                sketches.push(upload.sketch);
+              }
+              if(upload.cover && !upload.sketch) 
+                {       
+                  covers.push(upload.cover);
+                }
+              else
+              {
+                sketches.push(upload.sketch);
+                covers.push(upload.cover);          
+              }
+          });  
+          res.render("user-uploads", {sketches: sketches, covers: covers});
       }
   })
 })
@@ -475,31 +496,22 @@ app.put("/users/:id", function(req, res)
       }
       else{
       user.save();
-      res.redirect("/users/" + req.body.user.username);
+      req.user = user.username;
+      // res.render("home");
+      return res.redirect("/users/" + req.body.user.username);
       }
     })
- 
-  // User.findOne(req.params.id, req.body.user, function(err, updatedUser)
-  // {
-  //   if(err)
-  //   {
-  //     console.log(err);
-  //     console.log("error occured while updating user's information");
-  //     res.redirect("/users/" + req.body.user.username + "/edit");
-  //   }
-  //   else
-  //   {
-  //   res.redirect("/users/" + req.body.user.username);
-  //   res.render("home");
-  //   }
-  // });
+});
+
+app.get("/users/:id", isLoggedIn, function(req,res){
+  res.render("home");
 });
 
 app.delete("/users/:id", function(req,res){
    User.findByIdAndRemove(req.params.id, function(err,deletedUser)
    {
     if(err){
-      res.redirect("/users/" + req.params.id)
+      res.redirect("/users/" + req.params.id);
     }
     else{
       res.redirect("/logout");

@@ -3,11 +3,11 @@ var mongoose = require("mongoose"),
     // beautifyUnique = require('mongoose-beautiful-unique-validation');
 
 var userSchema = new mongoose.Schema({
-	firstName:{type: String,},
-	lastName:{type: String},
-	username:{type: String, unique:true},
-	email:{type: String, unique:true},
-	password:{type: String},
+	firstName:{type: String, required:'First Name can\'t be blank'},
+	lastName:{type: String, required:'Last Name can\'t be blank'},
+	username:{type: String, unique:true, required:'Username can\'t be blank'},
+	email:{type: String, unique:true, required:'Email can\'t be blank'},
+	password:{type: String, required:'Password can\'t be blank'},
 	events: {
 	        type: mongoose.Schema.Types.ObjectId
 		    },

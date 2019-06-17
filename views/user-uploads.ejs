@@ -8,9 +8,8 @@
         </div>
     <% } %> 
 
-    <% if(sketches.length !== 0 || covers.length !== 0) { %>
+    <% if(sketches.length !== 0) { %>
         <h1 style="font-family: BodoniXT; font-size: 50px; text-transform: uppercase; text-align: center">Sketches <i style="font-size: 40px;" class="fas fa-paint-brush"></i></h1>
-        
         <div class="container">
             <div class="row">
             <% for(var i = 0; i < sketches.length; i++){ %>
@@ -22,16 +21,17 @@
             <% } %>
             </div>
         </div>
+    <% } %>    
 
-
+    <% if(covers.length !== 0) { %>    
         <h1 style="font-family: BodoniXT; font-size: 50px; text-transform: uppercase; text-align: center">Covers <i style="font-size: 40px;" class="fas fa-video"></i></h1>
         <div class="container">
             <div class="row">
-            <% for(var j=0; j< covers.length; j++){ %>
+            <% for(var j = 0; j < covers.length; j++){ %>
                     <div class="col-lg-3 col-md-4 col-sm-6">
                         <!-- <div style="margin: 20px auto;"> -->
                             <video width="250" height="250" controls style="margin: 20px auto;">
-                                <source src="/<%= covers[i] %>" type="video/mp4">
+                                <source src="/<%= covers[j] %>" type="video/mp4">
                             </video>
                         <!-- </div>     -->
                     </div> 
