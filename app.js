@@ -354,35 +354,77 @@ app.get("/orders", isLoggedIn, function(req,res){
   })
 });
 
-app.get("/users/:id/orders", function(req, res)
+app.get("/users/:id/orders", isLoggedIn, function(req, res)
 {
   Order.find({userId: req.user._id}, function(err,foundOrders)
   {
     if(err){
       console.log(err);
     }
-    else{
-      var finalOrders = [];
+    else
+    {
       foundOrders.forEach(function(order)
       {
+        var finalOrders = [];
         var tourIndex = order.tourIndex;
+        var uploads   = order.uploads;
+        console.log(uploads);
         Event.findById(order.eventId, function(err,foundEvent)
         {
           if(err){
             console.log(err);
           }
-          else{  
-            var eachOrder = { bgImage: foundEvent.bgImage, eventName: foundEvent.celebName, tourIndex:tourIndex };
-          finalOrders.push(eachOrder);
+          else
+          {  
+              // console.log(foundEvent)
           }
         })
-      
+
+        Upload.findById(uploads, function(err,foundUploads)
+        {
+          if(err){
+            console.log(err);
+          }
+          else
+          {
+            // console.log(foundUploads);
+
+            //var eachOrder = {celebName: foundEvent.celebName,
+                      //       bgImage: foundEvent.bgImage,
+                      //       tourName: foundEvent.tourName,
+                      //       date: foundEvent.tourDates[tourIndex],
+                      //       tourCity: foundEvent.tourCity[tourIndex],
+                      //       tourCountry: foundEvent.tourCity[tourIndex],
+                      //       tourVenue: foundEvent.tourCity[tourIndex],
+                      //  uploads: foundUploads };
+             console.log(eachOrder);
+            // if(foundUploads.sketch && !foundUploads.cover){
+            //   console.log(foundUploads.sketch);
+              // eachOrder.sketch = foundUploads.sketch;
+            // }
+            // if(foundUploads.cover && !foundUploads.sketch){
+            //   console.log(foundUploads.cover);
+              // eachOrder.cover = foundUploads.cover;
+            // }
+            // if(foundUploads.cover && foundUploads.sketch) {
+              // eachOrder.sketch = foundUploads.sketch;
+              // console.log(foundUploads.sketch);
+              // console.log(foundUploads.cover);
+              // eachOrder.cover = foundUploads.cover;  
+            // }
+            //   console.log(eachOrder);
+            //   finalOrders.push(eachOrder); 
+          }
+        })
+        //  console.log(finalOrders);
       })
-      res.send("abhi ruk");
-      console.log(finalOrders);
-      //  res.render("orders", {orders: foundOrders})
+      
+      // console.log(finalOrders);
+      //  res.render("orders", {orders: finalOrders});
       }
   })
+  res.send("abhi ruk");
+
 })      
           // console.log(index);
           // eventId = order.eventId;
@@ -455,19 +497,19 @@ app.get("/users/:id/uploads", isLoggedIn, function(req, res){
           foundUploads.forEach(function(upload)
           {
               if(upload.sketch && !upload.cover)
-              {
-                sketches.push(upload.sketch);
-              }
+                {
+                  sketches.push(upload.sketch);
+                }
               if(upload.cover && !upload.sketch) 
                 {       
                   covers.push(upload.cover);
                 }
-              else
+              if(upload.sketch && upload.cover)
               {
                 sketches.push(upload.sketch);
                 covers.push(upload.cover);          
               }
-          });  
+          });
           res.render("user-uploads", {sketches: sketches, covers: covers});
       }
   })
