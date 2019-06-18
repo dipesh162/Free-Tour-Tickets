@@ -17,7 +17,10 @@ var express               =  require("express"),
     Submission            =  require("./models/submission"),
     path                  =  require("path");
 
+global.Promise            =  require('bluebird');
+mongoose.Promise = Promise;
 mongoose.connect("mongodb://localhost/ftt4git", {useNewUrlParser: true});
+
 
 // --------------------------------------------  <APP USES> --------------------------------------------------//
 
@@ -275,38 +278,34 @@ app.get("/uploads", function(req,res)
   })
 })
 
-app.get("/submissions", function(req,res)
+app.get("/submissions", async function(req,res)
 {
-	Event.find({}, function(err,events)
-    {
-       if(err){
-       	console.log(err);
-       }
-       else
-       {
-         res.send("rukja");
-         var allevents = events;
-         allevents.forEach(function(event)
-         {
-          //  if(event.uploads!==null)
-           var uploadsArray = event.uploads;
-           if(uploadsArray)
-           {
-             var finalUploadsArray = uploadsArray;
-            //  console.log(finalUploadsArray);
-             for(var i=0 ; i<finalUploadsArray; i++)
-             {
-                if(uploadsArray)
-                Upload.findById(finalUploadsArray[i], function(err,upload)
-                {
-                  console.log(upload);
-                })
-             }
-           }
-
-         })
-       }
-      })
+  var events = await Event.find({});
+  var submissions = await Promise.all(events.map(async event=>{
+    if(event.uploads){
+      let uploads = await Promise.all(event.uploads.map(async uploadId=>{
+        let upload = await Upload.findById(uploadId);
+        let owner = await User.findOne({_id : upload.ownerId});
+        return {
+              _id: upload._id,
+              sketch: upload.sketch,
+              cover: upload.cover,
+              ownerId: upload.ownerId,
+              owner:{
+                _id: owner._id,
+                username: owner.username,
+                email: owner.email,
+                firstName: owner.firstName,
+                lastName: owner.lastName
+              }
+        }
+      }));
+      return {event, uploads}
+    }
+  }));
+  console.log("submissions sent: ");
+  console.log(submissions);
+  res.send(submissions)
 })
 
 
@@ -354,136 +353,29 @@ app.get("/orders", isLoggedIn, function(req,res){
   })
 });
 
-app.get("/users/:id/orders", isLoggedIn, function(req, res)
+app.get("/users/:id/orders", isLoggedIn, async function(req, res)
 {
-  Order.find({userId: req.user._id}, function(err,foundOrders)
-  {
-    if(err){
-      console.log(err);
+  var orders = await Order.find({userId: req.user._id});
+  var finalOrders = await Promise.all(orders.map(async (foundOrder) => {
+    let tourIndex = foundOrder.tourIndex
+    var event = await Event.findById(foundOrder.eventId);
+    var upload = await Upload.findById(foundOrder.uploads);
+    return { 
+      celebName:   event.celebName,
+      bgImage:     event.bgImage,
+      tourIndex:   tourIndex,
+      tourName:    event.tourName,
+      tourDate:    event.tourDates[tourIndex],
+      tourCity:    event.tourCity[tourIndex],
+      tourCountry: event.tourCity[tourIndex],
+      tourVenue:   event.tourCity[tourIndex],
+      uploads:     upload
     }
-    else
-    {
-      foundOrders.forEach(function(order)
-      {
-        var finalOrders = [];
-        var tourIndex = order.tourIndex;
-        var uploads   = order.uploads;
-        console.log(uploads);
-        Event.findById(order.eventId, function(err,foundEvent)
-        {
-          if(err){
-            console.log(err);
-          }
-          else
-          {  
-              // console.log(foundEvent)
-          }
-        })
-
-        Upload.findById(uploads, function(err,foundUploads)
-        {
-          if(err){
-            console.log(err);
-          }
-          else
-          {
-            // console.log(foundUploads);
-
-            //var eachOrder = {celebName: foundEvent.celebName,
-                      //       bgImage: foundEvent.bgImage,
-                      //       tourName: foundEvent.tourName,
-                      //       date: foundEvent.tourDates[tourIndex],
-                      //       tourCity: foundEvent.tourCity[tourIndex],
-                      //       tourCountry: foundEvent.tourCity[tourIndex],
-                      //       tourVenue: foundEvent.tourCity[tourIndex],
-                      //  uploads: foundUploads };
-             console.log(eachOrder);
-            // if(foundUploads.sketch && !foundUploads.cover){
-            //   console.log(foundUploads.sketch);
-              // eachOrder.sketch = foundUploads.sketch;
-            // }
-            // if(foundUploads.cover && !foundUploads.sketch){
-            //   console.log(foundUploads.cover);
-              // eachOrder.cover = foundUploads.cover;
-            // }
-            // if(foundUploads.cover && foundUploads.sketch) {
-              // eachOrder.sketch = foundUploads.sketch;
-              // console.log(foundUploads.sketch);
-              // console.log(foundUploads.cover);
-              // eachOrder.cover = foundUploads.cover;  
-            // }
-            //   console.log(eachOrder);
-            //   finalOrders.push(eachOrder); 
-          }
-        })
-        //  console.log(finalOrders);
-      })
-      
-      // console.log(finalOrders);
-      //  res.render("orders", {orders: finalOrders});
-      }
-  })
-  res.send("abhi ruk");
-
-})      
-          // console.log(index);
-          // eventId = order.eventId;
-          // Event.findById(eventId, function(err,event){
-          //   var index = order.tourIndex;
-            //  console.log(event);  
-            // finalOrders.push(event); 
-            // finalOrders.push(index);     
-            // console.log(finalOrders);            
-        //   })
-        // })
-        // res.render("orders", {orders:finalOrders});
-        // userOrders.forEach(function(order){
-        //   var ee = order.EventId
-        //   console.log(ee);
-          // Event.findOne({_id:order.eventId}, function(err,event){
-          //   var event = event;
-          // });
-          // event.tourIndex = order.tourIndex;
-          // event.save();
-          // finalOrders.push(event);
-        // })
-~   
-    // });
-        // console.log(finalOrders);
-        // res.render("orders", {orders: finalOrders});
-        // var firsteventId = foundOrders[0].eventId;
-        
-        // Event.findById(firsteventId, function(err,firstevent)
-        // {
-        //   if(err){ console.log(err); }
-        //   else{
-        //   res.render("orders", {order1: foundOrders[0], order2:foundOrders[1], event:event});
-        //   }
-        // }
-      // }
+  }));
   
-//   var orders = Order.find({userId: loggedInUser._id});
-// orders[
-//   {userId: 1234, eventId: abc, tourIndex: 3},
-//   {userId: 1234, eventId: bcd, tourIndex: 0}
-// ]
+  res.render("orders", {orders: finalOrders});
+})
 
-
-  // events[
-  //   { _id: abc, name: dipesh, bg_Image: DIP.jpg, tourCity ... },
-  //   { _id: bcd, name: shubh, bg_Image: SHU.jpg, tourCity ... }
-  // ];
-  // var finalOrders = [];
-  // orders.forEach(function(order){
-
-      // event = Event.findOne({_id: order.eventId});
-  //   { _id: abc, name: dipesh, bg_Image: DIP.jpg, tourCity ... },
-
-      // event["tourIndex"] = order.tourIndex;
-  //   { _id: abc, name: dipesh, bg_Image: DIP.jpg, tourCity ..., tourIndex: 3 },
-
-      // finalOrders.push(event);
-  // })
 
 app.get("/users/:id/uploads", isLoggedIn, function(req, res){
   Upload.find({ownerId:req.user._id}, function(err, foundUploads)

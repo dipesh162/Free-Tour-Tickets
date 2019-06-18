@@ -9,10 +9,12 @@ var eventSchema = new mongoose.Schema({
     tourCity:    [{type: String}],
     tourCountry: [{type: String}], 
     tourVenue:   [{type: String}],
-    uploads: [{
+    uploads: [
+        {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Upload"
-    }]
+    }
+]
 });
 
 var Event = mongoose.model("Event", eventSchema);

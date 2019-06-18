@@ -1,18 +1,21 @@
 <% include partials/header %>
-
-<% if(orders.length === 0){ %>
+<p style="font-size: 36px; color: red"><%= orders.length %></p>
+<% if(orders.length == 0){ %>
 	<div style="height: 650px;">
         <h1 id="no-submissions">No Orders Yet</h1>
         <img src="/emoji.png" class ="emoji">
     </div>
-<% } %>
 
-<% else{ %>
+	<% } else{ %>
 	<% orders.forEach(function(order){ %>
-		<h1><%= order.bgImage %></h1>
-		<h1><%= order.tourDate[order.tourIndex] %></h1>
-		<h1><%= order.tourCity[order.tourIndex] %></h1>
-		<h1><%= order.tourCountry[order.tourIndex] %></h1>
+		<img src="/<%= order.bgImage %>">
+		<h1><%= order.tourDate %></h1>
+		<h1><%= order.tourCity %></h1>
+		<h1><%= order.tourCountry %></h1>
+		<img src="/<%= order.uploads.sketch %>" alt=""; style="width: 100%; height:100%">
+		<video width="250" height="250" controls style="margin: 20px auto;">
+			<source src="/<%= order.uploads.cover %>" type="video/mp4">
+		</video>
 	<% }) %>
 <% } %>
 <div style="height: 60%;"></div>
