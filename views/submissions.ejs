@@ -11,7 +11,6 @@
 <% if(submission.length !== 0){ %> 
 
   <% submission.forEach(function(sub){ %>
-      <% if(sub.uploads.length!== 0) { %>
           <img src="/<%= sub.bgImage %>" alt="">
 
             <% for(var i=0; i< sub.uploads.length; i++){ %>
@@ -21,8 +20,7 @@
               <video width="500" height="500" controls>
                 <source src="/<%= sub.uploads.cover %>" type="video/mp4">
               </video>
-            <% } %>  
-      <% } %>
+            <% } %>
    <% }) %>
 
   <div style="height: 500px;"></div>

@@ -34,8 +34,17 @@
       </li>
      
      <% } else if(currentUser.username === "iamadmin"){ %>
-      <li class="nav-item active">
-        <a class="nav-link" href="/submissions"><span>Submissions</span></a>
+      <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span class="text-white"><%= currentUser.username %></span>
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a class="nav-link" href="/uploads">Uploads</a>
+            <a class="nav-link" href="/submissions">Submissions</a>
+            <form action="/users/<%= currentUser._id %>?_method=DELETE" method="POST">
+              <button class="btn btn-danger"><a class="dropdown-item">Delete My Account</a></button>
+            </form> 
+          </div>
       </li> 
 
       <li class="nav-item active">
@@ -47,12 +56,12 @@
         <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <span class="text-white"><%= currentUser.username %></span>
         </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" style="width: 50px;">
           <a class="dropdown-item" href="/users/<%= currentUser.username %>/orders">My Orders</a>
           <a class="dropdown-item" href="/users/<%= currentUser.username %>/uploads">My Uploads</a>
           <a class="dropdown-item" href="/users/<%= currentUser.username %>/edit">Edit Profile</a>
           <form action="/users/<%= currentUser._id %>?_method=DELETE" method="POST">
-            <button class="btn btn-danger"><a class="dropdown-item">Delete My Account</a></button>
+            <button class="btn btn-danger btn-sm"><a class="dropdown-item">Delete My Account</a></button>
           </form> 
         </div>
       </li>  

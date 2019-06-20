@@ -50,7 +50,7 @@ app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser()); //(encoding) responsible for reading the session,taking data from that session and give back to session
 passport.deserializeUser(User.deserializeUser()); //(unencoding) and again serealizing for
-app.use(function(req, res, next){
+app.use((req, res, next)=>{
   res.locals.currentUser = req.user;
   next();
 })
@@ -61,7 +61,7 @@ app.use(function(req, res, next){
 
 var storage = multer.diskStorage({
   destination:"./public/uploads",
-  filename: function(req,file,cb){
+  filename: (req,file,cb)=>{
     cb(null,file.fieldname + '-' + Date.now() + '-' + file.originalname);
   }
 });
@@ -73,7 +73,7 @@ var upload = multer({storage: storage}).fields([
   ]);
 
 // Check file type
-function checkFileType(file,cb){
+ checkFileType = (file,cb)=>{
   var filetypes = /jpeg|jpg|png|gif/;
   var extname  =  filetypes.test(path.extname(file.originalname).toLowerCase());
 
@@ -93,7 +93,7 @@ function checkFileType(file,cb){
 
 // Authentication Middleware //
 
-    function isLoggedIn(req, res, next)
+    isLoggedIn = (req, res, next) =>
     {
       if(req.isAuthenticated()){
         return next();
@@ -103,16 +103,16 @@ function checkFileType(file,cb){
 
 // ================================================== ROUTES ================================================================//
 
-app.get("/", function(req,res){
+app.get("/", (req,res) =>{
 	res.render("home");
 });
 
-app.post('/login', function(req, res, next) {
-  passport.authenticate('local', function(err, user, info) {
+app.post('/login', (req, res, next)=> {
+  passport.authenticate('local', (err, user, info) => {
     if (err) { return next(err); }
     // Redirect if it fails
     if (!user) { return res.redirect('/login'); }
-    req.logIn(user, function(err) {
+    req.logIn(user, (err)=> {
       if (err) { return next(err); }
       // Redirect if it succeeds
       return res.redirect('/users/' + user.username);
@@ -121,9 +121,9 @@ app.post('/login', function(req, res, next) {
 });
 
 
-app.get("/grids", function(req,res)
+app.get("/grids", (req,res)=>
 {
-  Celebrity.find({} , function(err, allcelebs){
+  Celebrity.find({} , (err, allcelebs)=>{
   	if(err){
   		console.log(err);
   	}
@@ -134,18 +134,18 @@ app.get("/grids", function(req,res)
 });
 
 
-app.post("/register", function(req,res)
+app.post("/register", (req,res) =>
 { 
-    User.register(new User({username: req.body.username}), req.body.password, function(err,user)
+    User.register(new User({username: req.body.username}), req.body.password, (err,user)=>
     {
       if(err)
        {
         console.log(err);
         return res.render('register');
        }
-        passport.authenticate("local")(req, res, function()
+        passport.authenticate("local")(req, res, ()=>
         { 
-          User.findOne({username: req.body.username}, function(err,updateUser)
+          User.findOne({username: req.body.username}, (err,updateUser)=>
           {
               if(err)
                 {
@@ -165,9 +165,9 @@ app.post("/register", function(req,res)
 });  
 
 
-app.get("/events/:id", function(req,res)
+app.get("/events/:id", (req,res)=>
 {         
-    Celebrity.findById(req.params.id, function(err, allcelebs)
+    Celebrity.findById(req.params.id, (err, allcelebs)=>
     {
       if(err){
       	console.log(err);
@@ -175,7 +175,7 @@ app.get("/events/:id", function(req,res)
 
       else{     
             var getCeleb = allcelebs.celebName;
-            Event.findOne({celebName:getCeleb}, function(err,events)
+            Event.findOne({celebName:getCeleb}, (err,events)=>
             {
               res.render("newevent", {event:events, celeb:allcelebs});
             });
@@ -183,23 +183,20 @@ app.get("/events/:id", function(req,res)
     });
 });
 
-app.get("/login", function(req,res)
+app.get("/login", (req,res)=>
 {
 	res.render("login");
 });
 
-app.get("/register", function(req,res)
+app.get("/register", (req,res)=>
 {
 	res.render("register");
 });
-// app.get("/register/:id", function(req,res){
-//   res.render("register", id);
-// });
 
-app.get("/artworks/:id/:tourIndex",  isLoggedIn, function(req,res)
+app.get("/artworks/:id/:tourIndex",  isLoggedIn, (req,res)=>
 {
   
-  Event.findById(req.params.id,function(err, events){
+  Event.findById(req.params.id,(err, events)=>{
     if(err)
     {
       console.log(err);
@@ -211,12 +208,11 @@ app.get("/artworks/:id/:tourIndex",  isLoggedIn, function(req,res)
   });
 });
 
-app.post("/greetings/:id/:tourIndex",  isLoggedIn, function(req,res)
+app.post("/greetings/:id/:tourIndex",  isLoggedIn, (req,res)=>
 {  
    var tour_index    = req.params.tourIndex;
 
-
-    upload(req,res,function(err)
+    upload(req,res,(err)=>
     {
         if(err){
           res.redirect("artworks/:id");
@@ -236,20 +232,20 @@ app.post("/greetings/:id/:tourIndex",  isLoggedIn, function(req,res)
                 var cover = req.files.cover[0];                  
                 newUpload = {sketch:"uploads/" +sketch.filename ,cover:"uploads/" +cover.filename, ownerId:req.user._id};  
               }
-              Upload.create(newUpload, function(err,upload){
+              Upload.create(newUpload, (err,upload)=>{
                 if(err){
                   console.log(err);
                 }
                 else
                 {
-                  Order.create({userId:req.user._id, eventId:req.params.id, tourIndex:tour_index }, function(err,order){
+                  Order.create({userId:req.user._id, eventId:req.params.id, tourIndex:tour_index }, (err,order)=>{
                     if(err){console.log(err); }
                       else{
                       order.uploads = upload;
                       order.save();
                       }
                   })
-                  Event.findById(req.params.id,function(err,event)
+                  Event.findById(req.params.id,(err,event)=>
                   {
                       if(err)
                       {
@@ -269,116 +265,34 @@ app.post("/greetings/:id/:tourIndex",  isLoggedIn, function(req,res)
     }); 
 });
 
-
-
-app.get("/uploads", function(req,res)
-{
-  Upload.find({} , function(err,uploads){
-    res.render("uploads" , {uploads:uploads});
-  })
-})
-
-app.get("/submissions", async function(req,res)
+app.get("/submissions", async (req,res)=>
 {
   var events = await Event.find({});
-  var submissions = await Promise.all(events.map(async event=>{
-    if(event.uploads){
-      let uploads = await Promise.all(event.uploads.map(async uploadId=>{
+  var submissions = await Promise.all(events.map(async (event)=>
+  {
+    if(event.uploads.length!==0)
+    {
+      let submission = {celebName: event.celebName, tourName: event.tourName}
+      let uploadsArray  = event.uploads;
+      
+      var uploads = await Promise.all(uploadsArray.map(async (uploadId)=>
+      {
         let upload = await Upload.findById(uploadId);
-        let owner = await User.findOne({_id : upload.ownerId});
-        return {
-              _id: upload._id,
-              sketch: upload.sketch,
-              cover: upload.cover,
-              ownerId: upload.ownerId,
-              owner:{
-                _id: owner._id,
-                username: owner.username,
-                email: owner.email,
-                firstName: owner.firstName,
-                lastName: owner.lastName
-              }
-        }
-      }));
-      return {event, uploads}
+        let owner  = await User.find({_id:upload.ownerId});    
+      }))
+    submission['uploads'] = uploads;
+    return submission;
     }
+    return submissions;
+    
   }));
-  console.log("submissions sent: ");
   console.log(submissions);
-  res.send(submissions)
+  res.send("rukja");
 })
 
 
-
-app.get("/orders", isLoggedIn, function(req,res){
-
-//   var orders = Order.find({userId: loggedInUser._id});
-// orders[
-//   {userId: 1234, eventId: abc, tourIndex: 3},
-//   {userId: 1234, eventId: bcd, tourIndex: 0}
-// ]
-
-
-  // events[
-  //   { _id: abc, name: dipesh, bg_Image: DIP.jpg, tourCity ... },
-  //   { _id: bcd, name: shubh, bg_Image: SHU.jpg, tourCity ... }
-  // ];
-  // var finalOrders = [];
-  // orders.forEach(function(order){
-
-      // event = Event.findOne({_id: order.eventId});
-  //   { _id: abc, name: dipesh, bg_Image: DIP.jpg, tourCity ... },
-
-      // event["tourIndex"] = order.tourIndex;
-  //   { _id: abc, name: dipesh, bg_Image: DIP.jpg, tourCity ..., tourIndex: 3 },
-
-      // finalOrders.push(event);
-  // })
-
-// res.render("/orders", {orders: finalOrders})
-
-  
-  Order.find({}, function(err,orders){
-    if(err){
-      console.log(err);
-    }
-    else{
-      Event.findById(orders[0].userId, function(err,events){
-        if(err){ console.log(err); }
-        else{
-         res.render("orders", {event: events});
-        }
-      })
-    }
-  })
-});
-
-app.get("/users/:id/orders", isLoggedIn, async function(req, res)
-{
-  var orders = await Order.find({userId: req.user._id});
-  var finalOrders = await Promise.all(orders.map(async (foundOrder) => {
-    let tourIndex = foundOrder.tourIndex
-    var event = await Event.findById(foundOrder.eventId);
-    var upload = await Upload.findById(foundOrder.uploads);
-    return { 
-      celebName:   event.celebName,
-      bgImage:     event.bgImage,
-      tourIndex:   tourIndex,
-      tourName:    event.tourName,
-      tourDate:    event.tourDates[tourIndex],
-      tourCity:    event.tourCity[tourIndex],
-      tourCountry: event.tourCity[tourIndex],
-      tourVenue:   event.tourCity[tourIndex],
-      uploads:     upload
-    }
-  }));
-  
-  res.render("orders", {orders: finalOrders});
-})
-
-
-app.get("/users/:id/uploads", isLoggedIn, function(req, res){
-  Upload.find({ownerId:req.user._id}, function(err, foundUploads)
+app.get("/users/:id/uploads", isLoggedIn, (req, res)=>{
+  Upload.find({ownerId:req.user._id}, (err, foundUploads)=>
   {
     if(err){ 
         console.log(err);
@@ -386,7 +300,7 @@ app.get("/users/:id/uploads", isLoggedIn, function(req, res){
     else{
           var sketches = [],
               covers   = [];
-          foundUploads.forEach(function(upload)
+          foundUploads.forEach((upload)=>
           {
               if(upload.sketch && !upload.cover)
                 {
@@ -407,8 +321,32 @@ app.get("/users/:id/uploads", isLoggedIn, function(req, res){
   })
 })
 
-app.get("/users/:id/edit", function(req, res){
-  User.findById(req.user._id, function(err, foundUser){
+app.get("/users/:id/orders", isLoggedIn, async (req, res)=>
+{
+  var orders = await Order.find({userId: req.user._id});
+  var finalOrders = await Promise.all(orders.map(async (foundOrder) =>
+   {
+    let tourIndex = foundOrder.tourIndex
+    var event = await Event.findById(foundOrder.eventId);
+    var upload = await Upload.findById(foundOrder.uploads);
+    return { 
+      celebName:   event.celebName,
+      bgImage:     event.bgImage,
+      tourIndex:   tourIndex,
+      tourName:    event.tourName,
+      tourDate:    event.tourDates[tourIndex],
+      tourCity:    event.tourCity[tourIndex],
+      tourCountry: event.tourCountry[tourIndex],
+      tourVenue:   event.tourVenue[tourIndex],
+      uploads:     upload
+    }
+  }));
+  
+  res.render("orders", {orders: finalOrders});
+})
+
+app.get("/users/:id/edit", (req, res)=>{
+  User.findById(req.user._id, (err, foundUser)=>{
     if(err)
       { 
         console.log(err);
@@ -421,10 +359,10 @@ app.get("/users/:id/edit", function(req, res){
 });
 
 
-app.put("/users/:id", function(req, res)
+app.put("/users/:id", (req, res)=>
 {
   console.log(req.body.user.username);
-    User.findByIdAndUpdate(req.user._id, req.body.user, function(err,user){
+    User.findByIdAndUpdate(req.user._id, req.body.user, (err,user)=>{
       if(err){
         console.log(err);
       }
@@ -437,12 +375,12 @@ app.put("/users/:id", function(req, res)
     })
 });
 
-app.get("/users/:id", isLoggedIn, function(req,res){
+app.get("/users/:id", isLoggedIn, (req,res)=>{
   res.render("home");
 });
 
-app.delete("/users/:id", function(req,res){
-   User.findByIdAndRemove(req.params.id, function(err,deletedUser)
+app.delete("/users/:id", (req,res)=>{
+   User.findByIdAndRemove(req.params.id, (err,deletedUser)=>
    {
     if(err){
       res.redirect("/users/" + req.params.id);
@@ -453,12 +391,42 @@ app.delete("/users/:id", function(req,res){
    })
 })
 
-app.get('/logout', function(req, res){
+app.get("/uploads", isLoggedIn, (req, res)=>{
+  Upload.find({}, (err, Uploads)=>
+  {
+    if(err){ 
+        console.log(err);
+      }
+    else{
+          var sketches = [],
+              covers   = [];
+          Uploads.forEach((upload)=>
+          {
+              if(upload.sketch && !upload.cover)
+                {
+                  sketches.push(upload.sketch);
+                }
+              if(upload.cover && !upload.sketch) 
+                {       
+                  covers.push(upload.cover);
+                }
+              if(upload.sketch && upload.cover)
+              {
+                sketches.push(upload.sketch);
+                covers.push(upload.cover);          
+              }
+          });
+          res.render("uploads", {sketches: sketches, covers: covers});
+      }
+  })
+})
+
+app.get('/logout', (req, res)=>{
   req.logout();
   res.redirect('/');
 });
 
 
-app.listen(3333, "127.0.0.1" , function(){
+app.listen(3333, "127.0.0.1" , ()=>{
 	console.log("Free tour tickets server has started");
 });

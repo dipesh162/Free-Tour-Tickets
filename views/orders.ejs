@@ -1,22 +1,56 @@
 <% include partials/header %>
-<p style="font-size: 36px; color: red"><%= orders.length %></p>
+
 <% if(orders.length == 0){ %>
 	<div style="height: 650px;">
         <h1 id="no-submissions">No Orders Yet</h1>
         <img src="/emoji.png" class ="emoji">
     </div>
 
-	<% } else{ %>
-	<% orders.forEach(function(order){ %>
-		<img src="/<%= order.bgImage %>">
-		<h1><%= order.tourDate %></h1>
-		<h1><%= order.tourCity %></h1>
-		<h1><%= order.tourCountry %></h1>
-		<img src="/<%= order.uploads.sketch %>" alt=""; style="width: 100%; height:100%">
-		<video width="250" height="250" controls style="margin: 20px auto;">
-			<source src="/<%= order.uploads.cover %>" type="video/mp4">
-		</video>
-	<% }) %>
+<% } else{ %>
+
+	<div class="container-fluid">
+		<div class="row">
+			<% orders.forEach(function(order){ %>
+			<div class="col-lg-4">
+				<img src="/<%= order.bgImage %>" style="width: 400px; height:300px">
+			</div>
+			<div class="col-lg-4">
+				<h5><%= order.tourName %></h5>
+				<h5><%= order.tourDate %></h5>
+				<h5><%= order.tourCity %></h5>
+				<h5><%= order.tourVenue %></h5>
+				<h5><%= order.tourCountry %></h5>
+			</div>
+
+				<% if(order.uploads.sketch && !order.uploads.cover) { %>
+				<div class="col-lg-4">
+					<img src="/<%= order.uploads.sketch %>" alt=""; style="width: 100px; height:100px">
+				</div>
+				<% } %>
+				
+				<% if(order.uploads.cover && !order.uploads.sketch) { %>
+				<div class="col-lg-4">
+					<video width="200" height="200" controls style="margin: 20px auto;">
+						<source src="/<%= order.uploads.cover %>" type="video/mp4">
+					</video>
+				</div>
+				<% } %>
+				
+				<% if(order.uploads.sketch && order.uploads.sketch) { %>
+					<div class="col-lg-2">
+						<img src="/<%= order.uploads.sketch %>" alt=""; style="width: 100px; height:100px">
+					</div>
+
+					<div class="col-lg-2">
+						<video width="200" height="200" controls style="margin: 20px auto;">
+							<source src="/<%= order.uploads.cover %>" type="video/mp4">
+						</video>
+					</div>
+				<% } %>
+			<% }) %>
+		</div>
+	</div>
+	
 <% } %>
 <div style="height: 60%;"></div>
 
