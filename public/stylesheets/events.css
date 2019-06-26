@@ -131,6 +131,7 @@
   background: -webkit-linear-gradient(to right, #093637, #44A08D); 
   background: linear-gradient(to right, #093637, #44A08D);
   text-align: center;
+  padding-bottom: 30px;
 }
 
 .music-heading{
@@ -152,7 +153,20 @@
 }
 
 /* - - - - - - - - - - - - - - - - - - -</STREAMING SITES SECTIONS> - - - - - - - - - - - - - - - */
+.date{
+  float:right;
+}
 
+.book-ticket{
+  float:left; 
+  letter-spacing:5px;
+  line-height:33px;
+  background: #595b4e; 
+  padding: 5px 20px;
+  color: white; 
+  text-transform: uppercase;
+  border: 2px solid green;
+}
 
 /*------------------------------------------- MEDIA QUERIES -------------------------------- */
 
@@ -237,6 +251,18 @@
   #contact-email{
     font-size: 20px;
   }
+
+  .date{
+    float:none;
+  }
+
+  .book-ticket{
+    display: block;
+    margin: 15px auto 0px;
+    float: none;
+    width: 130px;
+  }
+
 }
 
 /* - - --- -- - - - - - - - - - - - -  - - - - - - - - - - - -  - - --------------------------------------- */
@@ -299,6 +325,16 @@
     height: 60px;
     width: 160px;
   }    
+  .date{
+    float:none;
+  }
+
+  .book-ticket{
+    display: block;
+    margin: 15px auto 0px;
+    float: none;
+    width: 130px;
+  }
 
 }
  /*--------------------------------------------------------------------------------------------------------------------*/
@@ -365,6 +401,8 @@
       height: 60px;
       width: 160px;
     }    
+
+    
 }
 
 /* ----------------------------------------------------------------------------------------------------------------- */
@@ -441,7 +479,21 @@
                   2.5px 2.5px 2.5px black;
       border-top: 1px solid grey;
       border-left: 1px solid grey;
-    }        
+    }  
+    
+    .date{
+      float:right;
+    }
+    
+    .book-ticket{
+      float:left; 
+      letter-spacing:5px;
+      line-height:33px;
+      background: #595b4e; 
+      padding: 5px 20px;
+      color: white; 
+      text-transform: uppercase
+    }
 }
 
 /* --------------------------------------------------------------------------------------------- */

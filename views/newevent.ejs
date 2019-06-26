@@ -81,71 +81,30 @@
 			<div class="col-md-3 col-sm-6 col-6"><a href="<%= celeb.applemusicLink %>"  target="_blank" title="Listen <%= celeb.celebName %> on iTunes"><img src="/applemusic.png"></a></div>
 			<div class="col-md-3 col-sm-6 col-6"><a href="<%= celeb.googleplayLink %>" target="_blank" title="Listen <%= celeb.celebName %> on googleplay"><img src="/googleplay.png"></a></div>
 		</div>
+		<hr style="width: 80%; border: 0.5px solid #02A880">
+	</div>
+
+
+	<h2 class="music-heading text-center mt-3 mb-3"><%= event.tourName %> Dates</h2>
+
+	<div class="containter text-center">
+		<div class="row" style="font-size: 18px; color: #96e4e8">
+			<% for(var i=0 ; i< event.tourDates.length; i++){ %>
+				<hr style="width: 67%; border: 0.5px solid #02A880">
+				<div class="col-lg-4 col-md-4">
+					<h4 class="date"><%= event.tourDates[i] %></h4>
+				</div>
+				<div class="col-lg-4 col-md-4">
+					<h5><%= event.tourCity[i] %> ,<%= event.tourCountry[i] %></h5>
+					<h5><%= event.tourVenue[i] %></h5>
+				</div>
+				<div class="col-lg-4 col-md-4">
+					<a class="book-ticket" href="/artworks/<%= event._id %>/<%= i %>">Tickets</a>
+				</div>
+		    <% } %>
+		</div>
 	</div>
 </div>
 
-<h2 class="text-center mt-3 mb-3"><%= event.tourName %> Dates</h2>
-
-<!-- <form action="/artworks/<%= event._id %>" method="GET" onsubmit="return give()"> -->
-	<table class="table">
-		<thead>
-			<tr>
-				<th>Date</th>
-				<th>City</th>
-				<th>Country</th>
-				<th>Venue</th>
-				<th></th>
-			</tr>
-	    </thead>
-	    <tbody>
-	      <% for(var i=0 ; i< event.tourDates.length; i++){ %>
-	       		<tr>
-					<td class="date"><%= event.tourDates[i] %></td>
-					<td class="city"><%= event.tourCity[i] %></td>
-					<td class="country"><%= event.tourCountry[i] %></td>
-					<td class="venue"><%= event.tourVenue[i] %></td>
-					<td style="width: 8%"><a class="ok" href="/artworks/<%= event._id %>/<%= i %>"><button>Book Ticket</button></a></td>
-					<!-- <td style="width: 8%">
-						<input class ="ok" type="submit" name="" value="Book Ticket">
-					</td> -->
-			    </tr>
-	      <% } %>
-	    </tbody>
-	</table>
-<!-- </form> -->
-
-<script type="text/javascript">
-// 	function give(){
-// 	var date    = document.getElementsByClassName('date');
-// 	var city    = document.getElementsByClassName('city');
-// 	var country = document.getElementsByClassName('country');
-// 	var venue   = document.getElementsByClassName('venue');
-
-//     alert(date[i].innerHTML);
-
- 
-//     alert(city[0].innerHTML);
-	
-
-// 	 alert(country[0].innerHTML);
-
-
-// 	 alert(venue[0].innerHTML);
-// 	return false;
-
-// 	alert(date[0].value);
-// 	return false;
-// 	console.log(date[1]);
-// 	return false;
-// 	var city = document.getElementByClassName('city').value;
-// 	var country = document.getElementByClassName('country').value;
-// 	var venue = document.getElementByClassName('venue').value;
-// 	alert(date);
-// 	alert("date");
-// 	alert(city);
-// 	alert(country);
-// 	alert(venue);
-// }
-</script>
 
 <% include partials/footer.ejs %>
