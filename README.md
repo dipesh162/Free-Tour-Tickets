@@ -3,7 +3,7 @@ This website is for artists where they can upload their song covers or sketches 
 
 
 Installation & Setup:
-1) You should have NodeJS and mongoDB isntalled in your system.
+1) You should have NodeJS and mongoDB installed in your system.
 
 2) Go to root directory of project and run seedDB.js file by running  command -   (node seedDB.js) in your terminal, this will create required databases for the websites'events.
 
