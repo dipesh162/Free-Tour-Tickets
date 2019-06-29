@@ -1,6 +1,6 @@
 <% include partials/header.ejs %>
 
-<% if(submission.length === 0){ %>
+<% if(submissions.length === 0){ %>
   <div style="height: 650px;">
     <h1 id="no-submissions">No Submissions Yet</h1>
     <img src="emoji.png" class ="emoji">
@@ -8,22 +8,53 @@
 <% } %> 
 
 
-<% if(submission.length !== 0){ %> 
+<% if(submissions.length !== 0){ %> 
+    <% submissions.forEach(function(sub){ %>
+      <% if(sub){%>
+        <img src="<%= sub.bgImage %>" alt="" style="width: 70%; height: 400px;">
+        <h1><%= sub.celebName %>'s <%= sub.tourName %> Uploads:</h1>
 
-  <% submission.forEach(function(sub){ %>
-          <img src="/<%= sub.bgImage %>" alt="">
+          <% sub.uploads.forEach(function(sub){ %>
+          <div class="container">
+            <div class="row">
+              <% if(sub.uploads.sketch){ %>
+                <div class="col-lg-6">
+                  <div id="carouselExampleSlidesOnly carousel Carousel" class="slide" data-ride="carousel" data-interval="2000">
+                    <div class="carousel-inner">
+                          <div class="carousel-item active">
+                            <img class="d-block w-100 img-fluid" src="/<%= sub.uploads.sketch %>" alt="Third slide">
+                            <div class="carousel-caption d-none d-md-block">
+                                <% if(sub.uploads.owner){ %>
+                                <h5><%= sub.uploads.owner.firstName %></h5>
+                                <p><%= sub.uploads.owner.email %></p>
+                                <% } %>
+                            </div>
+                          </div> 
+                          <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                              <span class="sr-only">Previous</span>
+                            </a>
+                          <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                          </a>        
+                    </div>
+                  </div>
+                </div>
+              <% } %>
+              <div class="col-lg-6">
 
-            <% for(var i=0; i< sub.uploads.length; i++){ %>
-              <h1>Sketches:</h1>
-              <img src="/<%= sub.uploads.sketch %>" alt="">
-              <h1>Videos:</h1>
-              <video width="500" height="500" controls>
-                <source src="/<%= sub.uploads.cover %>" type="video/mp4">
-              </video>
-            <% } %>
-   <% }) %>
+              </div>
+            </div>
+          </div>
+          <% }) %>
 
-  <div style="height: 500px;"></div>
+
+      <% } %>
+    <% }) %>
+    <div style="height: 800px;"></div>
+
+
 
 <% } %>
 

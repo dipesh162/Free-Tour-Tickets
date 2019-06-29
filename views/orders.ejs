@@ -34,9 +34,8 @@
 						<source src="/<%= order.uploads.cover %>" type="video/mp4">
 					</video>
 				</div>
-				<% } %>
 				
-				<% if(order.uploads.sketch && order.uploads.sketch) { %>
+				<% } if(order.uploads.cover && order.uploads.sketch) { %>
 					<div class="col-lg-2">
 						<img src="/<%= order.uploads.sketch %>" alt=""; style="width: 100px; height:100px">
 					</div>

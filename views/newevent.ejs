@@ -92,7 +92,13 @@
 			<% for(var i=0 ; i< event.tourDates.length; i++){ %>
 				<hr style="width: 67%; border: 0.5px solid #02A880">
 				<div class="col-lg-4 col-md-4">
-					<h4 class="date"><%= event.tourDates[i] %></h4>
+					<% var date = event.tourDates[i] %>
+					<% var first = date.slice(0,date.length-4) %>
+					<% var second = date.slice(date.length-5,date.length) %>
+                    <div class="date">
+						<h4><%= first %></h4>
+						<h4><%= second %></h4>
+				    </div>
 				</div>
 				<div class="col-lg-4 col-md-4">
 					<h5><%= event.tourCity[i] %> ,<%= event.tourCountry[i] %></h5>

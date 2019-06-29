@@ -268,25 +268,63 @@ app.post("/greetings/:id/:tourIndex",  isLoggedIn, (req,res)=>
 app.get("/submissions", async (req,res)=>
 {
   var events = await Event.find({});
-  var submissions = await Promise.all(events.map(async (event)=>
+  var submissions = await Promise.all(events.map(async (event, index)=> 
   {
     if(event.uploads.length!==0)
     {
-      let submission = {celebName: event.celebName, tourName: event.tourName}
+      let submission = {celebName: event.celebName, tourName: event.tourName, bgImage: event.bgImage}
       let uploadsArray  = event.uploads;
       
-      var uploads = await Promise.all(uploadsArray.map(async (uploadId)=>
+      let uploads = await Promise.all(uploadsArray.map(async (uploadId)=>
       {
-        let upload = await Upload.findById(uploadId);
-        let owner  = await User.find({_id:upload.ownerId});    
+        let sketches = [];
+        let covers = [];
+        
+        let sketch = {};
+        let cover  = {};
+        let upload = await Upload.findOne({_id:uploadId});       
+        let owner  = await User.findOne({_id:upload.ownerId});
+        if(upload.sketch && !upload.cover){
+           sketch['img'] = upload.sketch;
+           sketch['owner'] = owner;
+           sketches.push(sketch);
+           console.log(sketches);
+
+        }
+        if(upload.cover && !upload.sketch){
+          cover['video'] = upload.cover;
+          cover['owner'] = owner;
+           covers.push(cover);
+          console.log(covers);           
+        }
+        else{
+          sketch['img'] = upload.sketch;
+          sketch['owner'] = owner;          
+          cover['video'] = upload.cover;
+          cover['owner'] = owner;
+          sketches.push(sketch);
+          covers.push(cover);
+          console.log(sketches);
+          console.log(covers);
+        }
+
+        return sketches,covers;
+        console.log(sketches);
+        console.log(covers);
+        
       }))
-    submission['uploads'] = uploads;
-    return submission;
-    }
-    return submissions;
-    
+      
+      submission['Sketches'] = sketches;
+      submission['Covers'] = covers;
+      // console.log(submission);
+     
+      return submission;
+    } 
   }));
-  console.log(submissions);
+  console.log(JSON.stringify(submissions));
+
+  // res.render("submissions", {submissions:submissions});
+  res.send(submissions);
   res.send("rukja");
 })
 
@@ -341,7 +379,8 @@ app.get("/users/:id/orders", isLoggedIn, async (req, res)=>
       uploads:     upload
     }
   }));
-  
+  // res.send("rukja");
+  console.log(finalOrders);
   res.render("orders", {orders: finalOrders});
 })
 
