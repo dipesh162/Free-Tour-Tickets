@@ -1,20 +1,20 @@
-<% include partials/header.ejs %>
+
+
+<link href="/stylesheets/loginRegister.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"></link>
 
 <div class="page-bg-login">
-   <h1 class="ftt-heading">FreeTourTickets'19</h1>
+    <a href="/" class="ftt-heading">FreeTourTickets'19</a>
    <h5 class="ftt-login-register">Login to your account</h5>
    <hr class="hr-reg">
    <div class="login-reg-form-div">
-     <p class="container">
        <form action="/login" method="POST">
-         <div class="form-group">
+         <div>
            <input class="form-control form-group signup-input" type="text" name="username" placeholder="Username">
            <input class="form-control form-group signup-input" type="password" name="password" placeholder="Password">
          </div>
-         <p><input type="submit" class="btn btn-primary login-register-btn" value="Login"></p>
+          <input type="submit" class="btn btn-primary login-register-btn w-100" value="Sign In">
+          <p class="below_heading">Don’t have an account? <a href="/register">Get Started!</a></p>
        </form>
-     </p>
    </div>
 </div>
-
-<% include partials/footer.ejs %>

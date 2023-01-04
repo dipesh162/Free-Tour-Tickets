@@ -3,9 +3,9 @@
 /*---------------------------------------FOR EXTRA SMALL DEVICES -----------------------  */
 @media (max-width: 575px) {
 
-  #welcome{
+  /* #welcome{
       margin-bottom: 70%;
-    }
+    } */
 
    #welcome-h1{
     font-size: 45px;
@@ -35,11 +35,11 @@
     opacity: 1;
     height: 450px;
   }
-
+/* 
   #welcome{
       margin-bottom: 27%;
       text-align: center;    
-   }
+   } */
 
   .attractive-btn{
     font-size: 13px;
@@ -105,10 +105,10 @@
     height: 580px;
   }
 
-  #welcome{
+  /* #welcome{
       margin-bottom: 25%;
       text-align: center;    
-}
+} */
 
 .emoji{
     height:200px; 
@@ -155,11 +155,11 @@
     height: 620px;
   }
 
-  #welcome{
+  /* #welcome{
       margin-bottom: 34%;
       margin-top: 34;
       text-align: center;    
-  }
+  } */
 
   .ftt-heading{
     margin-top: 8%;
@@ -195,10 +195,10 @@
     height: 900px;
   }
 
-  #welcome{
+  /* #welcome{
       margin-top: 35%;
       text-align: center;    
-  }
+  } */
 
   .page-bg-login{
     background-repeat: no-repeat; 

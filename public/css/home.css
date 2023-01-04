@@ -1,0 +1,4 @@
+.main_carousel{
+    background-color: yellow;
+    height: calc(100vh - 56px);
+}

@@ -1,0 +1,100 @@
+.page-bg-login{
+    background-image: url('bg3.jpeg');
+  /*  background-repeat: no-repeat; 
+    background-size: cover;*/
+    height: 100%;
+    padding-top: 12%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100%;
+  }
+
+.page-bg-login{
+    padding-bottom: 10%;
+}
+
+.ftt-heading{
+    font-family:aero;
+    font-style: italic;
+    font-weight: bold; 
+    text-align: center; 
+    font-size: 2.5rem;
+    color:rgb(255,175,100);
+    margin: auto;
+    display: block;
+    width: fit-content;
+}
+
+.ftt-heading:hover{
+    color:rgb(255,175,100);
+    text-decoration: none;
+}
+
+
+.ftt-login-register{
+    color:white;
+    font-family: Billabong; 
+    font-weight: 900;
+    text-align: center;
+    font-size: 23px;
+}
+
+.hr-reg{
+    margin:25px auto; 
+    border: 0.3px solid white; 
+    width: 14%;
+}
+
+.login-reg-form-div{
+    /* width: 20%; */
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+  
+.login-register-btn{
+    display: block;
+    font-family: Billabong; 
+    margin: 0 auto;
+    width: 30%;
+    font-size: 18px;
+}
+
+.below_heading{
+    text-align: right; 
+    color: white; 
+    margin-top: 0.5rem;
+}
+
+.below_heading a{
+    color:rgb(255,175,100)
+}
+
+.below_heading a:hover{
+    text-decoration: none;
+    color:rgb(255,175,100)
+}
+
+/* // Small devices (landscape phones, 576px and up) */
+@media (max-width: 576px) { }
+
+/* // Medium devices (tablets, 768px and up) */
+@media (max-width: 768px) {
+    .ftt-heading{
+        font-size: 1.8rem;
+    }
+
+    .ftt-login-register{
+        color:white;
+        font-family: Billabong; 
+        font-weight: 900;
+        text-align: center;
+        font-size: 1rem;
+    }
+
+    .hr-reg {
+        margin: 16px auto 32px;
+        border: 0.3px solid white;
+        width: 25%;
+    }
+}

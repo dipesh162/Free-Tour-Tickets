@@ -28,10 +28,6 @@ a span {
     color: white;
 }
 
-#welcome{
-	    text-align: center;    
-}
-
 #welcome-h1{
      		font-size: 75px;
     		color: brown;
@@ -221,22 +217,7 @@ margin: -1rem -9rem -1rem auto;
   padding-bottom: 10%;
 }
 
-.ftt-heading{
-  font-family:aero;
-  font-style: italic;
-  font-weight: bold; 
-  text-align: center; 
-  font-size: 53px;
-  color:rgb(255,175,100);
-}
 
-.ftt-login-register{
-  color:white;
-  font-family: Billabong; 
-  font-weight: 900;
-  text-align: center;
-  font-size: 23px;
-}
 
 .hr-reg{
   margin:25px auto; 
@@ -244,18 +225,7 @@ margin: -1rem -9rem -1rem auto;
   width: 14%;
 }
 
-.login-reg-form-div{
-  width: 20%;
-  margin: 0 auto;
-}
 
-.login-register-btn{
-  display: block;
-  font-family: Billabong; 
-  margin: 0 auto;
-  width: 30%;
-  font-size: 18px;
-}
 
 .edit-info-form{
   width: 40%;
