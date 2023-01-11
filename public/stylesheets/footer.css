@@ -44,7 +44,7 @@
 .p-footer{
     text-align: justify;
     font-size: 13.5px;
-    color: hsl(240deg 6% 87%) !important;
+    color: #f8f9faeb;
     width: 550px;
     line-height: 1.2rem;
 }
@@ -54,7 +54,6 @@
 .iconsContainer{
     display: flex;
     gap: 6px;
-    /* transform: scale(0.6); */
 }
 
 .fa {
@@ -111,7 +110,6 @@
     text-align: center;
     padding: 0 0.5rem 0.8rem;
     font-size: 14px;
-    /* background-color: #161D26; */
 }
 
 @media only screen and (max-width: 948px) {
