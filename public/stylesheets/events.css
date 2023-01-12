@@ -15,8 +15,8 @@
   left: 18px;
   width: 320px; 
   height: 320px;
-  border: 3px solid brown;
-  border-radius: 40px; 
+  border: 1px solid brown;
+  border-radius: 18px; 
 }
 
 .bg-images #bg-profile-tourname{
@@ -72,10 +72,6 @@
   color:#89C4F4;
 }
 
-.common-tour-heading{
-  font-size: 52px;
-}
-
 /*----------------------------------</TOUR HEADINGS> -------------------------------- */ 
 
 /*-----------------------------------<LOGOS>-------------------------------------------*/ 
@@ -104,7 +100,7 @@
   position: absolute; 
   right: 20px;
   bottom: 10px;
-  display: block;
+  display: flex;
 }
 
 .bg-images #bg-profile-social-icons img{
@@ -170,6 +166,10 @@
   border:2px solid  rgb(1, 87, 1);
 }
 
+.book-ticket:hover{
+  color: white;
+}
+
 /*------------------------------------------- MEDIA QUERIES -------------------------------- */
 
 /*---------------------------------------FOR EXTRA SMALL DEVICES -----------------------  */
@@ -220,7 +220,7 @@
   }
 
   .common-tour-heading{
-    font-size: 28px;
+    font-size: 18px;
     text-align: center !important;
   }
 
@@ -286,7 +286,7 @@
   }
 
   .common-tour-heading{
-    font-size: 35px;
+    /* font-size: 35px; */
     text-align: center !important;
   }
 
@@ -343,7 +343,7 @@
 @media (min-width: 768px) {
 
     .bg-images img{
-      height: 430px;
+      height: 365px;
       width: 100%;
     }
 
@@ -351,6 +351,8 @@
        display: block;
        height:230px; 
        width:230px;
+       bottom: -20px;
+        left: 12px;
     }
     
     #purpose-tour-heading{
@@ -370,15 +372,11 @@
     }
 
     #met-logo{
-      height: 180px; 
+      height: 135px; 
       width:55%;
       position: absolute;
-      top: 1%;
+      top: 4%;
       left: 22.5%;
-    }
-
-    .common-tour-heading{
-      font-size: 41px;
     }
 
     .bg-images #bg-profile-social-icons img{
@@ -411,7 +409,7 @@
     .bg-images img{
       /*position: relative;*/
        width:100%;
-       height:calc(62vh - 56px);
+       height:calc(73vh - 56px);
        max-width:100%;
        max-height:90%;
     }
@@ -422,8 +420,6 @@
       left: 20px;
       width: 265px; 
       height: 265px;
-      border: 3px solid brown;
-      border-radius: 18px; 
     }
     
     #purpose-tour-heading{
@@ -455,8 +451,8 @@
     }
 
     .bg-images #bg-profile-social-icons img{
-      height: 40px;
-      width: 40px;
+      height: 30px;
+      width: 30px;
     }
 
     .music-heading{
