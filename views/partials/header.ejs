@@ -9,6 +9,7 @@
   <link rel="stylesheet" type="text/css" href="/stylesheets/events.css">
   <link rel="stylesheet" type="text/css" href="/stylesheets/home.css" >
   <link rel="stylesheet" type="text/css" href="/stylesheets/grids.css" >
+  <link rel="stylesheet" type="text/css" href="/stylesheets/header.css" >
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous"></link>
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
@@ -40,15 +41,9 @@
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
             <a class="nav-link" href="/uploads">Uploads</a>
             <a class="nav-link" href="/submissions">Submissions</a>
-            <form action="/users/<%= currentUser._id %>?_method=DELETE" method="POST">
-              <button class="btn btn-danger"><a class="dropdown-item">Delete My Account</a></button>
-            </form> 
+            <a class="dropdown-item" href="/logout">Log Out</a>
           </div>
-      </li> 
-
-      <li class="nav-item active">
-        <a class="nav-link" href="/logout"><span>Logout</span></a>
-      </li>            
+      </li>           
 
     <% } else { %> 
       <li class="nav-item dropdown">
@@ -58,16 +53,10 @@
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" style="width: 50px;">
           <a class="dropdown-item" href="/users/<%= currentUser.username %>/orders">My Orders</a>
           <a class="dropdown-item" href="/users/<%= currentUser.username %>/uploads">My Uploads</a>
-          <a class="dropdown-item" href="/users/<%= currentUser.username %>/edit">Edit Profile</a>
-          <form action="/users/<%= currentUser._id %>?_method=DELETE" method="POST">
-            <button class="btn btn-danger btn-sm"><a class="dropdown-item">Delete My Account</a></button>
-          </form> 
+          <a class="dropdown-item" href="/users/<%= currentUser.username %>/edit">Settings</a>
+          <a class="dropdown-item" href="/logout">Log Out</a>
         </div>
       </li>  
- 
-     <li class="nav-item active">
-        <a class="nav-link" href="/logout"><span>Logout</span></a>
-     </li>
 
     
     <% } %>
