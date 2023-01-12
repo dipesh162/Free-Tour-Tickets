@@ -1,5 +1,5 @@
 var express               =  require("express"),
-    PORT                  = process.env.PORT || 3030,
+    PORT                  =  process.env.PORT || 3030,
     app                   =  express(),
     methodOverride        =  require("method-override"),
     mongoose              =  require("mongoose"),
