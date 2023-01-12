@@ -22,5 +22,13 @@
 	</form>
 </div>
 
+<h1 class="text-center" style="margin-top:3%; margin-bottom: 1rem;">Delete My Account</h1>
+
+<form action="/users/<%= currentUser._id %>?_method=DELETE" method="POST">
+	<input type="submit" class="btn btn-danger login-register-btn" value="Delete My Account">
+	<!-- <button class="btn btn-danger d-block mx-auto"><a class="dropdown-item">Delete My Account</a></button> -->
+</form> 
+
+
 <div style="height: 60%"></div>
 <% include partials/footer2.ejs %>
