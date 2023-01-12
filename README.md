@@ -11,7 +11,7 @@ This website is for artists where they can upload their song covers/sketches of 
 
 4) After that run the app with command -  (node app.js).
 
-5) Goto address localhost:3333.
+5) Goto address localhost:3030.
 
 # Website features
 This site has a feature of uploading files, authentication etc, also the site has two panels:
