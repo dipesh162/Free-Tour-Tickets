@@ -127,6 +127,7 @@ margin: -1rem -9rem -1rem auto;
 .thumbnail img{
   height: 250px;
   width: 250px;
+  border-radius: 8px;
 }
 
 .phone-icon{
@@ -168,11 +169,6 @@ margin: -1rem -9rem -1rem auto;
 }
 
 /* - - - - - - - - - -  - - - - - - - - - - - - -  - - - - - - - - - - - - - - - - -  - - - - - - - */ 
-
-
-.thumbnail{
-  margin: 0 auto 20px auto;
-}
 
 
 .footer-info{

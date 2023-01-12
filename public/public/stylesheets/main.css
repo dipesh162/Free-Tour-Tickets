@@ -101,11 +101,6 @@ margin: -1rem -9rem -1rem auto;
   margin-left: auto;
 }
 
-.thumbnail img{
-  height: 250px;
-  width: 250px;
-}
-
 .phone-icon{
 	transform: scaleX(-1);
 }

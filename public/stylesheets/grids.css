@@ -1,0 +1,33 @@
+.main-container{
+    background: #0000;
+    padding-bottom: 24px;
+}
+
+#artistheading{
+    word-break: break-word;
+    color: rgb(51, 51, 51);
+    font-family: Roboto,sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1.17;
+    margin-top: 24px;
+    margin-bottom: 1.5rem;
+}
+
+.thumbnail{
+    margin-bottom: 1.8rem;
+}
+
+.thumbnail img{
+    height: 250px;
+    width: 100%;
+  }
+
+.caption h3{
+    color: rgb(34, 34, 34);
+    font-family: Roboto,sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    margin-top: 12px;
+    margin-bottom: 4px;
+}

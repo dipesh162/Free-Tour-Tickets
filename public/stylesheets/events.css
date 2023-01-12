@@ -175,10 +175,6 @@
 /*---------------------------------------FOR EXTRA SMALL DEVICES -----------------------  */
 @media (max-width: 575px) {
 
-  .bg-images{
-    position: relative;
-  }
-
   .bg-images img{
      width:100%;
      height:280px;
@@ -412,25 +408,22 @@
 /* -------------------------------------- Large devices desktops ----------------------------- */
 
 @media (min-width: 992px) {
-    .bg-images {
-      position: relative;
-    }
     .bg-images img{
       /*position: relative;*/
        width:100%;
-       height:700px;
+       height:calc(62vh - 56px);
        max-width:100%;
        max-height:90%;
     }
 
     .bg-images #bg-profile-img img{
       position: absolute;
-      bottom : 18px;
-      left: 18px;
-      width: 320px; 
-      height: 320px;
+      bottom: -28px;
+      left: 20px;
+      width: 265px; 
+      height: 265px;
       border: 3px solid brown;
-      border-radius: 40px; 
+      border-radius: 18px; 
     }
     
     #purpose-tour-heading{
@@ -457,7 +450,8 @@
     }
 
     .common-tour-heading{
-      font-size: 52px;
+      font-size: 28px;
+      letter-spacing: 2px;
     }
 
     .bg-images #bg-profile-social-icons img{
