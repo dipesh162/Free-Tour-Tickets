@@ -2,17 +2,34 @@
 
 <div class="page-bg-artworks" style="background-image: url('/<%= event.bgImage %>')">
 		<div style="width: inherit; margin: 0 auto;">
-			<h1 style="color: white; text-align: center; width: 100%; font-family: Billabong; font-weight: 900; margin-left: -30px">Upload your any <%= event.celebName %>'s cover/sketch</h1>
-			<hr style="margin-top: 35px; margin-bottom: 30px;">
-			<form action="/greetings/<%= event._id %>/<%= tourIndex %>" method="POST" name="myform" enctype="multipart/form-data" onsubmit="return validation()"> <!-- <%= %> -->			
-				<div class="form-group">
-					<input type="file" class="form-control-file" accept="image/*" name="sketch" placeholder="Sketch">
+			<h1 class="main-heading">Upload your any <%= event.celebName %>'s cover/sketch</h1>
+			<form class="main-form" action="/greetings/<%= event._id %>/<%= tourIndex %>" method="POST" name="myform" enctype="multipart/form-data" onsubmit="return validation()"> <!-- <%= %> -->			
+				<div class="form-row justify-content-center align-items-center mb-2">
+					<div class="upload-heading" style="margin-right: 8px; font-weight: 500;">
+						Upload sketch :
+					</div>
+
+					<div class="form-group mb-0">
+						<input type="file" class="form-control-file btn btn-light" accept="image/*" name="sketch" placeholder="Sketch">
+					</div>
+				</div>
+
+				<div class="position-relative">
+					<hr class="or-hr">
+					<div class="or-btn">OR</div>
+				</div>
+
+				<div class="form-row justify-content-center align-items-center mb-2">
+					<div class="upload-heading" style="margin-right: 14.5px; font-weight: 500;">
+						Upload cover :
+					</div> 
+
+					<div class="form-group mb-0">
+						<input type="file" class="form-control-file btn btn-light" accept="video/*" name="cover" placeholder="Cover">
+					</div>
 				</div>
 				<div class="form-group">
-					<input type="file" class="form-control-file" accept="video/*" name="cover" placeholder="Cover">
-				</div>
-				<div class="form-group">
-					<input type="submit" value="Submit">
+					<input type="submit" value="Submit" class="btn btn-danger submit-btn">
 				</div>
 			</form>
 		</div>			

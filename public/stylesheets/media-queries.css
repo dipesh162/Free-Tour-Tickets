@@ -50,15 +50,13 @@
   }
 
   #no-submissions{
-    font-size: 40px;
-    text-align: center;
-    margin-top: 20px
+    font-size: 24px;
   }
 
   .emoji{
-    height:150px; 
+    height:115px; 
     display: block;
-    margin: 30px auto;
+    margin: 20px auto;
    }
    
   .ftt-heading{
@@ -113,7 +111,7 @@
 .emoji{
     height:200px; 
     display: block;
-    margin: 50px auto;
+    margin: 28px auto;
    }
 
   .page-bg-login{

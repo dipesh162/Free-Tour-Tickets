@@ -150,9 +150,10 @@ margin: -1rem -9rem -1rem auto;
 
 
 .btn-home{
-		font-size: 30px;
+		font-size: 27px;
 /*  background-color: rgb(127,255,212);*/
 		border: 2px solid brown;
+    margin-top: 1rem;
 }
 
 .p-thankyou{
@@ -205,8 +206,9 @@ margin: -1rem -9rem -1rem auto;
 }
 
 #no-submissions{
-  font-size: 60px;
+  font-size: 35px;
   text-align: center;
+  padding-top: 2rem;
 }
 
 .page-bg-login{
@@ -280,7 +282,11 @@ margin: -1rem -9rem -1rem auto;
 
 /* ---------------- (max-width is just 1 less than that of min-width fro media queries) FOR GIVEN SCREEN OR SIZE (SMALL SIZE screens) ---------------- */
 @media (max-width: 575px) {
-
+  .btn-home{
+    font-size: 20px;
+    padding: 0.4rem 1rem;
+    margin-top: 0rem;
+  }
 }
 
 @media (max-width: 767px) {

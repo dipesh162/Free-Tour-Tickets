@@ -1,13 +1,13 @@
 <% include partials/header.ejs %>
 
-<div class="jumbotron" style="height: 80%">
+<div class="jumbotron main-container">
   <h1 class="display-3">Thank You!</h1>
-  <p class="lead text-justify" style="margin:40px auto">Thank you so much <strong><%= user.firstName %> <%= user.lastName %></strong>  for sending your response for an upcoming <strong><%= event.celebName %>'s - <%= event.tourName %></strong> ticket which will take place at <strong><%= event.tourVenue[tourIndex] %></strong> on <strong><%= event.tourDates[tourIndex] %></strong> in <strong><%= event.tourCity[tourIndex] %></strong> , <strong><%= event.tourCountry[tourIndex] %></strong>. Your ticket  will be confirmed by our team, if you are a that die hard fan of your favourite artist and you prove that, then our team will soon notify you via e-mail address you have provided .Our team will select 10 best fans from your city. We hope that you will get an overwhelming experience of watching your favourite artist/band performing live and rocking the arena.
+  <p class="lead text-justify  main-para">Thank you so much <strong><%= user.firstName %> <%= user.lastName %></strong>  for sending your response for an upcoming <strong><%= event.celebName %>'s - <%= event.tourName %></strong> ticket which will take place at <strong><%= event.tourVenue[tourIndex] %></strong> on <strong><%= event.tourDates[tourIndex] %></strong> in <strong><%= event.tourCity[tourIndex] %></strong> , <strong><%= event.tourCountry[tourIndex] %></strong>. Your ticket  will be confirmed by our team, if you are a that die hard fan of your favourite artist and you prove that, then our team will soon notify you via e-mail address you have provided .Our team will select 10 best fans from your city. We hope that you will get an overwhelming experience of watching your favourite artist/band performing live and rocking the arena.
   </p>
   <hr>
 
   <p class="lead">
-    <center><a class="btn btn-danger btn-lg btn-home" href="/" role="button" style="margin: 30px 30px;">Book Another </a></center>
+    <center><a class="btn btn-danger btn-lg btn-home" href="/" role="button">Book Another </a></center>
   </p>
 </div>
 
