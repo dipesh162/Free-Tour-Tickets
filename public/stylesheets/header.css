@@ -1,3 +1,29 @@
+.hamburger-btn{ 
+    font-size: 23px;
+    color: #F0F2F2;
+    width: 30px;
+    transform: rotate(90deg);
+    height: 30px;
+    margin-left: 1px;
+}
+
+.hamburger-mid-icon{
+    margin-right: 2px;
+    margin-left: 2px;
+}
+
 .dropdown-toggle::after {
     color: white;
+}
+
+.navbar-toggler:focus{
+    outline: none
+}
+
+.dropdown-menu{
+    left: -37px;
+}
+
+.dropdown-menu-admin{
+    left: -40px;
 }

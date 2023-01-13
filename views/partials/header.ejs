@@ -22,7 +22,9 @@
   <a class="navbar-brand loginbg" href="/"><span style="color: #F0F2F2;">Free Tour Tickets'23</span></a>
 
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
+      <div class="hamburger-btn">
+          <span>|</span><span class="hamburger-mid-icon">|</span><span>|</span>
+        </div>
   </button>
 
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
@@ -35,22 +37,22 @@
      
      <% } else if(currentUser.username === "iamadmin"){ %>
       <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <span class="text-white"><%= currentUser.username %></span>
           </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <a class="nav-link" href="/uploads">Uploads</a>
-            <a class="nav-link" href="/submissions">Submissions</a>
+          <div class="dropdown-menu dropdown-menu-admin" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="/uploads">Uploads</a>
+            <a class="dropdown-item" href="/submissions">Submissions</a>
             <a class="dropdown-item" href="/logout">Log Out</a>
           </div>
       </li>           
 
     <% } else { %> 
       <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <span class="text-white"><%= currentUser.username %></span>
         </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" style="width: 50px;">
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
           <a class="dropdown-item" href="/users/<%= currentUser.username %>/orders">My Orders</a>
           <a class="dropdown-item" href="/users/<%= currentUser.username %>/uploads">My Uploads</a>
           <a class="dropdown-item" href="/users/<%= currentUser.username %>/edit">Settings</a>

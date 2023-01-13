@@ -325,7 +325,7 @@ app.get("/submissions", async (req,res)=>
   console.log(JSON.stringify(submissions));
 
   // res.render("submissions", {submissions:submissions});
-  res.send(submissions);
+  // res.send(submissions);
   res.send("rukja");
 })
 
