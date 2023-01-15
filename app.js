@@ -1,4 +1,5 @@
 var express               =  require("express"),
+    dotenv                =  require('dotenv'),
     PORT                  =  process.env.PORT || 3030,
     app                   =  express(),
     methodOverride        =  require("method-override"),
@@ -20,6 +21,7 @@ var express               =  require("express"),
 
 global.Promise            =  require('bluebird');
 mongoose.Promise = Promise;
+dotenv.config({ path: './.env' });
 mongoose.connect("mongodb://localhost/ftt4git", {useNewUrlParser: true});
 
 
