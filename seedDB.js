@@ -29,19 +29,6 @@ var events = [
 		new Event({ celebName:"Evanescence",   bgImage:"bg-images/ev.jpg",   tourName:"Synthesis Tour",      tourDates:["4 April 2019", "9 April 2019", "13 April 2019" , "4 April 2019", "17 April 2019", "18 April 2019", "21 April 2019", "23 April 2019", "26 April 2019", "29 April 2019"], tourCity:["Taoyuan", "Tokyo", "Kuala Lumpur", "Hong Kong", "Hong Kong", "Incheon", "Osaka", "Singapore", "Bangkok", "Jakarta"], tourCountry:["Taiwan", "Japan", "Malaysia", "Hong Kong", "Hong Kong", "South Korea", "Japan", "Singapore", "Thailand", "Indonesia"], tourVenue:["Taoyuan City Stadium", "Tokyo Dome", "Bukit Jalil National Stadium", "Fantasy Road Outdoor Venue Hong Kong Disneyland", "Fantasy Road Outdoor Venue Hong Kong Disneyland", "Songdo Moonlight Festival Park", "Kyocera Dome", "Singapore National Stadium", "Rajamangala Stadium", "Gelora Bung Karno Stadium"]})
 ];
 
-
-// for(var i = 0; i < celebs.length; i++)
-// {
-// var createdCelebs = 0;
-//     celebs[i].save(function(err,celebs)
-//     {
-//         createdCelebs++;
-//         if(createdCelebs == celebs.length){
-//             createEvents();
-//         }
-//     });
-// }
-
 function createCelebs()
 {
   var createdCelebs = 0;
@@ -77,5 +64,5 @@ createEvents();
 createCelebs();
 
 function exit(){
-mongoose.disconnect();
+	mongoose.disconnect();
 }

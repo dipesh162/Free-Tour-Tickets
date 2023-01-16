@@ -1,6 +1,7 @@
 var express               =  require("express"),
     dotenv                =  require('dotenv'),
     PORT                  =  process.env.PORT || 3030,
+    { MongoClient, ServerApiVersion } = require('mongodb');
     app                   =  express(),
     methodOverride        =  require("method-override"),
     mongoose              =  require("mongoose"),
@@ -22,7 +23,27 @@ var express               =  require("express"),
 global.Promise            =  require('bluebird');
 mongoose.Promise = Promise;
 dotenv.config({ path: './.env' });
-mongoose.connect("mongodb://localhost/ftt4git", {useNewUrlParser: true});
+
+// mongoose.connect("mongodb://localhost/ftt4git", {useNewUrlParser: true});
+const connectionParams = {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+}
+
+mongoose.connect(process.env.DB_URL, connectionParams)
+.then(()=>{
+  console.info("conntect")
+})
+.catch((e)=>{
+  console.log("Error", e)
+})
+
+const uri = process.env.DB_URL
+const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
+client.connect(err => {
+  client.close();
+});
+
 
 
 // --------------------------------------------  <APP USES> --------------------------------------------------//
