@@ -145,14 +145,14 @@ app.post('/login', (req, res, next)=> {
 });
 
 
-app.get("/grids", (req,res)=>
+app.get("/explore", (req,res)=>
 {
   Celebrity.find({} , (err, allcelebs)=>{
   	if(err){
   		console.log(err);
   	}
   	else{
-  		res.render("grids", {celeb: allcelebs});
+  		res.render("explore", {celeb: allcelebs});
   	}
   });
 });
@@ -298,49 +298,49 @@ app.get("/submissions", async (req,res)=>
     {
       let submission = {celebName: event.celebName, tourName: event.tourName, bgImage: event.bgImage}
       let uploadsArray  = event.uploads;
-      
-      let uploads = await Promise.all(uploadsArray.map(async (uploadId)=>
-      {
-        let sketches = [];
-        let covers = [];
-        
-        let sketch = {};
-        let cover  = {};
-        let upload = await Upload.findOne({_id:uploadId});       
-        let owner  = await User.findOne({_id:upload.ownerId});
-        if(upload.sketch && !upload.cover){
-           sketch['img'] = upload.sketch;
-           sketch['owner'] = owner;
-           sketches.push(sketch);
-           console.log(sketches);
+      console.log('Uploads IDs',uploadsArray);
 
-        }
-        if(upload.cover && !upload.sketch){
-          cover['video'] = upload.cover;
-          cover['owner'] = owner;
-           covers.push(cover);
-          console.log(covers);           
-        }
-        else{
-          sketch['img'] = upload.sketch;
-          sketch['owner'] = owner;          
-          cover['video'] = upload.cover;
-          cover['owner'] = owner;
-          sketches.push(sketch);
-          covers.push(cover);
-          console.log(sketches);
-          console.log(covers);
-        }
-
-        return sketches,covers;
-        console.log(sketches);
-        console.log(covers);
+      // let uploads = await Promise.all(uploadsArray.map(async (uploadId)=>
+      // {
+      //   let sketches = [];
+      //   let covers = [];
         
-      }))
+      //   let sketch = {};
+      //   let cover  = {};
+      //   let upload = await Upload.findOne({_id:uploadId});       
+      //   let owner  = await User.findOne({_id:upload.ownerId});
+      //   if(upload.sketch && !upload.cover){
+      //      sketch['img'] = upload.sketch;
+      //      sketch['owner'] = owner;
+      //      sketches.push(sketch);
+      //      console.log(sketches);
+
+      //   }
+      //   if(upload.cover && !upload.sketch){
+      //     cover['video'] = upload.cover;
+      //     cover['owner'] = owner;
+      //      covers.push(cover);
+      //     console.log(covers);           
+      //   }
+      //   else{
+      //     sketch['img'] = upload.sketch;
+      //     sketch['owner'] = owner;          
+      //     cover['video'] = upload.cover;
+      //     cover['owner'] = owner;
+      //     sketches.push(sketch);
+      //     covers.push(cover);
+      //     console.log(sketches);
+      //     console.log(covers);
+      //   }
+
+      //   return sketches,covers;
+      //   console.log(sketches);
+      //   console.log(covers);
+        
+      // }))
       
-      submission['Sketches'] = sketches;
-      submission['Covers'] = covers;
-      // console.log(submission);
+      // submission['Sketches'] = sketches;
+      // submission['Covers'] = covers;
      
       return submission;
     } 

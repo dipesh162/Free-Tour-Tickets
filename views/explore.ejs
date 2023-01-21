@@ -1,0 +1,24 @@
+<% include partials/header.ejs %>
+
+<div class="main-container">
+	<h1 id="artistheading">Artists/Bands On Tour</h1>
+	<div class="container">
+		<div class="row text-center">
+		<%	celeb.forEach(function(celeb){   %>
+			<div class="col-lg-3 col-md-4 col-sm-6">
+				<a href="/events/<%= celeb._id %>">
+					<div class="thumbnail">
+						<img src="<%= celeb.image %>">
+						<div class="caption" style="width: 100%">
+							<h3><%= celeb.celebName %></h3>
+						</div>
+						<!-- INFO -->
+					</div>
+				</a>
+			</div>
+		<% }) %>
+		</div>
+	</div>
+</div>
+
+<% include partials/footer.ejs %>
