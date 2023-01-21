@@ -1,13 +1,13 @@
 <% include partials/header.ejs %>
 
-<div style="min-height: calc(100vh - 56px); background: #0000">
+<div style="min-height: calc(100vh - 56px); background: #0000; padding: 2rem;">
     <% if(sketches.length === 0 && covers.length === 0){ %>
         <h1 id="no-submissions">No Uploads Yet</h1>
         <img src="/emoji.png" class ="emoji">
     <% } %> 
 
     <% if(sketches.length !== 0) { %>
-        <h1 style="font-family: BodoniXT; font-size: 50px; text-transform: uppercase; text-align: center">Sketches <i style="font-size: 40px;" class="fas fa-paint-brush"></i></h1>
+        <h1 class="user_uploads_heading">Sketches <i style="font-size: 24px;" class="fas fa-paint-brush"></i></h1>
         <div class="container">
             <div class="row">
             <% for(var i = 0; i < sketches.length; i++){ %>
@@ -22,7 +22,7 @@
     <% } %>    
 
     <% if(covers.length !== 0) { %>    
-        <h1 style="font-family: BodoniXT; font-size: 50px; text-transform: uppercase; text-align: center">Covers <i style="font-size: 40px;" class="fas fa-video"></i></h1>
+        <h1 class="user_uploads_heading">Covers <i style="font-size: 24px;" class="fas fa-video"></i></h1>
         <div class="container">
             <div class="row">
             <% for(var j = 0; j < covers.length; j++){ %>

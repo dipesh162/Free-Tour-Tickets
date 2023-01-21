@@ -403,7 +403,6 @@ app.get("/users/:id/orders", isLoggedIn, async (req, res)=>
       uploads:     upload
     }
   }));
-  // res.send("rukja");
   console.log(finalOrders);
   res.render("orders", {orders: finalOrders});
 })
