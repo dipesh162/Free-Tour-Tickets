@@ -152,7 +152,7 @@ app.get("/explore", (req,res)=>
   		console.log(err);
   	}
   	else{
-  		res.render("explore", {celeb: allcelebs});
+  		res.render("explore", { data: {celeb: allcelebs , routeType: 'celebs'}});
   	}
   });
 });
@@ -289,7 +289,18 @@ app.post("/greetings/:id/:tourIndex",  isLoggedIn, (req,res)=>
     }); 
 });
 
-app.get("/submissions", async (req,res)=>
+app.get("/submissions", async (req,res)=>{
+  Celebrity.find({} , (err, allcelebs)=>{
+  	if(err){
+  		console.log(err);
+  	}
+  	else{
+  		res.render("explore", { data: {celeb: allcelebs , routeType: 'submissions'}});
+  	}
+  });
+});
+
+app.get("/submissionss", async (req,res)=>
 {
   var events = await Event.find({});
   var submissions = await Promise.all(events.map(async (event, index)=> 
