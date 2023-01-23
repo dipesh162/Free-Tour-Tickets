@@ -11,7 +11,6 @@ var express               =  require("express"),
     passport              =  require("passport"),
     LocalStrategy         =  require('passport-local'),
     passportLocalMongoose =  require("passport-local-mongoose"),
-    // bcrypt                =  require("bcrypt"),
     Celebrity             =  require("./models/celebrity"),
     Order                 =  require("./models/order"),
     Upload                =  require("./models/upload"),
@@ -19,7 +18,6 @@ var express               =  require("express"),
     User                  =  require("./models/user"),
     Submission            =  require("./models/submission"),
     path                  =  require("path");
-
 global.Promise            =  require('bluebird');
 mongoose.Promise = Promise;
 dotenv.config({ path: './.env' });
@@ -247,11 +245,11 @@ app.post("/greetings/:id/:tourIndex",  isLoggedIn, (req,res)=>
                 var sketch = req.files.sketch[0];
                 newUpload = {sketch:"uploads/" +sketch.filename , ownerId:req.user._id};  
               }
-              if(req.files.cover && !req.files.sketch){
+              else if(req.files.cover && !req.files.sketch){
                 var cover = req.files.cover[0];      
                 newUpload = {cover:"uploads/" +cover.filename, ownerId:req.user._id};  
               }
-              if(req.files.cover && req.files.sketch) {
+              else if(req.files.cover && req.files.sketch) {
                 var sketch = req.files.sketch[0];
                 var cover = req.files.cover[0];                  
                 newUpload = {sketch:"uploads/" +sketch.filename ,cover:"uploads/" +cover.filename, ownerId:req.user._id};  
@@ -300,69 +298,40 @@ app.get("/submissions", async (req,res)=>{
   });
 });
 
-app.get("/submissionss", async (req,res)=>
-{
-  var events = await Event.find({});
-  var submissions = await Promise.all(events.map(async (event, index)=> 
-  {
-    if(event.uploads.length!==0)
+app.get("/submissions/:id", isLoggedIn, (req,res)=>{        
+    Celebrity.findById(req.params.id, (err, allcelebs)=>
     {
-      let submission = {celebName: event.celebName, tourName: event.tourName, bgImage: event.bgImage}
-      let uploadsArray  = event.uploads;
-      console.log('Uploads IDs',uploadsArray);
+      if(err){
+      	console.log(err);
+        }
 
-      // let uploads = await Promise.all(uploadsArray.map(async (uploadId)=>
-      // {
-      //   let sketches = [];
-      //   let covers = [];
-        
-      //   let sketch = {};
-      //   let cover  = {};
-      //   let upload = await Upload.findOne({_id:uploadId});       
-      //   let owner  = await User.findOne({_id:upload.ownerId});
-      //   if(upload.sketch && !upload.cover){
-      //      sketch['img'] = upload.sketch;
-      //      sketch['owner'] = owner;
-      //      sketches.push(sketch);
-      //      console.log(sketches);
+      else{     
+            var getCeleb = allcelebs.celebName;
+            Event.findOne({celebName:getCeleb}, async (err,event)=>
+            {
+              if(err){
+                console.log(err);
+              } else {
+                const record = await Order.find({eventId: event._id})
 
-      //   }
-      //   if(upload.cover && !upload.sketch){
-      //     cover['video'] = upload.cover;
-      //     cover['owner'] = owner;
-      //      covers.push(cover);
-      //     console.log(covers);           
-      //   }
-      //   else{
-      //     sketch['img'] = upload.sketch;
-      //     sketch['owner'] = owner;          
-      //     cover['video'] = upload.cover;
-      //     cover['owner'] = owner;
-      //     sketches.push(sketch);
-      //     covers.push(cover);
-      //     console.log(sketches);
-      //     console.log(covers);
-      //   }
+                let submissions = await Promise.all(record.map(async (record)=> {
+                  let upload = await Upload.findOne({_id: record.uploads})
+                  let user = await User.findOne({_id: record.userId})
+                  
+                  return {
+                    tourIndex: record.tourIndex,
+                    upload,
+                    user,
+                  }
+                }))
 
-      //   return sketches,covers;
-      //   console.log(sketches);
-      //   console.log(covers);
-        
-      // }))
-      
-      // submission['Sketches'] = sketches;
-      // submission['Covers'] = covers;
-     
-      return submission;
-    } 
-  }));
-  console.log(JSON.stringify(submissions));
+                res.render("submissions", {event: event, submissions: submissions})
+              }
 
-  // res.render("submissions", {submissions:submissions});
-  // res.send(submissions);
-  res.send("rukja");
-})
-
+            });
+          }
+    });
+});
 
 app.get("/users/:id/uploads", isLoggedIn, (req, res)=>{
   Upload.find({ownerId:req.user._id}, (err, foundUploads)=>
@@ -434,7 +403,6 @@ app.get("/users/:id/edit", (req, res)=>{
 
 app.put("/users/:id", (req, res)=>
 {
-  console.log(req.body.user.username);
     User.findByIdAndUpdate(req.user._id, req.body.user, (err,user)=>{
       if(err){
         console.log(err);

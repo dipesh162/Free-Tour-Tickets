@@ -7,26 +7,24 @@
   </div>
 <% } %> 
 
+<img src="/<%= event.bgImage %>" alt="" style="width: 70%; height: 400px;">
+<h1><%= event.celebName %>'s <%= event.tourName %> Uploads:</h1>
 
 <% if(submissions.length !== 0){ %> 
     <% submissions.forEach(function(sub){ %>
       <% if(sub){%>
-        <img src="<%= sub.bgImage %>" alt="" style="width: 70%; height: 400px;">
-        <h1><%= sub.celebName %>'s <%= sub.tourName %> Uploads:</h1>
-
-          <% sub.uploads.forEach(function(sub){ %>
           <div class="container">
             <div class="row">
-              <% if(sub.uploads.sketch){ %>
+              <% if(sub.upload.sketch){ %>
                 <div class="col-lg-6">
                   <div id="carouselExampleSlidesOnly carousel Carousel" class="slide" data-ride="carousel" data-interval="2000">
                     <div class="carousel-inner">
                           <div class="carousel-item active">
-                            <img class="d-block w-100 img-fluid" src="/<%= sub.uploads.sketch %>" alt="Third slide">
+                            <img class="d-block w-100 img-fluid" src="/<%= sub.upload.sketch %>" alt="Third slide">
                             <div class="carousel-caption d-none d-md-block">
-                                <% if(sub.uploads.owner){ %>
-                                <h5><%= sub.uploads.owner.firstName %></h5>
-                                <p><%= sub.uploads.owner.email %></p>
+                                <% if(sub.user){ %>
+                                  <h5><%= sub.user.firstName %> <%= sub.user.lastName %></h5>
+                                  <p><%= sub.user.email %></p>
                                 <% } %>
                             </div>
                           </div> 
@@ -41,19 +39,24 @@
                     </div>
                   </div>
                 </div>
-              <% } %>
-              <div class="col-lg-6">
 
-              </div>
+              <% } else { %>
+                <div class="col-lg-6">
+                  <video width="200" height="200" controls style="margin: 20px auto;">
+                    <source src="/<%= sub.upload.cover %>" type="video/mp4">
+                  </video>
+                  <% if(sub.user){ %>
+                    <h5><%= sub.user.firstName %> <%= sub.user.lastName %></h5>
+                    <p><%= sub.user.email %></p>
+                  <% } %>
+                </div>
+              <% } %>
             </div>
           </div>
-          <% }) %>
 
 
       <% } %>
     <% }) %>
-    <div style="height: 800px;"></div>
-
 
 
 <% } %>
