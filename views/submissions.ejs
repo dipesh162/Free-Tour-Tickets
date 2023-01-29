@@ -5,26 +5,129 @@
     <h1 id="no-submissions">No Submissions Yet</h1>
     <img src="emoji.png" class ="emoji">
   </div>
-<% } %> 
+<% } else { %> 
 
-<img src="/<%= event.bgImage %>" alt="" style="width: 70%; height: 400px;">
-<h1><%= event.celebName %>'s <%= event.tourName %> Uploads:</h1>
+  <div class="bg-images">
 
-<% if(submissions.length !== 0){ %> 
-    <% submissions.forEach(function(sub){ %>
-      <% if(sub){%>
+    <img src="/<%= event.bgImage %>">
+  
+    <div id="bg-profile-img">
+      <img src="/<%= celeb.image %>">
+    </div>
+  
+    <% if(event.tourName === "WorldWired Tour") { %>
+      <div id="met-logo">
+        <img src="/metlogo.svg">
+      </div>
+    <% } %>
+  
+    <% if(event.tourName === "Purpose Tour") { %>
+          <img id="purpose-tour-heading" src="/ppi2.svg">
+    <% } %>
+  
+    <div id="bg-profile-tourname">
+      <% if(event.tourName === "Sweetner World Tour") { %>
+          <% var tourName =  event.tourName %>
+          <h2 id="sweetner-tour-heading" class="common-tour-heading">
+            <span style="position: relative"><%= tourName.slice(0,8) %></span>
+            <span style="display: block"><%= tourName.slice(9) %></span>
+          </h2>
+      <% } %>
+  
+      <% if(event.tourName === "Divide Tour") { %>
+          <h2 id="divide-tour-heading" class="common-tour-heading">
+            <%= event.tourName %>
+          </h2>		 
+          <img src="/divide.jpg" id="divide-logo">
+      <% } %>
+  
+      <% if(event.tourName === "Reputation Tour") { %>
+        <h2 id="reputation-tour-heading" class="common-tour-heading">
+          <%= event.tourName %>
+        </h2>
+      <% } %>	
+  
+      <% if(event.tourName === "2019 Tour") { %>
+        <h2 id="boyce-tour-heading" class="common-tour-heading">
+          Boyce Avenue's <%= event.tourName %>
+        </h2>
+      <% } %>
+  
+      <% if(event.tourName === "Voice Notes Tour") { %>
+        <h2 id="voice-tour-heading" class="common-tour-heading">
+          THE <%= event.tourName %>
+        </h2>
+      <% } %>
+  
+      <% if(event.tourName === "Synthesis Tour") { %>
+        <h2 id="synthesis-tour-heading" class="common-tour-heading">
+          Synthesis Live 2019
+        </h2>
+      <% } %>						
+  
+    </div>	
+  
+      <div id="bg-profile-social-icons">
+      <div><a href="<%= celeb.fbLink %>" target="_blank" title="Like <%= celeb.celebName %> on facebook"><img src="/facebook.png"></a></div>
+      <div><a href="<%= celeb.twitterLink %>" target="_blank" title="Follow <%= celeb.celebName %> on twitter"><img src="/twitter.png"></a></div>
+      <div><a href="<%= celeb.instaLink %>" target="_blank" title="Follow <%= celeb.celebName %> on instagram"><img src="/instagram.png"></a></div>
+      <div><a href="<%= celeb.youtubeLink %>" target="_blank" title="Watch <%= celeb.celebName %>'s videos on youtube"><img src="/youtube.png"></a></div>
+      <div><a href="<%= celeb.soundcloudLink %>" target="_blank" title="Listen <%= celeb.celebName %> on soundcloud"><img src="/soundcloud.png"></a></div>
+    </div>
+  
+  </div>
+
+    <div class="streaming-sites-row">
+      <div class="container">
+        <h2 class="music-heading">music</h2>
+        <div class="row streaming-sites-icons">
+          <div class="col-md-3 col-sm-6 col-6"><a href="<%= celeb.spotifyLink %>" target="_blank" title="Listen <%= celeb.celebName %> on spotify"><img src="/spotify_color.png"></a></div>
+          <div class="col-md-3 col-sm-6 col-6"><a href="<%= celeb.amazonmusicLink %>" target="_blank" title="Listen <%= celeb.celebName %> on amazonmusic"><img src="/amazon_02.png"></a></div>
+          <div class="col-md-3 col-sm-6 col-6"><a href="<%= celeb.applemusicLink %>"  target="_blank" title="Listen <%= celeb.celebName %> on iTunes"><img src="/applemusic.png"></a></div>
+          <div class="col-md-3 col-sm-6 col-6"><a href="<%= celeb.googleplayLink %>" target="_blank" title="Listen <%= celeb.celebName %> on googleplay"><img src="/googleplay.png"></a></div>
+        </div>
+        <hr style="width: 80%; border: 0.5px solid #02A880">
+      </div>
+    
+    
+      <h2 class="music-heading text-center mt-3 mb-0"><%= event.tourName %> Submissions</h2>
+    
+
+
+    <% for(var i=0 ; i< submissions.length; i++){ %>
+          <div class="containter text-center">
+            <div class="row" style="font-size: 18px; color: #96e4e8">
+                <hr style="width: 67%; border: 0.5px solid #02A880">
+                <div class="text-center col-lg-6 col-md-12">
+                  <% var date = event.tourDates[i] %>
+                  <% var first = date.slice(0,date.length-4) %>
+                  <% var second = date.slice(date.length-5,date.length) %>
+                            <div class="date">
+                    <h4><%= first %> <%= second %></h4>
+                    <!-- <h4><%= second %></h4> -->
+                    </div>
+                </div>  
+                <div class="text-center col-lg-6 col-md-12">
+                  <h5><%= event.tourCity[submissions[i].tourIndex] %> ,<%= event.tourCountry[submissions[i].tourIndex] %></h5>
+                  <h5><%= event.tourVenue[submissions[i].tourIndex] %></h5>
+                </div>
+                <!-- <div class="col-lg-4 col-md-4">
+                  <a class="book-ticket" href="/artworks/<%= event._id %>/<%= i %>">Tickets</a>
+                </div> -->
+            </div>
+          </div>
           <div class="container">
             <div class="row">
-              <% if(sub.upload.sketch){ %>
+              <% if(submissions[i].upload.sketch){ %>
                 <div class="col-lg-6">
                   <div id="carouselExampleSlidesOnly carousel Carousel" class="slide" data-ride="carousel" data-interval="2000">
                     <div class="carousel-inner">
                           <div class="carousel-item active">
-                            <img class="d-block w-100 img-fluid" src="/<%= sub.upload.sketch %>" alt="Third slide">
+                            <img class="d-block w-100 img-fluid" src="/<%= submissions[i].upload.sketch %>" alt="Third slide">
                             <div class="carousel-caption d-none d-md-block">
-                                <% if(sub.user){ %>
-                                  <h5><%= sub.user.firstName %> <%= sub.user.lastName %></h5>
-                                  <p><%= sub.user.email %></p>
+                                <% if(submissions[i].user){ %>
+                                  <h5><%= submissions[i].user.firstName %> <%= submissions[i].user.lastName %></h5>
+                                  <p><%= submissions[i].user.email %></p>
                                 <% } %>
                             </div>
                           </div> 
@@ -43,22 +146,18 @@
               <% } else { %>
                 <div class="col-lg-6">
                   <video width="200" height="200" controls style="margin: 20px auto;">
-                    <source src="/<%= sub.upload.cover %>" type="video/mp4">
+                    <source src="/<%= submissions[i].upload.cover %>" type="video/mp4">
                   </video>
-                  <% if(sub.user){ %>
-                    <h5><%= sub.user.firstName %> <%= sub.user.lastName %></h5>
-                    <p><%= sub.user.email %></p>
+                  <% if(submissions[i].user){ %>
+                    <h5><%= submissions[i].user.firstName %> <%= submissions[i].user.lastName %></h5>
+                    <p><%= submissions[i].user.email %></p>
                   <% } %>
                 </div>
               <% } %>
             </div>
           </div>
-
-
-      <% } %>
-    <% }) %>
-
-
+    <% } %>
+    </div>
 <% } %>
 
 

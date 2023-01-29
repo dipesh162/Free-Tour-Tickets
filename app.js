@@ -30,7 +30,7 @@ const connectionParams = {
 
 mongoose.connect(process.env.DB_URL, connectionParams)
 .then(()=>{
-  console.info("conntect")
+  console.info("connected to DB")
 })
 .catch((e)=>{
   console.log("Error", e)
@@ -299,14 +299,14 @@ app.get("/submissions", async (req,res)=>{
 });
 
 app.get("/submissions/:id", isLoggedIn, (req,res)=>{        
-    Celebrity.findById(req.params.id, (err, allcelebs)=>
+    Celebrity.findById(req.params.id, (err, celeb)=>
     {
       if(err){
       	console.log(err);
         }
 
       else{     
-            var getCeleb = allcelebs.celebName;
+            var getCeleb = celeb.celebName;
             Event.findOne({celebName:getCeleb}, async (err,event)=>
             {
               if(err){
@@ -325,7 +325,7 @@ app.get("/submissions/:id", isLoggedIn, (req,res)=>{
                   }
                 }))
 
-                res.render("submissions", {event: event, submissions: submissions})
+                res.render("submissions", {celeb: celeb, event: event, submissions: submissions})
               }
 
             });

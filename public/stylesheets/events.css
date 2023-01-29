@@ -139,6 +139,7 @@
 }
 
 .streaming-sites-icons img{
+  border-radius: 6px;
   font-size: 20px;
   height: 80px;
   width: 180px;
@@ -412,7 +413,7 @@
     .bg-images img{
       /*position: relative;*/
        width:100%;
-       height:calc(73vh - 56px);
+       height:calc(90vh - 56px);
        max-width:100%;
        max-height:90%;
     }
