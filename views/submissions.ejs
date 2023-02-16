@@ -103,8 +103,7 @@
                   <% let first = date.slice(0,date.length-4) %>
                   <% let second = date.slice(date.length-5,date.length) %>
                     <div>
-                    <h4><%= first %> <%= second %></h4>
-                    <!-- <h4><%= second %></h4> -->
+                      <h4><%= first %> <%= second %></h4>
                     </div>
                 </div>  
                 <div class="text-center col-lg-6 col-md-12">
@@ -126,7 +125,11 @@
                 <% } %>
 
                 <% if(submissions[i].user){ %>
-                  <button data-datac="<%= submissions[i].upload %>" class="btn btn-danger shortlist-btn" onclick="call('<%= submissions[i].upload._id %>')">Shortlist</button>
+                  <button class="btn btn-danger shortlist-btn" 
+                    onclick="call('<%= i %>','<%= JSON.stringify(submissions[i].user) %>','<%= submissions[i].upload._id %>','<%= submissions[i].tourIndex %>','<%= JSON.stringify(event) %>')"
+                  >
+                    ShortList
+                  </button>
                 <% } %>
             </div>
           </div>

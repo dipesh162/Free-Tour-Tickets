@@ -6,7 +6,7 @@ var uploadSchema = new mongoose.Schema({
 	ownerId:{
 		type: mongoose.Schema.Types.ObjectId,
 	},
-	shortListed: Boolean
+	shortListed: false
 });
 
 var Upload = mongoose.model("Upload", uploadSchema);

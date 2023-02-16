@@ -1,4 +1,5 @@
 var express               =  require("express"),
+    nodemailer            =  require('nodemailer'),
     dotenv                =  require('dotenv'),
     PORT                  =  process.env.PORT || 3030,
     { MongoClient, ServerApiVersion } = require('mongodb');
@@ -20,6 +21,9 @@ var express               =  require("express"),
     path                  =  require("path");
 global.Promise            =  require('bluebird');
 mongoose.Promise = Promise;
+mongoose.set('useFindAndModify', false);
+mongoose.set('useNewUrlParser', true);
+mongoose.set('useCreateIndex', true);
 dotenv.config({ path: './.env' });
 
 // mongoose.connect("mongodb://localhost/ftt4git", {useNewUrlParser: true});
@@ -122,6 +126,25 @@ var upload = multer({storage: storage}).fields([
       }
        res.redirect("/login");
     }
+
+// ======================================== Set Node Mailer ======================== /
+
+let transporter = nodemailer.createTransport({
+  service: 'gmail',
+  host: 'smtp.gmail.com',
+  port: 465,
+  secure: true,
+  auth: {
+    user: 'freetourtickets@gmail.com',
+    pass: 'vmccpvjuvwipqpom'
+  }
+});
+
+let mailOptions = {
+  from: 'freetourtickets@gmail.com',
+  subject: 'Your Upload for the concert is selected',
+  text: 'Congratulations!'
+};
 
 // ================================================== ROUTES ================================================================//
 
@@ -312,9 +335,9 @@ app.get("/submissions/:id", isLoggedIn, (req,res)=>{
               if(err){
                 console.log(err);
               } else {
-                const record = await Order.find({eventId: event._id})
+                const EventOrders = await Order.find({eventId: event._id})
 
-                let submissions = await Promise.all(record.map(async (record)=> {
+                let submissions = await Promise.all(EventOrders.map(async (record)=> {
                   let upload = await Upload.findOne({_id: record.uploads})
                   let user = await User.findOne({_id: record.userId})
                   
@@ -332,6 +355,36 @@ app.get("/submissions/:id", isLoggedIn, (req,res)=>{
           }
     });
 });
+
+app.post("/test", (req,res)=>{
+  let user = req.body.user
+  let uploadId = req.body.uploadId
+  let tourIndex = req.body.tourIndex
+  let event = req.body.event
+
+  Upload.findByIdAndUpdate(uploadId, { shortListed:true }, (err,upload)=>{
+    if(err){
+      console.log(err)
+      res.status(500).send('Internal Server Error')
+    } else {
+      res.status(200).send('OK')
+      sendEmail({to: 'dipeshsingh162@gmail.com'})
+      console.log(upload);
+    }
+  })
+
+  const sendEmail = (extraMailParams) =>{
+    transporter.sendMail({...mailOptions, ...extraMailParams}, function(error, info){
+      if (error) {
+        console.log(error);
+      } else {
+        console.log('Email sent to: '  + info.response);
+        res.status(200).send('OK')
+      }
+    });
+  }
+
+})
 
 app.get("/users/:id/uploads", isLoggedIn, (req, res)=>{
   Upload.find({ownerId:req.user._id}, (err, foundUploads)=>
