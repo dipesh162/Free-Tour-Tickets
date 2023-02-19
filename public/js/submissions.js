@@ -22,7 +22,7 @@ function call(btnIndex, user, uploadId, tourIndex, event){
     )
     .then((res) => {
             if(res.ok){
-                $($('.shortlist-btn')[btnIndex]).html('ShortListed')
+                $($('.shortlist-btn')[btnIndex]).toggleClass("shortlist-btn-disabled").html('ShortListed')
                 return res
             }
 

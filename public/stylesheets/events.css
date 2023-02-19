@@ -138,6 +138,15 @@
   letter-spacing: 5px;             
 }
 
+.shortlist-btn-disabled{
+  opacity: .65;
+}
+
+.shortlist-btn-disabled:hover{
+  cursor: not-allowed !important;
+  pointer-events: none !important;
+}
+
 .streaming-sites-icons img{
   border-radius: 6px;
   font-size: 20px;

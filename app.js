@@ -142,7 +142,7 @@ let transporter = nodemailer.createTransport({
 
 let mailOptions = {
   from: 'freetourtickets@gmail.com',
-  subject: 'Your Upload for the concert is selected',
+  subject: 'Congratulations! Your Upload for the concert is selected',
   text: 'Congratulations!'
 };
 
@@ -357,10 +357,18 @@ app.get("/submissions/:id", isLoggedIn, (req,res)=>{
 });
 
 app.post("/test", (req,res)=>{
-  let user = req.body.user
+  let user = JSON.parse(req.body.user)
   let uploadId = req.body.uploadId
   let tourIndex = req.body.tourIndex
-  let event = req.body.event
+  let event = JSON.parse(req.body.event)
+
+  let celebName = event.celebName
+  let tourName = event.tourName
+  let eventBgImg = event.bgImage
+  let tourCity = event.tourCity[tourIndex]
+  let tourVenue = event.tourVenue[tourIndex]
+  let tourCountry = event.tourCountry[tourIndex]
+  let tourDate = event.tourDates[tourIndex]
 
   Upload.findByIdAndUpdate(uploadId, { shortListed:true }, (err,upload)=>{
     if(err){
@@ -368,7 +376,17 @@ app.post("/test", (req,res)=>{
       res.status(500).send('Internal Server Error')
     } else {
       res.status(200).send('OK')
-      sendEmail({to: 'dipeshsingh162@gmail.com'})
+      sendEmail({
+        to: user.email,
+        attachments: [
+          {
+              filename: 'event.png',
+              path: __dirname + "/public" + `/${eventBgImg}`,
+              cid: 'uniq-event.png'
+          },
+        ],
+        html: `<h3>Your submission is selected  for an upcoming ${celebName}'s ${tourName} which will take place on ${tourDate} at ${tourVenue} in ${tourCity}, ${tourCountry}. Kindly visit the concert venue atleast 1 hour prior to the actual timing's to collect your ticket from the ticket deparment. </h3>`,
+      })
       console.log(upload);
     }
   })

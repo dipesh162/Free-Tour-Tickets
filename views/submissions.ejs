@@ -103,35 +103,38 @@
                   <% let first = date.slice(0,date.length-4) %>
                   <% let second = date.slice(date.length-5,date.length) %>
                     <div>
-                      <h4><%= first %> <%= second %></h4>
+                      <h4><%= first %></h4>
+                      <h4><%= second %></h4>
                     </div>
                 </div>  
                 <div class="text-center col-lg-6 col-md-12">
                   <h5><%= event.tourCity[submissions[i].tourIndex] %> ,<%= event.tourCountry[submissions[i].tourIndex] %></h5>
                   <h5><%= event.tourVenue[submissions[i].tourIndex] %></h5>
                 </div>
-
-                <% if(submissions[i].upload.sketch){ %>
-                  <img style="width: 50px; height: auto;" src="/<%= submissions[i].upload.sketch %>">
-
-                <% } else { %>
-                  <video width="200" height="200" controls style="margin: 20px auto;">
-                    <source src="/<%= submissions[i].upload.cover %>" type="video/mp4">
-                  </video>
-                  <% if(submissions[i].user){ %>
-                    <h5><%= submissions[i].user.firstName %> <%= submissions[i].user.lastName %></h5>
-                    <p><%= submissions[i].user.email %></p>
-                  <% } %>
-                <% } %>
-
-                <% if(submissions[i].user){ %>
-                  <button class="btn btn-danger shortlist-btn" 
-                    onclick="call('<%= i %>','<%= JSON.stringify(submissions[i].user) %>','<%= submissions[i].upload._id %>','<%= submissions[i].tourIndex %>','<%= JSON.stringify(event) %>')"
-                  >
-                    ShortList
-                  </button>
-                <% } %>
             </div>
+
+            <div>
+              <% if(submissions[i].upload.sketch){ %>
+                <img class="img-fluid" style="width: 300px; height: auto; margin: 20px 16px" src="/<%= submissions[i].upload.sketch %>">
+
+              <% } else { %>
+                <video width="300" height="auto" controls style="margin: 20px auto;">
+                  <source src="/<%= submissions[i].upload.cover %>" type="video/mp4">
+                </video>
+                <!-- <% if(submissions[i].user){ %>
+                  <h5><%= submissions[i].user.firstName %> <%= submissions[i].user.lastName %></h5>
+                  <p><%= submissions[i].user.email %></p>
+                <% } %> -->
+              <% } %>
+            </div>
+
+            <% if(submissions[i].user){ %>
+              <button class="btn btn-danger <%= submissions[i].upload.shortListed ? `shortlist-btn-disabled `  : `shortlist-btn`  %>"
+                onclick="call('<%= i %>','<%= JSON.stringify(submissions[i].user) %>','<%= submissions[i].upload._id %>','<%= submissions[i].tourIndex %>','<%= JSON.stringify(event) %>')"
+              >
+                <%= submissions[i].upload.shortListed ? 'ShortListed' : 'ShortList' %>
+              </button>
+            <% } %>
           </div>
     <% } %>
     </div>
