@@ -1,4 +1,4 @@
-<% include partials/header %>
+<%- include('partials/header.ejs'); -%>
 
 <div style="min-height: calc(100vh - 56px); background: #0000">
 	<% if(orders.length == 0){ %>
@@ -49,7 +49,6 @@
 		</div>	
 	<% } %>
 </div>
-
 
 
 <%- include('partials/footer.ejs'); -%>
