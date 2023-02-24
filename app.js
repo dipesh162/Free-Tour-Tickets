@@ -337,17 +337,31 @@ app.get("/submissions/:id", isLoggedIn, (req,res)=>{
               } else {
                 const EventOrders = await Order.find({eventId: event._id})
 
-                let submissions = await Promise.all(EventOrders.map(async (record)=> {
+                let OrderDetails = await Promise.all(EventOrders.map(async (record)=> {
+
                   let upload = await Upload.findOne({_id: record.uploads})
                   let user = await User.findOne({_id: record.userId})
+                
+                  let submissions = [{upload,user}]
                   
-                  return {
-                    tourIndex: record.tourIndex,
-                    upload,
-                    user,
-                  }
+                    return {
+                      tourIndex: record.tourIndex,
+                      submissions: submissions
+                    }
                 }))
 
+                const filteredOrders = OrderDetails.reduce((acc, {tourIndex, submissions}) => {
+                  acc[tourIndex] ??= {tourIndex: tourIndex, submissions: []};
+                  if(Array.isArray(submissions)) // if it's array type then concat 
+                    acc[tourIndex].submissions = acc[tourIndex].submissions.concat(submissions);
+                  else
+                    acc[tourIndex].submissions.push(submissions);
+                  
+                  return acc;
+                }, {});
+
+                let submissions = Object.values(filteredOrders) 
+                
                 res.render("submissions", {celeb: celeb, event: event, submissions: submissions})
               }
 
@@ -356,7 +370,7 @@ app.get("/submissions/:id", isLoggedIn, (req,res)=>{
     });
 });
 
-app.post("/test", (req,res)=>{
+app.post("/shortlist-upload", (req,res)=>{
   let user = JSON.parse(req.body.user)
   let uploadId = req.body.uploadId
   let tourIndex = req.body.tourIndex
@@ -385,7 +399,7 @@ app.post("/test", (req,res)=>{
               cid: 'uniq-event.png'
           },
         ],
-        html: `<h3>Your submission is selected  for an upcoming ${celebName}'s ${tourName} which will take place on ${tourDate} at ${tourVenue} in ${tourCity}, ${tourCountry}. Kindly visit the concert venue atleast 1 hour prior to the actual timing's to collect your ticket from the ticket deparment. </h3>`,
+        html: `<h3>Your submission is selected for an upcoming ${celebName}'s ${tourName} which will take place on ${tourDate} at ${tourVenue} in ${tourCity}, ${tourCountry}. Kindly visit the concert venue atleast 1 hour prior to the actual timing's to collect your ticket from the ticket deparment. </h3>`,
       })
       console.log(upload);
     }

@@ -1,11 +1,10 @@
-
-function call(btnIndex, user, uploadId, tourIndex, event){
+function handleShortlisting(btnIndex, user, uploadId, tourIndex, event){
 
     $($('.shortlist-btn')[btnIndex]).html('ShortListing')
     $($('.shortlist-btn')[btnIndex]).prop('disabled', true)
     
     fetch(
-        `/test`, 
+        `/shortlist-upload`, 
         {
             method: 'post',
             headers: {

@@ -1,0 +1,8 @@
+.submissions-row{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: auto;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
