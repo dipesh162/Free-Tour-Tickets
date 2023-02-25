@@ -1,8 +1,13 @@
-function handleShortlisting(btnIndex, user, uploadId, tourIndex, event){
+$(".shortlist-btn").on('click', function() {
 
-    $($('.shortlist-btn')[btnIndex]).html('ShortListing')
-    $($('.shortlist-btn')[btnIndex]).prop('disabled', true)
-    
+    $(this).html('ShortListing')
+    $(this).prop('disabled', true)
+
+    let user = $(this).attr('data-user')
+    let uploadId = $(this).attr('data-upload-id')
+    let tourIndex = $(this).attr('data-tour-index')
+    let event = $(this).attr('data-event')
+
     fetch(
         `/shortlist-upload`, 
         {
@@ -21,16 +26,16 @@ function handleShortlisting(btnIndex, user, uploadId, tourIndex, event){
     )
     .then((res) => {
             if(res.ok){
-                $($('.shortlist-btn')[btnIndex]).toggleClass("shortlist-btn-disabled").html('ShortListed')
+                $(this).toggleClass("shortlist-btn-disabled").html('ShortListed')
                 return res
             }
 
             throw new Error('Something went wrong.');
     })
     .catch((error) =>{
-        $($('.shortlist-btn')[btnIndex]).prop('disabled', false)
-        $($('.shortlist-btn')[btnIndex]).html('ShortList')
+        $(this).prop('disabled', false)
+        $(this).html('ShortList')
         console.error('Error:', error);
     })
-}
+});
 

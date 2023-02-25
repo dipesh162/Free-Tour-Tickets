@@ -89,58 +89,60 @@
         <hr style="width: 80%; border: 0.5px solid #02A880">
       </div>
     
-    
       <h2 class="music-heading text-center mt-3 mb-0"><%= event.tourName %> Submissions</h2>
     
 
+      <% for(let i=0 ; i< submissions.length; i++){ %>
+            <div class="containter">
+              <div class="row" style="color: #96e4e8">
+                  <hr style="width: 67%; border: 0.5px solid #02A880">
+                  <div class="text-center col-lg-6 col-md-12">
+                    <% let date = event.tourDates[submissions[i].tourIndex] %>
+                    <% let first = date.slice(0,date.length-4) %>
+                    <% let second = date.slice(date.length-5,date.length) %>
+                      <div>
+                        <h4><%= first %></h4>
+                        <h4><%= second %></h4>
+                      </div>
+                  </div>  
+                  <div class="text-center col-lg-6 col-md-12">
+                    <h5><%= event.tourCity[submissions[i].tourIndex] %> ,<%= event.tourCountry[submissions[i].tourIndex] %></h5>
+                    <h5><%= event.tourVenue[submissions[i].tourIndex] %></h5>
+                  </div>
+              </div>
 
-    <% for(let i=0 ; i< submissions.length; i++){ %>
-          <div class="containter">
-            <div class="row" style="color: #96e4e8">
-                <hr style="width: 67%; border: 0.5px solid #02A880">
-                <div class="text-center col-lg-6 col-md-12">
-                  <% let date = event.tourDates[submissions[i].tourIndex] %>
-                  <% let first = date.slice(0,date.length-4) %>
-                  <% let second = date.slice(date.length-5,date.length) %>
+              <div class="row">
+                <div class="submissions-row">
+                  <% submissions[i].submissions.forEach(function (sub) { %>
                     <div>
-                      <h4><%= first %></h4>
-                      <h4><%= second %></h4>
-                    </div>
-                </div>  
-                <div class="text-center col-lg-6 col-md-12">
-                  <h5><%= event.tourCity[submissions[i].tourIndex] %> ,<%= event.tourCountry[submissions[i].tourIndex] %></h5>
-                  <h5><%= event.tourVenue[submissions[i].tourIndex] %></h5>
-                </div>
-            </div>
+                      <div style="margin: 20px 16px">
+                        <% if(sub.upload.sketch){ %>
+                          <img class="upload-img" src="/<%= sub.upload.sketch %>">
 
-            <div class="row">
-              <div class="submissions-row">
-                <% submissions[i].submissions.forEach(function (sub) { %>
-                  <div>
-                    <div>
-                      <% if(sub.upload.sketch){ %>
-                        <img class="img-fluid" style="width: 300px; height: auto; margin: 20px 16px" src="/<%= sub.upload.sketch %>">
+                        <% } else { %>
+                          <video class="upload-cover" width="300" height="auto" controls>
+                            <source src="/<%= sub.upload.cover %>" type="video/mp4">
+                          </video>
+                        <% } %>
+                      </div>
 
-                      <% } else { %>
-                        <video width="300" height="auto" controls style="margin: 20px 16px;">
-                          <source src="/<%= sub.upload.cover %>" type="video/mp4">
-                        </video>
+                      <% if(sub.user){ %>
+                        <button 
+                          class="btn btn-danger <%= sub.upload.shortListed ? `shortlist-btn-disabled `  : `shortlist-btn`  %>"
+                          data-user="<%= JSON.stringify(sub.user) %>"
+                          data-upload-id="<%= sub.upload._id %>"
+                          data-tour-index="<%= submissions[i].tourIndex %>"
+                          data-event="<%= JSON.stringify(event) %>"
+                        >
+                          <%= sub.upload.shortListed ? 'ShortListed' : 'ShortList' %>
+                        </button>
                       <% } %>
                     </div>
-
-                    <% if(sub.user){ %>
-                      <button class="btn btn-danger <%= sub.upload.shortListed ? `shortlist-btn-disabled `  : `shortlist-btn`  %>"
-                        onclick="handleShortlisting('<%= i %>','<%= JSON.stringify(sub.user) %>','<%= sub.upload._id %>','<%= submissions[i].tourIndex %>','<%= JSON.stringify(event) %>')"
-                      >
-                        <%= sub.upload.shortListed ? 'ShortListed' : 'ShortList' %>
-                      </button>
-                    <% } %>
-                  </div>
-                <% }) %>
+                  <% }) %>
+                </div>
               </div>
             </div>
-          </div>
-    <% } %>
+      <% } %>
     </div>
 <% } %>
 

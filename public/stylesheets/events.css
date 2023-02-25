@@ -239,14 +239,15 @@
     text-shadow: 2px 2px 2px grey,
                  2px 2px 2px black;
     letter-spacing: 5px;  
-    font-size: 45px;           
+    font-size: 32px;   
+    padding: 8px 8px 0px;     
   }
 
   .streaming-sites-icons img{
     box-shadow: 1.5px 1.5px 1.5px grey,
               1.5px 1.5px 1.5px black;
-    height: 50px;
-    width: 130px;
+    height: auto;
+    width: 100%;
   }   
 
   #contact-icon{

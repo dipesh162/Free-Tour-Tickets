@@ -4,5 +4,17 @@
     gap: 8px;
     margin: auto;
     flex-wrap: wrap;
-    justify-content: space-evenly;
+    justify-content: center;
+}
+
+.upload-img{
+    width: 100%;
+    height: auto;
+    max-width: 300px;
+}
+
+.upload-cover{
+    width: 100%;
+    height: auto;
+    max-width: 300px;
 }
