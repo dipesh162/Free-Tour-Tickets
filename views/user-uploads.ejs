@@ -1,6 +1,6 @@
 <%- include('partials/header.ejs'); -%>
 
-<div style="min-height: calc(100vh - 56px); background: #0000; padding: 2rem;">
+<div class="main-container">
     <% if(sketches.length === 0 && covers.length === 0){ %>
         <h1 id="no-submissions">No Uploads Yet</h1>
         <img src="/emoji.png" class ="emoji">
@@ -10,13 +10,13 @@
         <h1 class="user_uploads_heading">Sketches <i style="font-size: 24px;" class="fas fa-paint-brush"></i></h1>
         <div class="container">
             <div class="row">
-            <% for(var i = 0; i < sketches.length; i++){ %>
-                    <div class="col-lg-3 col-md-4 col-sm-6">
-                        <div style="width: 250px; height: 250px; border: 1px solid brown; margin: 30px auto">
-                            <img src="/<%= sketches[i] %>" alt=""; style="width: 100%; height:100%">
+                <div class="uploads-row">
+                    <% for(var i = 0; i < sketches.length; i++){ %>
+                        <div style="margin: 0px 16px 0px">
+                            <img class="upload-img" src="/<%= sketches[i] %>" alt="";>
                         </div>
-                    </div>
-            <% } %>
+                    <% } %>
+                </div>
             </div>
         </div>
     <% } %>    
@@ -25,15 +25,15 @@
         <h1 class="user_uploads_heading">Covers <i style="font-size: 24px;" class="fas fa-video"></i></h1>
         <div class="container">
             <div class="row">
-            <% for(var j = 0; j < covers.length; j++){ %>
-                    <div class="col-lg-3 col-md-4 col-sm-6">
-                        <!-- <div style="margin: 20px auto;"> -->
-                            <video width="250" height="250" controls style="margin: 20px auto;">
+                <div class="uploads-row">
+                    <% for(var j = 0; j < covers.length; j++){ %>
+                        <div style="margin: 0px 16px 0px;">
+                            <video class="upload-cover" width="300" height="auto" controls>
                                 <source src="/<%= covers[j] %>" type="video/mp4">
                             </video>
-                        <!-- </div>     -->
-                    </div> 
-            <% } %>
+                        </div>  
+                    <% } %>
+                </div>
             </div>
         </div> 
     <% } %>

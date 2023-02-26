@@ -1,34 +1,40 @@
 <%- include('partials/header.ejs'); -%>
 
-<h1 class="text-center" style="margin-top:3%">Edit Your Information</h1>
+<div class="settings-container">
+	<h1 class="text-center settings-heading">Edit Your Information</h1>
 
-<div class="edit-info-form">
-	<form action="/users/:id?_method=PUT" method="POST">
-	    <div class="form-group">
-			<input type="text" class="form-control" name="user[firstName]" placeholder="Edit First Name" value="<%= user.firstName %>">  
-	    </div>			
-		<div class="form-group">
-			<input type="text" class="form-control" name="user[lastName]" placeholder="Edit Last Name" value="<%= user.lastName %>">
-		</div>
-		<div class="form-group">
-			<input type="username" class="form-control" name="user[username]" placeholder="Edit Username" value="<%= user.username %>">
-		</div>
-		<div class="form-group">
-			<input type="email" class="form-control" name="user[email]" placeholder="Edit Email" value="<%= user.email %>">
-		</div>		
-        <div class="form-group">
-		     <input type="submit" class="btn btn-danger login-register-btn" value="Update Info">
-        </div>		
-	</form>
+	<div class="edit-info-form">
+		<form action="/users/:id?_method=PUT" method="POST">
+			<div class="form-group">
+				<input type="text" class="form-control" name="user[firstName]" placeholder="Edit First Name" value="<%= user.firstName %>">  
+			</div>			
+			<div class="form-group">
+				<input type="text" class="form-control" name="user[lastName]" placeholder="Edit Last Name" value="<%= user.lastName %>">
+			</div>
+			<div class="form-group">
+				<input type="username" class="form-control" name="user[username]" placeholder="Edit Username" value="<%= user.username %>">
+			</div>
+			<div class="form-group">
+				<input type="email" class="form-control" name="user[email]" placeholder="Edit Email" value="<%= user.email %>">
+			</div>		
+			<div class="form-group">
+				<input type="submit" class="btn btn-danger login-register-btn" value="Update Info">
+			</div>		
+		</form>
+	</div>
+
+	<div class="divider">
+		<hr>
+		<div class="divider-OR">OR</div>
+	</div>
+
+	<h1 class="text-center settings-heading" style="margin-bottom: 1rem;">Delete My Account</h1>
+
+	<form action="/users/<%= currentUser._id %>?_method=DELETE" method="POST">
+		<input type="submit" class="btn btn-danger login-register-btn" value="Delete My Account" style="margin-top: 24px">
+		<!-- <button class="btn btn-danger d-block mx-auto"><a class="dropdown-item">Delete My Account</a></button> -->
+	</form> 
 </div>
 
-<h1 class="text-center" style="margin-top:3%; margin-bottom: 1rem;">Delete My Account</h1>
+<%- include('partials/footer.ejs'); -%>
 
-<form action="/users/<%= currentUser._id %>?_method=DELETE" method="POST">
-	<input type="submit" class="btn btn-danger login-register-btn" value="Delete My Account">
-	<!-- <button class="btn btn-danger d-block mx-auto"><a class="dropdown-item">Delete My Account</a></button> -->
-</form> 
-
-
-<div style="height: 60%"></div>
-<% include partials/footer2.ejs %>

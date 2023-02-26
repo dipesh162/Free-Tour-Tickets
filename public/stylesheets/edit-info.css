@@ -1,0 +1,54 @@
+.settings-container{
+    padding: 1.5rem;
+}
+
+.edit-info-form{
+    width: 40%;
+    margin: 28px auto 40px;
+}
+
+.login-register-btn{
+    letter-spacing: 0.5px;
+    display: block;
+    font-family: inherit;
+    margin: 0 auto;
+    font-size: 18px;
+}
+
+.divider{
+    width: 45%;
+    margin: auto;
+    position: relative;
+    margin-bottom: 2rem;
+}
+
+.divider-OR{
+    position: absolute;
+    bottom: -14px;
+    background: white;
+    width: 10%;
+    left: 45%;
+    text-align: center;
+    font-size: 1.3rem;
+    font-weight: 500; 
+}
+
+@media (max-width: 768px) {
+    .divider{
+        width: 45%;
+    }
+
+    .divider-OR{
+        width: 18%;
+        left: 41%;
+    }
+
+    .edit-info-form{
+        width: 100%;
+        margin: 24px 0px 40px 0px;
+    }
+
+    .settings-heading{
+        font-size: 1.5rem;
+    }
+}
