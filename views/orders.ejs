@@ -16,27 +16,68 @@
 					
 						<div class="order-submissions-row">
 							<% if(order.uploads.sketch && !order.uploads.cover) { %>
-							<div>
+							<div style="position: relative; width: fit-content; margin: auto;">
 								<img class="order-submission-img" src="/<%= order.uploads.sketch %>" alt="";>
+							
+								<% if(order.uploads.shortListed){ %>
+									<div 
+										class="order-shortlisted-item"
+									>
+										<i class="fa fa-check fa-sm" style="font-size:13px" aria-hidden="true"></i>
+									</div>
+								<% } else{ %>
+									<div></div>
+								<% } %>
 							</div>
 							<% } %>
 							
 							<% if(order.uploads.cover && !order.uploads.sketch) { %>
-							<div style="border-radius:10px">
+							<div style="position: relative; border-radius:10px; width: fit-content; margin: auto;">
 								<video class="order-submission-video" width="" height="" controls="">
 									<source src="/<%= order.uploads.cover %>" type="video/mp4">
 								</video>
+
+								<% if(order.uploads.shortListed){ %>
+									<div 
+										class="order-shortlisted-item"
+									>
+										<i class="fa fa-check fa-sm" style="font-size:13px" aria-hidden="true"></i>
+									</div>
+								<% } else{ %>
+									<div></div>
+								<% } %>
 							</div>
 							
 							<% } if(order.uploads.cover && order.uploads.sketch) { %>
-								<div>
+								<div style="position: relative;">
 									<img class="order-submission-img"  src="/<%= order.uploads.sketch %>" alt="";>
+								
+									<% if(order.uploads.shortListed){ %>
+										<div 
+											class="order-shortlisted-item"
+										>
+											<i class="fa fa-check fa-sm" style="font-size:13px" aria-hidden="true"></i>
+										</div>
+									<% } else{ %>
+										<div></div>
+									<% } %>
+								
 								</div>
 	
-								<div style="border-radius:10px">
+								<div style="position: relative; border-radius:10px; width: fit-content; margin: auto;">
 									<video  class="order-submission-video" width="" height="" controls="">
 										<source src="/<%= order.uploads.cover %>" type="video/mp4">
 									</video>
+
+									<% if(order.uploads.shortListed){ %>
+										<div 
+											class="order-shortlisted-item"
+										>
+											<i class="fa fa-check fa-sm" style="font-size:13px" aria-hidden="true"></i>
+										</div>
+									<% } else{ %>
+										<div></div>
+									<% } %>
 								</div>
 							<% } %>
 						</div>

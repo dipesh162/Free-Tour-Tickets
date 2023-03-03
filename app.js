@@ -431,16 +431,16 @@ app.get("/users/:id/uploads", isLoggedIn, (req, res)=>{
           {
               if(upload.sketch && !upload.cover)
                 {
-                  sketches.push(upload.sketch);
+                  sketches.push(upload);
                 }
               if(upload.cover && !upload.sketch) 
                 {       
-                  covers.push(upload.cover);
+                  covers.push(upload);
                 }
               if(upload.sketch && upload.cover)
               {
-                sketches.push(upload.sketch);
-                covers.push(upload.cover);          
+                sketches.push(upload);
+                covers.push(upload);          
               }
           });
           res.render("user-uploads", {sketches: sketches, covers: covers});
@@ -530,16 +530,16 @@ app.get("/uploads", isLoggedIn, (req, res)=>{
           {
               if(upload.sketch && !upload.cover)
                 {
-                  sketches.push(upload.sketch);
+                  sketches.push(upload);
                 }
               if(upload.cover && !upload.sketch) 
                 {       
-                  covers.push(upload.cover);
+                  covers.push(upload);
                 }
               if(upload.sketch && upload.cover)
               {
-                sketches.push(upload.sketch);
-                covers.push(upload.cover);          
+                sketches.push(upload);
+                covers.push(upload);          
               }
           });
           res.render("uploads", {sketches: sketches, covers: covers});

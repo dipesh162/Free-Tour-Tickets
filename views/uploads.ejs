@@ -15,8 +15,18 @@
             <div class="row">
                 <div class="uploads-row">
                     <% for(var i = 0; i < sketches.length; i++){ %>
-                        <div style="margin: 0px 16px 0px">
-                            <img class="upload-img" src="/<%= sketches[i] %>" alt="">
+                        <div style="margin: 0px 16px 0px; position: relative;">
+                            <img class="upload-img" src="/<%= sketches[i].sketch %>" alt="">
+
+                            <% if(sketches[i].shortListed){ %>
+                                <div 
+                                    class="shortlisted-item"
+                                >
+                                    <i class="fa fa-check" aria-hidden="true"></i>
+                                </div>
+                            <% } else{ %>
+                                <div></div>
+                            <% } %>
                         </div>
                     <% } %>
                 </div>
@@ -30,10 +40,20 @@
             <div class="row">
                 <div class="uploads-row">
                     <% for(var j = 0; j < covers.length; j++){ %>
-                        <div style="margin: 0px 16px 0px;">
+                        <div style="margin: 0px 16px 0px;  position: relative;">
                             <video class="upload-cover" width="300" height="auto" controls>
-                                <source src="/<%= covers[j] %>" type="video/mp4">
+                                <source src="/<%= covers[j].cover %>" type="video/mp4">
                             </video>
+
+                            <% if(covers[j].shortListed){ %>
+                                <div 
+                                    class="shortlisted-item"
+                                >
+                                    <i class="fa fa-check" aria-hidden="true"></i>
+                                </div>
+                            <% } else{ %>
+                                <div></div>
+                            <% } %>
                         </div> 
                     <% } %>
                 </div>

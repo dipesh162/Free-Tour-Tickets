@@ -41,12 +41,28 @@
     width: 130px; 
     height:130px; 
     border-radius: 5px;
+    border: 1px solid brown;
 }
 
 .order-submission-video{
     margin-bottom: -5px;
     border-radius: 5px;
     width: 230px;
+    border: 1px solid brown;
+}
+
+.order-shortlisted-item{
+    top: 4px;
+    right: 7px;
+    background: #fbca27;
+    border-radius: 50%;
+    height: 22px;
+    width: 22px;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    color: #fff;
+    position: absolute;
 }
 
 

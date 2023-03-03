@@ -11,10 +11,12 @@
     width: 100%;
     height: auto;
     max-width: 300px;
+    border: 1px solid brown;
 }
 
 .upload-cover{
     width: 100%;
     height: auto;
     max-width: 300px;
+    border: 1px solid brown;
 }
