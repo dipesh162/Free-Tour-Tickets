@@ -7,8 +7,6 @@ var express               =  require("express"),
     methodOverride        =  require("method-override"),
     mongoose              =  require("mongoose"),
     multer                =  require("multer"),
-    fs                    =  require("fs"),
-    cloudinary            =  require('cloudinary').v2,
     bodyParser            =  require("body-parser"),
     expressSession        =  require("express-session"),
     passport              =  require("passport"),
@@ -34,7 +32,6 @@ const connectionParams = {
   useUnifiedTopology: true
 }
 
-// mongoose.set('strictQuery', true);
 mongoose.connect(process.env.DB_URL, connectionParams)
 .then(()=>{
   console.info("connected to DB")
@@ -88,13 +85,6 @@ app.use((req, res, next)=>{
 
 // ======================================= Set Storage Enging for multer ======================================= //
 
-// Creating uploads folder if not already present
-// In "uploads" folder we will temporarily upload
-// image before uploading to cloudinary
-if (!fs.existsSync("./uploads")) {
-  fs.mkdirSync("./uploads");
-}
-
 var storage = multer.diskStorage({
   destination:"./public/uploads",
   filename: (req,file,cb)=>{
@@ -103,10 +93,10 @@ var storage = multer.diskStorage({
 });
 
 
-// var upload = multer({storage: storage}).fields([
-//    {name: "sketch"},
-//    {name: "cover"}
-//   ]);
+var upload = multer({storage: storage}).fields([
+   {name: "sketch"},
+   {name: "cover"}
+  ]);
 
 // Check file type
  checkFileType = (file,cb)=>{
@@ -125,41 +115,6 @@ var storage = multer.diskStorage({
 }
 
 // ========================================== </MULTER SETUP DONE> ========================================//
-
-// ================= Cloudinary ============== //
-
-var upload = multer({ storage: storage });
-
-
-// Configuration 
-cloudinary.config({
-  cloud_name: "dykew1rdb",
-  api_key: "183653233132669",
-  api_secret: "wQDrBWdjNvvZ6sS_1Fc_Ks2X038"
-});
-
-function buildSuccessMsg(urlList) {
-  
-  // Building success msg to display on screen
-  var response = `<h1>
-                 <a href="/">Click to go to Home page</a><br>
-                </h1><hr>`;
-
-  // Iterating over urls of images and creating basic
-  // html to render images on screen
-  for (var i = 0; i < urlList.length; i++) {
-      response += "File uploaded successfully.<br><br>";
-      response += `FILE URL: <a href="${urlList[i]}">
-                  ${urlList[i]}</a>.<br><br>`;
-      response += `<img src="${urlList[i]}" /><br><hr>`;
-  }
-
-  response += `<br>
-<p>Now you can store this url in database or 
-// do anything with it  based on use case.</p>
-`;
-  return response;
-}
 
 
 // Authentication Middleware //
