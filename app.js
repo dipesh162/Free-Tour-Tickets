@@ -34,7 +34,7 @@ const connectionParams = {
   useUnifiedTopology: true
 }
 
-mongoose.set('strictQuery', true);
+// mongoose.set('strictQuery', true);
 mongoose.connect(process.env.DB_URL, connectionParams)
 .then(()=>{
   console.info("connected to DB")
