@@ -7,6 +7,8 @@ var express               =  require("express"),
     methodOverride        =  require("method-override"),
     mongoose              =  require("mongoose"),
     multer                =  require("multer"),
+    fs                    =  require("fs"),
+    cloudinary            =  require('cloudinary').v2,
     bodyParser            =  require("body-parser"),
     expressSession        =  require("express-session"),
     passport              =  require("passport"),
@@ -32,6 +34,7 @@ const connectionParams = {
   useUnifiedTopology: true
 }
 
+mongoose.set('strictQuery', true);
 mongoose.connect(process.env.DB_URL, connectionParams)
 .then(()=>{
   console.info("connected to DB")
@@ -85,6 +88,13 @@ app.use((req, res, next)=>{
 
 // ======================================= Set Storage Enging for multer ======================================= //
 
+// Creating uploads folder if not already present
+// In "uploads" folder we will temporarily upload
+// image before uploading to cloudinary
+if (!fs.existsSync("./uploads")) {
+  fs.mkdirSync("./uploads");
+}
+
 var storage = multer.diskStorage({
   destination:"./public/uploads",
   filename: (req,file,cb)=>{
@@ -93,10 +103,10 @@ var storage = multer.diskStorage({
 });
 
 
-var upload = multer({storage: storage}).fields([
-   {name: "sketch"},
-   {name: "cover"}
-  ]);
+// var upload = multer({storage: storage}).fields([
+//    {name: "sketch"},
+//    {name: "cover"}
+//   ]);
 
 // Check file type
  checkFileType = (file,cb)=>{
@@ -116,6 +126,76 @@ var upload = multer({storage: storage}).fields([
 
 // ========================================== </MULTER SETUP DONE> ========================================//
 
+// ================= Cloudinary ============== //
+
+var upload = multer({ storage: storage });
+
+
+// Configuration 
+cloudinary.config({
+  cloud_name: "dykew1rdb",
+  api_key: "183653233132669",
+  api_secret: "wQDrBWdjNvvZ6sS_1Fc_Ks2X038"
+});
+
+function buildSuccessMsg(urlList) {
+  
+  // Building success msg to display on screen
+  var response = `<h1>
+                 <a href="/">Click to go to Home page</a><br>
+                </h1><hr>`;
+
+  // Iterating over urls of images and creating basic
+  // html to render images on screen
+  for (var i = 0; i < urlList.length; i++) {
+      response += "File uploaded successfully.<br><br>";
+      response += `FILE URL: <a href="${urlList[i]}">
+                  ${urlList[i]}</a>.<br><br>`;
+      response += `<img src="${urlList[i]}" /><br><hr>`;
+  }
+
+  response += `<br>
+<p>Now you can store this url in database or 
+// do anything with it  based on use case.</p>
+`;
+  return response;
+}
+
+async function uploadToCloudinary(locaFilePath) {
+  
+  // locaFilePath: path of image which was just
+  // uploaded to "uploads" folder
+
+  var mainFolderName = "main";
+  // filePathOnCloudinary: path of image we want
+  // to set when it is uploaded to cloudinary
+  var filePathOnCloudinary = 
+      mainFolderName + "/" + locaFilePath;
+
+  return cloudinary.uploader
+      .upload(locaFilePath, { public_id: filePathOnCloudinary })
+      .then((result) => {
+
+          // Image has been successfully uploaded on
+          // cloudinary So we dont need local image 
+          // file anymore
+          // Remove file from local uploads folder
+          fs.unlinkSync(locaFilePath);
+
+          console.log('heree is ',result);
+
+          return {
+              message: "Success",
+              url: result.url,
+          };
+      })
+      .catch((error) => {
+
+          // Remove file from local uploads folder
+          fs.unlinkSync(locaFilePath);
+          return { message: "Fail" };
+      });
+}
 
 // Authentication Middleware //
 
@@ -253,62 +333,100 @@ app.get("/artworks/:id/:tourIndex",  isLoggedIn, (req,res)=>
   });
 });
 
-app.post("/greetings/:id/:tourIndex",  isLoggedIn, (req,res)=>
+app.post("/greetings/:id/:tourIndex", isLoggedIn, upload.single("sketch"), async (req,res)=>
 {  
-   var tour_index    = req.params.tourIndex;
 
-    upload(req,res,(err)=>
-    {
-        if(err){
-          res.redirect("artworks/:id");
-          console.log("Multer error occured when uploading image(sketch)");
-        }
-        else{
-              if(req.files.sketch && !req.files.cover){
-                var sketch = req.files.sketch[0];
-                newUpload = {sketch:"uploads/" +sketch.filename , ownerId:req.user._id};  
-              }
-              else if(req.files.cover && !req.files.sketch){
-                var cover = req.files.cover[0];      
-                newUpload = {cover:"uploads/" +cover.filename, ownerId:req.user._id};  
-              }
-              else if(req.files.cover && req.files.sketch) {
-                var sketch = req.files.sketch[0];
-                var cover = req.files.cover[0];                  
-                newUpload = {sketch:"uploads/" +sketch.filename ,cover:"uploads/" +cover.filename, ownerId:req.user._id};  
-              }
-              Upload.create(newUpload, (err,upload)=>{
-                if(err){
-                  console.log(err);
-                }
-                else
-                {
-                  Order.create({userId:req.user._id, eventId:req.params.id, tourIndex:tour_index }, (err,order)=>{
-                    if(err){console.log(err); }
-                      else{
-                      order.uploads = upload;
-                      order.save();
-                      }
-                  })
-                  Event.findById(req.params.id,(err,event)=>
-                  {
-                      if(err)
-                      {
-                        console.log(err);
-                        res.redirect("artworks");
-                      }
-                      else
-                      {
-                        event.uploads.push(upload);
-                        event.save();
-                        res.render("greetings", {user:req.user ,event:event, tourIndex: tour_index});
-                      }
-                  }); 
-                }
-              })
-        }
-    }); 
-});
+        // req.file is the `profile-file` file
+        // req.body will hold the text fields,
+        // if there were any
+  
+        // req.file.path will have path of image
+        // stored in uploads folder
+        var locaFilePath = req.file.path;
+        console.log('localFile Path', locaFilePath);
+  
+        // Upload the local image to Cloudinary 
+        // and get image url as response
+        var result = await uploadToCloudinary(locaFilePath);
+  
+        // Generate html to display images on web page.
+        var response = buildSuccessMsg([result.url]);
+  
+        return res.send(response);
+
+    // upload(req,res, async (err)=>
+    // {
+    //     if(err){
+    //       res.redirect("artworks/:id");
+    //       console.log("Multer error occured when uploading image(sketch)");
+    //     }
+    //     else{
+    //       console.log(req.file);
+    //       const upload = await cloudinary.uploader.upload(req.file.path);
+    //       return res.json({
+    //         success: true,
+    //         file: upload.secure_url,
+    //       });
+    //     }
+    // })
+})
+
+// app.post("/greetings/:id/:tourIndex",  isLoggedIn, (req,res)=>
+// {  
+//    var tour_index    = req.params.tourIndex;
+
+//     upload(req,res,(err)=>
+//     {
+//         if(err){
+//           res.redirect("artworks/:id");
+//           console.log("Multer error occured when uploading image(sketch)");
+//         }
+//         else{
+//               if(req.files.sketch && !req.files.cover){
+//                 var sketch = req.files.sketch[0];
+//                 newUpload = {sketch:"uploads/" +sketch.filename , ownerId:req.user._id};  
+//               }
+//               else if(req.files.cover && !req.files.sketch){
+//                 var cover = req.files.cover[0];      
+//                 newUpload = {cover:"uploads/" +cover.filename, ownerId:req.user._id};  
+//               }
+//               else if(req.files.cover && req.files.sketch) {
+//                 var sketch = req.files.sketch[0];
+//                 var cover = req.files.cover[0];                  
+//                 newUpload = {sketch:"uploads/" +sketch.filename ,cover:"uploads/" +cover.filename, ownerId:req.user._id};  
+//               }
+//               Upload.create(newUpload, (err,upload)=>{
+//                 if(err){
+//                   console.log(err);
+//                 }
+//                 else
+//                 {
+//                   Order.create({userId:req.user._id, eventId:req.params.id, tourIndex:tour_index }, (err,order)=>{
+//                     if(err){console.log(err); }
+//                       else{
+//                       order.uploads = upload;
+//                       order.save();
+//                       }
+//                   })
+//                   Event.findById(req.params.id,(err,event)=>
+//                   {
+//                       if(err)
+//                       {
+//                         console.log(err);
+//                         res.redirect("artworks");
+//                       }
+//                       else
+//                       {
+//                         event.uploads.push(upload);
+//                         event.save();
+//                         res.render("greetings", {user:req.user ,event:event, tourIndex: tour_index});
+//                       }
+//                   }); 
+//                 }
+//               })
+//         }
+//     }); 
+// });
 
 app.get("/submissions", async (req,res)=>{
   Celebrity.find({} , (err, allcelebs)=>{
