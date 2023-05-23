@@ -2,6 +2,7 @@ var express               =  require("express"),
     nodemailer            =  require('nodemailer'),
     dotenv                =  require('dotenv'),
     PORT                  =  process.env.PORT || 3030,
+    Ip                    =  process.env.IP_ADDRESS,
     { MongoClient, ServerApiVersion } = require('mongodb');
     app                   =  express(),
     methodOverride        =  require("method-override"),
@@ -555,6 +556,6 @@ app.get('/logout', (req, res)=>{
 });
 
 
-app.listen(PORT, "127.0.0.1" , ()=>{
+app.listen(PORT, process.env.IP_ADDRESS , ()=>{
 	console.log("Free tour tickets server has started");
 });
