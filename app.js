@@ -27,25 +27,26 @@ mongoose.set('useNewUrlParser', true);
 mongoose.set('useCreateIndex', true);
 dotenv.config({ path: './.env' });
 
-// mongoose.connect("mongodb://localhost/ftt4git", {useNewUrlParser: true});
-const connectionParams = {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-}
 
-mongoose.connect(process.env.DB_URL, connectionParams)
-.then(()=>{
-  console.info("connected to DB")
-})
-.catch((e)=>{
-  console.log("Error", e)
-})
+// connection to Mongo DB
+  const connectionParams = {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  }
 
-const uri = process.env.DB_URL
-const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
-client.connect(err => {
-  client.close();
-});
+  mongoose.connect(process.env.DB_URL, connectionParams)
+  .then(()=>{
+    console.info("connected to DB")
+  })
+  .catch((e)=>{
+    console.log("Error", e)
+  })
+
+  const uri = process.env.DB_URL
+  const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
+  client.connect(err => {
+    client.close();
+  });
 
 
 
