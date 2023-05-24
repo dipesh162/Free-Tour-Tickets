@@ -1,4 +1,5 @@
 var express               =  require("express"),
+    cors                  = require('cors'),
     nodemailer            =  require('nodemailer'),
     dotenv                =  require('dotenv'),
     PORT                  =  process.env.PORT || 3030,
@@ -77,6 +78,12 @@ app.use(expressSession({
 app.use(express.static(__dirname + "/public"));
 app.set("view engine" , "ejs");
 app.use(methodOverride("_method"));
+app.use( cors({ origin: ["http://localhost:3030", "https://naughty-goat-loafers.cyclic.app/"], credentials: true, }) )
+app.set("trust proxy", 1);
+
+
+
+
 
 // --------------------------------------------  </APP USES> --------------------------------------------------//
 
