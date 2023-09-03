@@ -35,29 +35,32 @@ dotenv.config({ path: './.env' });
     useUnifiedTopology: true
   }
 
-  // mongoose.connect(process.env.DB_URL, connectionParams)
-  // .then(()=>{
-  //   console.info("connected to DB")
-  // })
-  // .catch((e)=>{
-  //   console.log("Error", e)
-  // })
+  // Connect DB for render
+  mongoose.connect(process.env.DB_URL, connectionParams)
+  .then(()=>{
+    console.info("connected to DB")
+  })
+  .catch((e)=>{
+    console.log("Error", e)
+  })
 
-  // const uri = process.env.DB_URL
-  // const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
-  // client.connect(err => {
-  //   client.close();
-  // });
+  const uri = process.env.DB_URL
+  const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
+  client.connect(err => {
+    client.close();
+  });
 
-  const connectDB = async () => {
-    try {
-      const conn = await mongoose.connect(process.env.DB_URL, connectionParams);
-      console.log(`MongoDB Connected: ${conn.connection.host}`);
-    } catch (error) {
-      console.log(error);
-      process.exit(1);
-    }
-  }
+
+  // Connect DB For Cyclic
+  // const connectDB = async () => {
+  //   try {
+  //     const conn = await mongoose.connect(process.env.DB_URL, connectionParams);
+  //     console.log(`MongoDB Connected: ${conn.connection.host}`);
+  //   } catch (error) {
+  //     console.log(error);
+  //     process.exit(1);
+  //   }
+  // }
 
 
 
@@ -573,9 +576,15 @@ app.get('/logout', (req, res)=>{
   });
 });
 
-//Connect to the database before listening
-connectDB().then(() => {
+//Connect to the database before listening (for cyclic)
+// connectDB().then(() => {
+// app.listen(PORT, process.env.IP_ADDRESS , ()=>{
+// 	console.log("Free tour tickets server has started");
+// })
+// })
+
+
+// For Render
 app.listen(PORT, process.env.IP_ADDRESS , ()=>{
 	console.log("Free tour tickets server has started");
-})
 })
