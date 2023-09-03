@@ -207,7 +207,7 @@ app.post("/register", (req,res) =>
     {
       if(err)
        {
-        console.log(err);
+        console.log('Mongoose error while creating user', err);
         return res.render('register');
        }
         passport.authenticate("local")(req, res, ()=>
