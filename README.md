@@ -1,6 +1,11 @@
 # Free-Tour-Tickets - https://freetourtickets.onrender.com/
-NOTE: To access admin panel on prod, just use **username-iamadmin** (if admin account is already created) 
-OR create a new user with username - **iamadmin**.
+NOTE: To access admin panel on prod, just use 
+**username-iamadmin**
+**password - 123456**
+(if admin account is already created) 
+
+OR 
+create a new user with username - **iamadmin**.
 
 
 # Description
