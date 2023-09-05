@@ -157,13 +157,13 @@ let transporter = nodemailer.createTransport({
   port: 465,
   secure: true,
   auth: {
-    user: 'freetourtickets@gmail.com',
-    pass: 'vmccpvjuvwipqpom'
+    user: process.env.MAIL_TRANSPORTER_USER,
+    pass: process.env.MAIL_TRANSPORTER_PASSWORD
   }
 });
 
 let mailOptions = {
-  from: 'freetourtickets@gmail.com',
+  from: process.env.MAIL_TRANSPORTER_USER,
   subject: 'Congratulations! Your Upload for the concert is selected',
   text: 'Congratulations!'
 };
