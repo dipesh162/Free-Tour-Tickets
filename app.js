@@ -1,5 +1,5 @@
-var express               =  require("express"),
-    cors                  = require('cors'),
+const express             =  require("express"),
+    cors                  =  require('cors'),
     nodemailer            =  require('nodemailer'),
     dotenv                =  require('dotenv'),
     PORT                  =  process.env.PORT || 3030,
@@ -107,7 +107,7 @@ app.use((req, res, next)=>{
 
 // ======================================= Set Storage Enging for multer ======================================= //
 
-var storage = multer.diskStorage({
+const storage = multer.diskStorage({
   destination:"./public/uploads",
   filename: (req,file,cb)=>{
     cb(null,file.fieldname + '-' + Date.now() + '-' + file.originalname);
@@ -115,18 +115,18 @@ var storage = multer.diskStorage({
 });
 
 
-var upload = multer({storage: storage}).fields([
+const upload = multer({storage: storage}).fields([
    {name: "sketch"},
    {name: "cover"}
   ]);
 
 // Check file type
  checkFileType = (file,cb)=>{
-  var filetypes = /jpeg|jpg|png|gif/;
-  var extname  =  filetypes.test(path.extname(file.originalname).toLowerCase());
+  let filetypes = /jpeg|jpg|png|gif/;
+  let extname  =  filetypes.test(path.extname(file.originalname).toLowerCase());
 
   // check mime type
-  var mimetype = filetypes.test(file.mimetype);
+  let mimetype = filetypes.test(file.mimetype);
 
   if(mimetype && extname){
     return cb(null,true);
@@ -151,7 +151,7 @@ var upload = multer({storage: storage}).fields([
 
 // ======================================== Set Node Mailer ======================== /
 
-let transporter = nodemailer.createTransport({
+const transporter = nodemailer.createTransport({
   service: 'gmail',
   host: 'smtp.gmail.com',
   port: 465,
@@ -162,7 +162,7 @@ let transporter = nodemailer.createTransport({
   }
 });
 
-let mailOptions = {
+const mailOptions = {
   from: process.env.MAIL_TRANSPORTER_USER,
   subject: 'Congratulations! Your Upload for the concert is selected',
   text: 'Congratulations!'
@@ -241,7 +241,7 @@ app.get("/events/:id", (req,res)=>
         }
 
       else{     
-            var getCeleb = allcelebs.celebName;
+            const getCeleb = allcelebs.celebName;
             Event.findOne({celebName:getCeleb}, (err,events)=>
             {
               res.render("newevent", {event:events, celeb:allcelebs});
@@ -277,7 +277,7 @@ app.get("/artworks/:id/:tourIndex",  isLoggedIn, (req,res)=>
 
 app.post("/greetings/:id/:tourIndex",  isLoggedIn, (req,res)=>
 {  
-   var tour_index    = req.params.tourIndex;
+   const tour_index    = req.params.tourIndex;
 
     upload(req,res,(err)=>
     {
@@ -287,16 +287,16 @@ app.post("/greetings/:id/:tourIndex",  isLoggedIn, (req,res)=>
         }
         else{
               if(req.files.sketch && !req.files.cover){
-                var sketch = req.files.sketch[0];
+                let sketch = req.files.sketch[0];
                 newUpload = {sketch:"uploads/" +sketch.filename , ownerId:req.user._id};  
               }
               else if(req.files.cover && !req.files.sketch){
-                var cover = req.files.cover[0];      
+                let cover = req.files.cover[0];      
                 newUpload = {cover:"uploads/" +cover.filename, ownerId:req.user._id};  
               }
               else if(req.files.cover && req.files.sketch) {
-                var sketch = req.files.sketch[0];
-                var cover = req.files.cover[0];                  
+                let sketch = req.files.sketch[0];
+                let cover = req.files.cover[0];                  
                 newUpload = {sketch:"uploads/" +sketch.filename ,cover:"uploads/" +cover.filename, ownerId:req.user._id};  
               }
               Upload.create(newUpload, (err,upload)=>{
@@ -351,7 +351,7 @@ app.get("/submissions/:id", isLoggedIn, (req,res)=>{
         }
 
       else{     
-            var getCeleb = celeb.celebName;
+            let getCeleb = celeb.celebName;
             Event.findOne({celebName:getCeleb}, async (err,event)=>
             {
               if(err){
@@ -447,23 +447,18 @@ app.get("/users/:id/uploads", isLoggedIn, (req, res)=>{
         console.log(err);
       }
     else{
-          var sketches = [],
+          let sketches = [],
               covers   = [];
           foundUploads.forEach((upload)=>
           {
-              if(upload.sketch && !upload.cover)
-                {
-                  sketches.push(upload);
-                }
-              if(upload.cover && !upload.sketch) 
-                {       
-                  covers.push(upload);
-                }
-              if(upload.sketch && upload.cover)
-              {
+            if (upload.sketch && !upload.cover) {
+              sketches.push(upload);
+            } else if (upload.cover && !upload.sketch) {
+                covers.push(upload);
+            } else if (upload.sketch && upload.cover) {
                 sketches.push(upload);
-                covers.push(upload);          
-              }
+                covers.push(upload);
+            }
           });
           res.render("user-uploads", {sketches: sketches, covers: covers});
       }
@@ -472,12 +467,12 @@ app.get("/users/:id/uploads", isLoggedIn, (req, res)=>{
 
 app.get("/users/:id/orders", isLoggedIn, async (req, res)=>
 {
-  var orders = await Order.find({userId: req.user._id});
-  var finalOrders = await Promise.all(orders.map(async (foundOrder) =>
+  const orders = await Order.find({userId: req.user._id});
+  const finalOrders = await Promise.all(orders.map(async (foundOrder) =>
    {
     let tourIndex = foundOrder.tourIndex
-    var event = await Event.findById(foundOrder.eventId);
-    var upload = await Upload.findById(foundOrder.uploads);
+    let event = await Event.findById(foundOrder.eventId);
+    let upload = await Upload.findById(foundOrder.uploads);
     return { 
       celebName:   event.celebName,
       bgImage:     event.bgImage,
@@ -546,7 +541,7 @@ app.get("/uploads", isLoggedIn, (req, res)=>{
         console.log(err);
       }
     else{
-          var sketches = [],
+          let sketches = [],
               covers   = [];
           Uploads.forEach((upload)=>
           {
