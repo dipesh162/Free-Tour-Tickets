@@ -26,11 +26,15 @@
     position: absolute;
     bottom: -14px;
     background: white;
-    width: 10%;
-    left: 45%;
+    width: 14%;
+    left: 43%;
     text-align: center;
-    font-size: 1.3rem;
+    font-size: 1.5rem;
     font-weight: 500; 
+}
+
+.settings-heading{
+    font-size: 28px;
 }
 
 @media (max-width: 768px) {
